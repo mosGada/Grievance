@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="79ce5214d4234789bdfb9ca4b2120a7e" Name="Diagram1" ZoomLevel="67">
+        <EntityTypeShape EntityType="grievancedbModel.AspNetRole" Width="1.5" PointX="0.75" PointY="7.875" />
+        <EntityTypeShape EntityType="grievancedbModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="6.5" />
+        <EntityTypeShape EntityType="grievancedbModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="15" />
+        <EntityTypeShape EntityType="grievancedbModel.AspNetUser" Width="1.5" PointX="3" PointY="6.25" />
+        <EntityTypeShape EntityType="grievancedbModel.Client" Width="1.5" PointX="5.75" PointY="2.125" />
+        <EntityTypeShape EntityType="grievancedbModel.Department" Width="1.5" PointX="3" PointY="19" />
+        <EntityTypeShape EntityType="grievancedbModel.Notification" Width="1.5" PointX="7.5" PointY="10.25" />
+        <EntityTypeShape EntityType="grievancedbModel.NotificationType" Width="1.5" PointX="5.25" PointY="17.5" />
+        <EntityTypeShape EntityType="grievancedbModel.TicketOwner" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="grievancedbModel.TicketPriority" Width="1.5" PointX="3" PointY="12.375" />
+        <EntityTypeShape EntityType="grievancedbModel.TicketRemark" Width="1.5" PointX="7.5" PointY="13.875" />
+        <EntityTypeShape EntityType="grievancedbModel.Ticket" Width="1.5" PointX="5.25" PointY="9.125" />
+        <EntityTypeShape EntityType="grievancedbModel.TicketStatus" Width="1.5" PointX="3" PointY="15.75" />
+        <EntityTypeShape EntityType="grievancedbModel.TicketType" Width="1.5" PointX="3" PointY="23.125" />
+        <AssociationConnector Association="grievancedbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="grievancedbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="grievancedbModel.FK__Tickets__UserId__01142BA1" />
+        <AssociationConnector Association="grievancedbModel.FK__Tickets__Departm__787EE5A0" />
+        <AssociationConnector Association="grievancedbModel.FK__Notificat__Notif__75A278F5" />
+        <AssociationConnector Association="grievancedbModel.FK__Notificat__Ticke__74AE54BC" />
+        <AssociationConnector Association="grievancedbModel.FK__Tickets__Complai__76969D2E" />
+        <AssociationConnector Association="grievancedbModel.FK__Tickets__TicketP__7D439ABD" />
+        <AssociationConnector Association="grievancedbModel.FK__Grievance__Ticke__6FE99F9F" />
+        <AssociationConnector Association="grievancedbModel.FK__Tickets__Grievan__778AC167" />
+        <AssociationConnector Association="grievancedbModel.FK__Tickets__TicketS__797309D9" />
+        <AssociationConnector Association="grievancedbModel.AspNetUserRoles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
