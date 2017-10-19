@@ -17,7 +17,6 @@ namespace Grievance.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Ticket()
         {
-            this.Notifications = new HashSet<Notification>();
             this.TicketRemarks = new HashSet<TicketRemark>();
         }
     
@@ -27,18 +26,19 @@ namespace Grievance.DAL
         public string Organization { get; set; }
         public string Remarks { get; set; }
         public System.DateTime CreatedDate { get; set; }
-        public System.DateTime LastModifiedDate { get; set; }
-        public Nullable<int> ComplainantId { get; set; }
+        public Nullable<int> TicketOwnersId { get; set; }
         public Nullable<int> GrievanceTypeId { get; set; }
         public Nullable<int> DepartmentId { get; set; }
         public Nullable<int> TicketStatusId { get; set; }
         public Nullable<int> TicketPriorityId { get; set; }
         public string UserId { get; set; }
+        public string CreatedBy { get; set; }
+        public string ReferenceNumber { get; set; }
+        public string UpdatedBy { get; set; }
+        public string UpdatedDate { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Department Department { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Notification> Notifications { get; set; }
         public virtual TicketOwner TicketOwner { get; set; }
         public virtual TicketPriority TicketPriority { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

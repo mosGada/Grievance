@@ -37,8 +37,6 @@ namespace Grievance.DAL
         public string UserName { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string Designation { get; set; }
-        public int CompanyId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }

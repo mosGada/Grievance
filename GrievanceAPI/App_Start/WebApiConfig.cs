@@ -14,8 +14,8 @@
         {
 
             //Auth Configuration
-            config.SuppressDefaultHostAuthentication();
-            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+            //config.SuppressDefaultHostAuthentication();
+            //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
             
             var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);

@@ -12,7 +12,7 @@
     #endregion
 
 
-    public class TicketRepository
+    public class TicketRepository : BaseRepository
     {
         #region Private member variable(s)
         private grievancedbEntities _ctx;
@@ -64,7 +64,7 @@
             var ticketsDTO = new List<TicketDTO>();
             await Task.Run(() =>
             {
-                var tickets = _ctx.Tickets.ToList();
+                var tickets = _ctx.Tickets.ToList().OrderByDescending(x => x.CreatedDate);
                 if (tickets.Any())
                 {
                     ticketsDTO.AddRange(tickets.Select(ticket => new TicketDTO()
@@ -72,10 +72,15 @@
                         Id = ticket.Id,
                         CreatedDate = ticket.CreatedDate,
                         Description = ticket.Description,
-                        LastModifiedDate = ticket.LastModifiedDate,
+                        //LastModifiedDate = ticket.LastModifiedDate,
+                        //LastModifiedDate = DateTime.Parse(ticket.UpdatedDate.ToString()),
                         Name = ticket.Name,
                         Organization = ticket.Organization,
-                        Remarks = ticket.Remarks
+                        Remarks = ticket.Remarks,
+                        CreatedBy = ticket.CreatedBy,
+                        ReferenceNumber = ticket.ReferenceNumber,
+                        TicketStatus = ticket.TicketStatus.Name,
+                        TicketType = ticket.TicketType.Name
                     }));
                 }
             });
@@ -89,20 +94,32 @@
         /// <returns></returns>
         public async Task<TicketDTO> Add(TicketDTO ticket)
         {
+            Random rnd = new Random();
             await Task.Run(() =>
             {
                 var newTicket = new Ticket()
                 {
-                    CreatedDate = DateTime.Now,
-                    LastModifiedDate = DateTime.Now,
                     Description = ticket.Description,
                     Name = ticket.Name,
                     Organization = ticket.Organization,
-                    Remarks = ticket.Remarks
+                    Remarks = ticket.Remarks,
+                    CreatedBy = ticket.CreatedBy,
+                    CreatedDate = ticket.CreatedDate,
+                    UserId = ticket.UserId,
+                    //LastModifiedDate = ticket.LastModifiedDate,
+                    UpdatedDate = ticket.LastModifiedDate.ToString(),
+                    ReferenceNumber = ticket.CreatedDate.ToShortDateString() + rnd.Next(0, 1000).ToString(),
+                    TicketStatusId = GetNewTicketStatusId(),
+                    GrievanceTypeId = GetComplaintTicketTypeId()
                 };
                 _ctx.Tickets.Add(newTicket);
                 _ctx.SaveChanges();
                 ticket.Id = newTicket.Id;
+                ticket.ReferenceNumber =newTicket.ReferenceNumber;
+                ticket.TicketStatus = GetTicketStatus(newTicket.TicketStatusId.GetValueOrDefault()).Name;
+                ticket.TicketType = GetTicketType(newTicket.GrievanceTypeId.GetValueOrDefault()).Name;
+                //ticket.TicketStatus = newTicket.TicketStatus.Name;
+                //ticket.TicketType = newTicket.TicketType.Name;
             });
             return ticket;
         }
@@ -123,7 +140,8 @@
                     existingTicket.Remarks = ticket.Remarks;
                     existingTicket.Name = ticket.Name;
                     existingTicket.Organization = ticket.Organization;
-                    existingTicket.LastModifiedDate = DateTime.Now;
+                    //existingTicket.LastModifiedDate = DateTime.Now;
+                    existingTicket.UpdatedDate = DateTime.Now.ToString();
                     _ctx.SaveChanges();
                 }
             });

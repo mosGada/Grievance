@@ -57,8 +57,6 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="Surname" Type="nvarchar(max)" />
-          <Property Name="Designation" Type="nvarchar(max)" />
-          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Clients">
           <Key>
@@ -163,17 +161,20 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Organization" Type="nvarchar" MaxLength="255" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="255" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="LastModifiedDate" Type="datetime" Nullable="false" />
-          <Property Name="ComplainantId" Type="int" />
+          <Property Name="TicketOwnersId" Type="int" />
           <Property Name="GrievanceTypeId" Type="int" />
           <Property Name="DepartmentId" Type="int" />
           <Property Name="TicketStatusId" Type="int" />
           <Property Name="TicketPriorityId" Type="int" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="ReferenceNumber" Type="nvarchar" MaxLength="128" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TicketStatuses">
           <Key>
@@ -199,18 +200,6 @@
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
-        <Association Name="FK__Grievance__Ticke__6FE99F9F">
-          <End Role="Tickets" Type="Self.Tickets" Multiplicity="0..1" />
-          <End Role="TicketRemarks" Type="Self.TicketRemarks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tickets">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TicketRemarks">
-              <PropertyRef Name="TicketId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Notificat__Notif__75A278F5">
           <End Role="NotificationTypes" Type="Self.NotificationTypes" Multiplicity="1" />
           <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
@@ -223,14 +212,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Notificat__Ticke__74AE54BC">
+        <Association Name="FK__TicketRem__Ticke__1CBC4616">
           <End Role="Tickets" Type="Self.Tickets" Multiplicity="0..1" />
-          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <End Role="TicketRemarks" Type="Self.TicketRemarks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tickets">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Notifications">
+            <Dependent Role="TicketRemarks">
               <PropertyRef Name="TicketId" />
             </Dependent>
           </ReferentialConstraint>
@@ -243,7 +232,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Tickets">
-              <PropertyRef Name="ComplainantId" />
+              <PropertyRef Name="TicketOwnersId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -379,17 +368,13 @@
           <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketStatuses" EntityType="Self.TicketStatuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketTypes" EntityType="Self.TicketTypes" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Grievance__Ticke__6FE99F9F" Association="Self.FK__Grievance__Ticke__6FE99F9F">
-            <End Role="Tickets" EntitySet="Tickets" />
-            <End Role="TicketRemarks" EntitySet="TicketRemarks" />
-          </AssociationSet>
           <AssociationSet Name="FK__Notificat__Notif__75A278F5" Association="Self.FK__Notificat__Notif__75A278F5">
             <End Role="NotificationTypes" EntitySet="NotificationTypes" />
             <End Role="Notifications" EntitySet="Notifications" />
           </AssociationSet>
-          <AssociationSet Name="FK__Notificat__Ticke__74AE54BC" Association="Self.FK__Notificat__Ticke__74AE54BC">
+          <AssociationSet Name="FK__TicketRem__Ticke__1CBC4616" Association="Self.FK__TicketRem__Ticke__1CBC4616">
             <End Role="Tickets" EntitySet="Tickets" />
-            <End Role="Notifications" EntitySet="Notifications" />
+            <End Role="TicketRemarks" EntitySet="TicketRemarks" />
           </AssociationSet>
           <AssociationSet Name="FK__Tickets__Complai__76969D2E" Association="Self.FK__Tickets__Complai__76969D2E">
             <End Role="TicketOwners" EntitySet="TicketOwners" />
@@ -471,10 +456,6 @@
             <End Role="NotificationType" EntitySet="NotificationTypes" />
             <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
-          <AssociationSet Name="FK__Notificat__Ticke__74AE54BC" Association="grievancedbModel.FK__Notificat__Ticke__74AE54BC">
-            <End Role="Ticket" EntitySet="Tickets" />
-            <End Role="Notification" EntitySet="Notifications" />
-          </AssociationSet>
           <AssociationSet Name="FK__Tickets__Complai__76969D2E" Association="grievancedbModel.FK__Tickets__Complai__76969D2E">
             <End Role="TicketOwner" EntitySet="TicketOwners" />
             <End Role="Ticket" EntitySet="Tickets" />
@@ -483,7 +464,7 @@
             <End Role="TicketPriority" EntitySet="TicketPriorities" />
             <End Role="Ticket" EntitySet="Tickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__Grievance__Ticke__6FE99F9F" Association="grievancedbModel.FK__Grievance__Ticke__6FE99F9F">
+          <AssociationSet Name="FK__TicketRem__Ticke__1CBC4616" Association="grievancedbModel.FK__TicketRem__Ticke__1CBC4616">
             <End Role="Ticket" EntitySet="Tickets" />
             <End Role="TicketRemark" EntitySet="TicketRemarks" />
           </AssociationSet>
@@ -547,8 +528,6 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Surname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Designation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="grievancedbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="grievancedbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
           <NavigationProperty Name="Tickets" Relationship="grievancedbModel.FK__Tickets__UserId__01142BA1" FromRole="AspNetUser" ToRole="Ticket" />
@@ -596,7 +575,6 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="NotificationType" Relationship="grievancedbModel.FK__Notificat__Notif__75A278F5" FromRole="Notification" ToRole="NotificationType" />
-          <NavigationProperty Name="Ticket" Relationship="grievancedbModel.FK__Notificat__Ticke__74AE54BC" FromRole="Notification" ToRole="Ticket" />
         </EntityType>
         <EntityType Name="NotificationType">
           <Key>
@@ -656,7 +634,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Ticket" Relationship="grievancedbModel.FK__Grievance__Ticke__6FE99F9F" FromRole="TicketRemark" ToRole="Ticket" />
+          <NavigationProperty Name="Ticket" Relationship="grievancedbModel.FK__TicketRem__Ticke__1CBC4616" FromRole="TicketRemark" ToRole="Ticket" />
         </EntityType>
         <EntityType Name="Ticket">
           <Key>
@@ -664,23 +642,25 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Organization" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Remarks" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ComplainantId" Type="Int32" />
+          <Property Name="TicketOwnersId" Type="Int32" />
           <Property Name="GrievanceTypeId" Type="Int32" />
           <Property Name="DepartmentId" Type="Int32" />
           <Property Name="TicketStatusId" Type="Int32" />
           <Property Name="TicketPriorityId" Type="Int32" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AspNetUser" Relationship="grievancedbModel.FK__Tickets__UserId__01142BA1" FromRole="Ticket" ToRole="AspNetUser" />
           <NavigationProperty Name="Department" Relationship="grievancedbModel.FK__Tickets__Departm__787EE5A0" FromRole="Ticket" ToRole="Department" />
-          <NavigationProperty Name="Notifications" Relationship="grievancedbModel.FK__Notificat__Ticke__74AE54BC" FromRole="Ticket" ToRole="Notification" />
           <NavigationProperty Name="TicketOwner" Relationship="grievancedbModel.FK__Tickets__Complai__76969D2E" FromRole="Ticket" ToRole="TicketOwner" />
           <NavigationProperty Name="TicketPriority" Relationship="grievancedbModel.FK__Tickets__TicketP__7D439ABD" FromRole="Ticket" ToRole="TicketPriority" />
-          <NavigationProperty Name="TicketRemarks" Relationship="grievancedbModel.FK__Grievance__Ticke__6FE99F9F" FromRole="Ticket" ToRole="TicketRemark" />
+          <NavigationProperty Name="TicketRemarks" Relationship="grievancedbModel.FK__TicketRem__Ticke__1CBC4616" FromRole="Ticket" ToRole="TicketRemark" />
           <NavigationProperty Name="TicketType" Relationship="grievancedbModel.FK__Tickets__Grievan__778AC167" FromRole="Ticket" ToRole="TicketType" />
           <NavigationProperty Name="TicketStatus" Relationship="grievancedbModel.FK__Tickets__TicketS__797309D9" FromRole="Ticket" ToRole="TicketStatus" />
         </EntityType>
@@ -774,18 +754,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Notificat__Ticke__74AE54BC">
-          <End Type="grievancedbModel.Ticket" Role="Ticket" Multiplicity="0..1" />
-          <End Type="grievancedbModel.Notification" Role="Notification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ticket">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Notification">
-              <PropertyRef Name="TicketId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Tickets__Complai__76969D2E">
           <End Type="grievancedbModel.TicketOwner" Role="TicketOwner" Multiplicity="0..1" />
           <End Type="grievancedbModel.Ticket" Role="Ticket" Multiplicity="*" />
@@ -794,7 +762,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Ticket">
-              <PropertyRef Name="ComplainantId" />
+              <PropertyRef Name="TicketOwnersId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -810,7 +778,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Grievance__Ticke__6FE99F9F">
+        <Association Name="FK__TicketRem__Ticke__1CBC4616">
           <End Type="grievancedbModel.Ticket" Role="Ticket" Multiplicity="0..1" />
           <End Type="grievancedbModel.TicketRemark" Role="TicketRemark" Multiplicity="*" />
           <ReferentialConstraint>
@@ -886,8 +854,6 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="grievancedbModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -1012,13 +978,16 @@
           <EntitySetMapping Name="Tickets">
             <EntityTypeMapping TypeName="grievancedbModel.Ticket">
               <MappingFragment StoreEntitySet="Tickets">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="TicketPriorityId" ColumnName="TicketPriorityId" />
                 <ScalarProperty Name="TicketStatusId" ColumnName="TicketStatusId" />
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="GrievanceTypeId" ColumnName="GrievanceTypeId" />
-                <ScalarProperty Name="ComplainantId" ColumnName="ComplainantId" />
-                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="TicketOwnersId" ColumnName="TicketOwnersId" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="Organization" ColumnName="Organization" />

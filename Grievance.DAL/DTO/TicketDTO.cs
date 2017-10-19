@@ -38,6 +38,7 @@
         /// <summary>
         /// Sample Ticket CreatedDate Property
         /// </summary>
+        [DataMember(Name = "CreatedDate")]
         public DateTime CreatedDate { get; set; }
 
         /// <summary>
@@ -50,5 +51,35 @@
         /// </summary>
         [DataMember(Name = "Remarks")]
         public string Remarks { get; set; }
+
+        /// <summary>
+        /// Ticket owner
+        /// </summary>
+        [DataMember(Name = "CreatedBy")]
+        public string CreatedBy { get; set; }
+
+        /// <summary>
+        /// Ticket Owner/User id.
+        /// </summary>
+        public string UserId { get; set; }
+
+        /// <summary>
+        /// Ticket Reference Number
+        /// </summary>
+        [DataMember(Name = "ReferenceNumber")]
+        public string ReferenceNumber { get; set; }
+
+        /// <summary>
+        /// Ticket status
+        /// </summary>
+        [DataMember(Name = "Status")]
+        public string TicketStatus { get; set; }
+
+        /// <summary>
+        /// Ticket Type
+        /// </summary>
+        [DataMember(Name = "Type")]
+        public string TicketType { get; set; }
+
     }
 }

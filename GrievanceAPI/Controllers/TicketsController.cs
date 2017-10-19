@@ -11,13 +11,13 @@
     using GrievanceRepository;
     using Grievance.DAL;
     #endregion
-
-
+        
     [RoutePrefix("api/tickets")]
-    public class TicketsController : ApiController
+    public class TicketsController : BaseController
     {
         #region Private Member Variable(s)
         TicketRepository _dataProvider = new TicketRepository();
+        NotificationRepository _notificationProvider = new NotificationRepository();
         #endregion
 
         //[HttpGet]
@@ -40,9 +40,35 @@
         [Route("Add")]
         public async Task<TicketDTO> Add(TicketDTO ticket)
         {
-            var newTicket = await _dataProvider.Add(ticket);
+            var newTicket = new TicketDTO();
+            ticket.CreatedBy = currentUser;
+            ticket.CreatedDate = currentDateTime;
+            ticket.LastModifiedDate = currentDateTime;            
+            ticket.UserId = currentUserId;
+            await Task.Run(async () =>
+            {
+                //Add Ticket
+                newTicket = await _dataProvider.Add(ticket);
+
+                //Send Email Notification
+                _notificationProvider.SendConfirmationNotification(currentUserEmail, newTicket);
+            });
+            
             return newTicket;
         }
+
+        ///// <summary>
+        ///// Sends a notification.
+        ///// </summary>
+        ///// <param name="emailAddress"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //[Route("SendNotification")]
+        //public async Task<HttpResponseMessage> SendNotification(string emailAddress)
+        //{
+        //    var response = await _notificationProvider.SendNotification(emailAddress);
+        //    return Request.CreateResponse(HttpStatusCode.OK, response);
+        //}
 
         [HttpPost]
         [Route("Update")]

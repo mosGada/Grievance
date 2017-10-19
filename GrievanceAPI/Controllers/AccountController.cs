@@ -7,13 +7,20 @@
     using Microsoft.Owin.Security;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using System.Net;
+    using Grievance.DAL;
+    using GrievanceRepository;
+    using System.Collections.Generic;
     #endregion
 
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
-        
+        private UserRepository _userProvider = null;
+
+        //UserRepository _userProvider = new UserRepository();
+
         private IAuthenticationManager Authentication
         {
             get { return Request.GetOwinContext().Authentication;  }
@@ -22,11 +29,16 @@
         public AccountController()
         {
             _repo = new AuthRepository();
+            _userProvider = new UserRepository();
         }
 
-        // POST api/Account/Register
+        /// <summary>
+        /// Create a new user.
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         [AllowAnonymous]
-        [Route("Register")]
+        [Route("user/register")]
         public async Task<IHttpActionResult> Register(UserModel userModel)
         {
 
@@ -57,7 +69,13 @@
             return Ok("Success");
         }
 
-        [Route("Update")]
+        /// <summary>
+        /// Update a user.
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
+        [AcceptVerbs("PUT", "POST")]
+        [Route("user/update")]
         public async Task<IHttpActionResult> Update(UserModel userModel)
         {
             if (!ModelState.IsValid)
@@ -75,6 +93,79 @@
             }
 
             return Ok("Error");
+        }
+
+        [HttpGet]
+        [Route("user/getAll")]
+        public async Task<List<UserDTO>> GetAll()
+        {
+            return await _userProvider.GetAll();
+        }
+
+        /// <summary>
+        /// Update a role.
+        /// </summary>
+        /// <param name="RoleDefinition"></param>
+        /// <returns></returns>
+        [AcceptVerbs("PUT", "POST")]
+        [HttpPost]
+        [Route("role/update")]
+        public async Task<IdentityResult> Update(RoleModel RoleDefinition)
+        {
+            IdentityResult result = await _repo.UpdateRole(RoleDefinition);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns all role(s).
+        /// </summary>
+        /// <returns></returns>
+        [Route("role/getAll")]
+        public HttpResponseMessage GetAllRoles()
+        {
+            var roles = _repo.GetAllRoles();
+            return Request.CreateResponse(HttpStatusCode.OK, roles);
+            //return Ok(roles);
+        }
+
+        /// <summary>
+        /// Creates/registers a new role.
+        /// </summary>
+        /// <param name="roleModel"></param>
+        /// <returns></returns>
+        [Route("role/register")]
+        public async Task<IHttpActionResult> Register(RoleModel roleModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult result = await _repo.CreateRole(roleModel);
+
+            IHttpActionResult errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Returns role(s) by user Id
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+
+        [Route("role/getByUserId")]
+        public HttpResponseMessage GetAllRolesbyUser(string userid)
+        {
+            var role = _repo.GetUserRoles(userid);
+            return Request.CreateResponse(HttpStatusCode.OK, role);
+            //return Ok(roles);
         }
 
         #region Helpers

@@ -28,7 +28,7 @@ namespace GrievanceAPI
             WebApiConfig.Register(config);
 
             //Swagger configuration
-
+            //SwaggerConfig.Register();
             app.UseWebApi(config);
         }
 

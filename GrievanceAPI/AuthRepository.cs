@@ -148,6 +148,52 @@
             return client;
         }
 
+        /// <summary>
+        /// Returns a list of role(s).
+        /// </summary>
+        /// <returns></returns>
+        public List<IdentityRole> GetAllRoles()
+        {
+            var result = _roleManager.Roles.ToList();
+            return result;
+        }
+
+        /// <summary>
+        /// Create(s) a new role
+        /// </summary>
+        /// <param name="roleModel"></param>
+        /// <returns></returns>
+        public async Task<IdentityResult> CreateRole(RoleModel roleModel)
+        {
+            IdentityRole role = new IdentityRole
+            {
+                Name = roleModel.Name
+            };
+
+            var result = await _roleManager.CreateAsync(role);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Modifies a role.
+        /// </summary>
+        /// <param name="roleModel"></param>
+        /// <returns></returns>
+
+        public async Task<IdentityResult> UpdateRole(RoleModel roleModel)
+        {
+
+            var result = await _roleManager.FindByIdAsync(roleModel.id);
+
+            result.Name = roleModel.Name;
+
+            await _roleManager.UpdateAsync(result);
+
+
+            return null;
+        }
+
         public void Dispose()
         {
             _ctx.Dispose();
