@@ -1,0 +1,38 @@
+﻿<div class="login-box" style="background-color:white !important;margin-bottom: 40px;border-radius: 15px">
+    <div class="login-logo">
+        <img src="../../assets/images/Logo.png" width="200px" height="100px">
+    </div>
+</div>
+
+<div class="login-box" style="margin-top: 15px;">
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+        <form>
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="Username" data-ng-model="loginData.userName" required autofocus>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" placeholder="Password" data-ng-model="loginData.password" required>
+            </div>
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-xs-12">
+                    <!--<button type="submit" class="btn btn-danger btn-block btn-lrg">Sign In</button>-->
+                    <button class="btn btn-md btn-danger btn-block" type="submit" data-ng-click="login()">Login</button>
+                    <br />
+                    <div data-ng-hide="message == ' '" class="alert alert-danger">
+                        {{message}}
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+        <!-- /.social-auth-links -->
+        <a href="#" style="color:gray" class="pull-right">I forgot my password</a>
+        <br />
+        <!-- <a href="register.html" style="color:gray">Register a new membership</a> -->
+    </div>
+    <!-- /.login-box-body -->
+</div>
+

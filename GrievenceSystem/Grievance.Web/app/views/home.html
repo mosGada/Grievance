@@ -1,0 +1,180 @@
+﻿
+
+<section class="content-header">
+    <h1>
+        Dashboard
+        
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard fa-lg"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+<section class="content" id="Dash">
+
+    <div class="box box-info" id="dashboardheader">
+        <div class="box-header text-center with-border">
+            <h4 class="box-title">Date Range Filter</h4>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus fa-2x"></i>
+                </button>
+
+            </div>
+        </div>
+        <div class="DashBoardbox box-body">
+
+            <div class="row">
+                <div class="col-lg-12"></div>
+                <form name="dateFilterForm" class="col-md-4">
+                    <input type="text" name="datefilter" class="form-control date-Range-TexField pull-left" ng-model="dateFilter.dateReturn" value="" placeholder="Date Range" required />
+                    <button type="button" ng-click="getCurrentMonthData()" ng-hide="dateFilterForm.$invalid" class="btn btn-default blue pull-left" data-toggle="tooltip" data-placement="top" title="Reset to current month orders">
+                        <i class="fa fa-refresh"></i> Reset To {{startMonth | date:'MMMM'}}
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-16" id="Dashdata">
+        
+        <div class="col-md-6 box box-info" id="Dashinside"  ng-repeat="details in getProductStatuses">
+            <div class="box-header text-center with-border">
+                <h3 class="box-title">{{ details.productName }}</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus fa-2x"></i>
+                    </button>
+
+                </div>
+            </div>
+            <div class="box-body" id="DashboardBodybox">
+
+                <div class="row">
+                    <div class="col-lg-12"></div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-gray"><i class="fa fa-line-chart"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">All Orders</span>
+                                <span class="info-box-number">{{ details.totalOrders }}<small>&nbsp;&nbsp;Orders</small></span>
+                                <span class="info-box-number tons">{{ details.totalTons/1000 }}<tons>&nbsp;&nbsp;Tons</tons></span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-green"><i class="fa fa-bar-chart"></i></span>
+                            <div class="info-box-content">
+                                <san class="info-box-text">Pending </san>
+                                <span class="info-box-number">{{ details.pendingCount }}<small>&nbsp;&nbsp;Orders</small></span>
+                                <span class="info-box-number tons">{{ details.pendingTons/1000 }}<tons>&nbsp;&nbsp;Tons</tons></span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-yellow"><i class="fa fa-pie-chart"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Authorized </span>
+                                <span class="info-box-number">{{ details.authorizedCount }}<small>&nbsp;&nbsp;Orders</small></span>
+                                <span class="info-box-number tons">{{ details.authorizedTons/1000 }}<tons>&nbsp;&nbsp;Tons</tons></span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-red"><i class="fa fa-area-chart"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Assigned </span>
+                                <span class="info-box-number">{{ details.assignedCount }}<small>&nbsp;&nbsp;Orders</small></span>
+                                <span class="info-box-number tons">{{ details.assignedTons/1000 }}<tons>&nbsp;&nbsp;Tons</tons></span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" style="padding-left: 5%">
+                            <div class="info-box bg-red-gradient">
+                                <span class="info-box-icon"><i class="fa fa-times"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">rejected</span>
+                                    <span class="info-box-number">{{ details.rejectedCount }}<small>&nbsp;&nbsp;Orders</small></span>
+                                    <span class="info-box-number">{{ details.rejectedTons/1000 }}<small>&nbsp;&nbsp;Tons</small></span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: {{(details.rejectedCount / details.totalOrders ) * 100 | number : 0 }}%"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        {{( details.rejectedCount / details.totalOrders ) * 100 | number : 0 }} % Completed Orders
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding-left: 5%">
+                            <div class="info-box bg-light-blue-gradient">
+                                <span class="info-box-icon"><i class="fa fa-hourglass-start"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">In Progress</span>
+                                    <span class="info-box-number">{{ details.inProgressCount }}<small>&nbsp;&nbsp;Orders</small></span>
+                                    <span class="info-box-number">{{ details.inProgressTons/1000 }}<small>&nbsp;&nbsp;Tons</small></span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: {{ ( details.inProgressCount / details.totalOrders ) * 100 | number : 0 }}%"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        {{ ( details.inProgressCount / details.totalOrders ) * 100 | number : 0 }}% In Progress Orders
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+                        <div class="col-lg-4" style="padding-right: 5%">
+                            <div class="info-box bg-green-gradient">
+                                <span class="info-box-icon"><i class="fa fa-check"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">completed</span>
+                                    <span class="info-box-number">{{ details.completedCount }}<small>&nbsp;&nbsp;Orders</small></span>
+                                    <span class="info-box-number">{{ details.completedTons/1000 }}<small>&nbsp;&nbsp;Tons</small></span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: {{( details.completedCount / details.totalOrders ) * 100 | number : 0 }}%"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        {{( details.completedCount / details.totalOrders ) * 100 | number : 0 }} % Completed Orders
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+  
+</section>
+
+          
+<!--<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Latest Orders</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+
+    </div>
+</div>-->

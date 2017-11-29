@@ -1,0 +1,44 @@
+﻿            <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Maintenance 
+        <small>Role Definitions</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/#!/home"><i class="fa fa-dashboard fa-lg"></i> Dashboard </a></li>
+        <li><a href="#">Maintenance</a></li>
+        <li class="active">Role Definitions</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-2">
+            <a id="" ng-click="addNew()"><span class="fa fa-plus fa-lg" data-ng-hide="isFleet">New</span></a>&nbsp;
+            <a id="togglesearch" ng-click="toggleFiltering()"><span class="fa fa-search fa-lg">Filter</span></a>
+        </div>
+        <div class="col-md-5">
+            <input type="text" id="globalsearch" class="form-control " ng-model="search" ng-change="refreshData(search)" placeholder="Search..." />
+        </div>
+        <!-- general form elements -->
+        <!--/.col (left) -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-md-12">
+            <br>
+            <div id="gridRoleOptions" ui-grid-edit ui-grid-exporter ui-grid-auto-resize class="grid" ui-grid="gridRoleOptions"></div>
+            <strong>Number of Role Definitions:</strong> {{ gridRoleOptions.data.length | number }}
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $("#togglesearch").click(function (event) {
+
+            //$("#globalsearch").toggle();
+        });
+    });
+</script>
+<!-- /.content -->

@@ -1,0 +1,22 @@
+﻿<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <form class="form-horizontal" name="responseForm" method="post">
+                <div class="box-body">
+                    <div class="form-group has-success">
+                        <label for="name" class="control-label">Successfully Captured Ticket</label>
+                        <br /><br />
+                        <label for="name" class="control-label">{{resMessage.msg}}</label>
+                        <div>
+                            <label for="name" class="control-label">{{resMessage.refNum}}</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-default" ng-click="closeModal()">OK</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

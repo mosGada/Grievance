@@ -10,7 +10,6 @@
     using System.Collections.Generic;
     using Grievance.DAL.DTO;
     using GrievanceRepository.Account;
-    using System.Net;
     #endregion
 
     [RoutePrefix("api/Account")]

@@ -1,0 +1,33 @@
+﻿<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="col-sm-6">
+                <h3 class="modal-title">Add New Status Type</h3>
+            </div>
+            <div class="col-sm-6">
+                <i class="fa fa-times fa-lg" ng-click="closeModal()"></i>
+            </div>
+
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" name="statusTypeAddForm" method="post">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="name" class="col-lg-3 control-label">Name <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" placeholder="Name" ng-model="statusType.name" name="name" required />
+                            <div ng-messages="statusTypeAddForm.name.$error">
+                                <div class="text-danger" ng-message="required">Name is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-default pull-right" ng-click="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-info pull-right" ng-click="saveStatusType()" ng-disabled="statusTypeAddForm.$invalid">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

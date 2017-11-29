@@ -232,7 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Grievance.DAL\Grievance.DAL.csproj">
-      <Project>{c75f4c33-ed1e-4d47-9bc3-109761219291}</Project>
+      <Project>{C75F4C33-ED1E-4D47-9BC3-109761219291}</Project>
       <Name>Grievance.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\GrievanceRepository\Grievance.Repositories.csproj">
