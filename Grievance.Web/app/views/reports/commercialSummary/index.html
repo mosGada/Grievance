@@ -1,0 +1,19 @@
+﻿<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Reports
+        <small>Commercial Summary</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard fa-lg"></i> Home</a></li>
+        <li><a href="#">Reports</a></li>
+        <li class="active">Commercial Summary</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="col-md-12">
+        <br />
+        <div id="grdCommercialSummary" ui-grid="gridOptions" style="height:447px" ui-grid-exporter ui-grid-auto-resize class="grid"></div>
+        <strong>Number of Commercial Summaries:</strong> {{ gridOptions.data.length | number }}
+    </div>
+</section>

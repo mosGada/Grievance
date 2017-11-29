@@ -1,0 +1,40 @@
+﻿<section class="content-header">
+    <h1>
+        Maintenance
+        <small>Status Type</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard fa-lg"></i> Home</a></li>
+        <li><a href="#">Maintenance</a></li>
+        <li class="active">Status Type</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+
+        <div class="col-md-2">
+            <a id="" ng-click="addNew()"><span class="fa fa-plus fa-lg">New</span></a>&nbsp;
+            <a id="togglesearch" ng-click="toggleFiltering()"><span class="fa fa-search fa-lg">Filter</span></a>
+        </div>
+        <div class="col-md-5">
+            <!--<input type="text" class="form-control " ng-change="refreshData()" placeholder="Search" ng-model="searchText">-->
+            <input type="text" id="globalsearch" class="form-control " ng-model="search" ng-change="refreshData(search)" placeholder="Search..." />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <br>
+            <img src="../../../../assets/images/underConstruction.png" />
+            <!--<div id="grid1" ui-grid-edit ui-grid-exporter ui-grid-auto-resize class="grid" ui-grid="grdStatusType"></div>
+            <strong>Number of Status:</strong> {{ grdStatusType.data.length | number }}-->
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $("#togglesearch").click(function (event) {
+
+            $("#globalsearch").toggle();
+        });
+    });
+</script>

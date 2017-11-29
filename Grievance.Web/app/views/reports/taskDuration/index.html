@@ -1,0 +1,23 @@
+﻿<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Reports
+        <small>Task Durations</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard fa-lg"></i> Home</a></li>
+        <li><a href="#">Reports</a></li>
+        <li class="active">Task Durations</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="col-md-12">
+
+        <br />
+        <div id="grdTaskDuration" ui-grid="gridOptions" style="height:447px" ui-grid-exporter ui-grid-auto-resize class="grid"></div>
+        <strong>Number of Task Durations:</strong> {{ gridOptions.data.length | number }}
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
