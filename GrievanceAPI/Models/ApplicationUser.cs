@@ -7,5 +7,8 @@
     {
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string IDNumber { get; set; }
+        public string PhysicalAddress { get; set; }
+        //public string Gender { get; set; }
     }
 }

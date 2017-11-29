@@ -57,7 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseRepository.cs" />
+    <Compile Include="Account\AccountRepository.cs" />
+    <Compile Include="Account\IAccountRepository.cs" />
+    <Compile Include="Base\BaseRepository.cs" />
+    <Compile Include="Departments\DepartmentRepository.cs" />
+    <Compile Include="Departments\IDepartmentRepository.cs" />
     <Compile Include="NotificationRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -65,7 +69,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="TicketRepository.cs" />
+    <Compile Include="TicketCategory\ITicketCategoryRepository.cs" />
+    <Compile Include="TicketCategory\TicketCategoryRepository.cs" />
+    <Compile Include="TicketIssues\ITicketIssuesRepository.cs" />
+    <Compile Include="TicketIssues\TicketIssuesRepository.cs" />
+    <Compile Include="TicketPriority\ITicketPriorityRepository.cs" />
+    <Compile Include="TicketPriority\TicketPriorityRepository.cs" />
+    <Compile Include="TicketRemarks\ITicketRemarksRepository.cs" />
+    <Compile Include="TicketRemarks\TicketRemarksRepository.cs" />
+    <Compile Include="TicketStatus\ITicketStatusRepository.cs" />
+    <Compile Include="TicketStatus\TicketStatusRepository.cs" />
+    <Compile Include="TicketType\ITicketTypeRepository.cs" />
+    <Compile Include="TicketType\TicketTypeRepository.cs" />
+    <Compile Include="Ticket\ITicketRepository.cs" />
+    <Compile Include="Ticket\TicketRepository.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +111,7 @@
   <ItemGroup>
     <None Include="Resources\ConfirmationEmail.html" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

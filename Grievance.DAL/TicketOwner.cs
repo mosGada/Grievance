@@ -23,19 +23,21 @@ namespace Grievance.DAL
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string Gender { get; set; }
         public string IDNumber { get; set; }
-        public string ContactNumber { get; set; }
-        public string AlternativeNumber { get; set; }
-        public string EmailAddress { get; set; }
         public string PhysicalAddress { get; set; }
+        public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public Nullable<int> TicketTypeId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket> Tickets { get; set; }
+        public virtual TicketType TicketType { get; set; }
     }
 }

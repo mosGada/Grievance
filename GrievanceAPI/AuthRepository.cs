@@ -39,7 +39,9 @@
                 UserName = userModel.UserName,
                 Name = userModel.Name,
                 Surname = userModel.Surname,
-                Email = userModel.Email
+                Email = userModel.Email,
+                IDNumber = userModel.IDNumber,
+                PhysicalAddress = userModel.PhysicalAddress                
             };
 
             var result = await _userManager.CreateAsync(user, userModel.Password);

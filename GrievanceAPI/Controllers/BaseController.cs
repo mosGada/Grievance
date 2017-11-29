@@ -7,7 +7,8 @@
     using System.Linq;
     using System.Web.Http;
     #endregion
-    [HostAuthentication("bearer")]
+
+    //[HostAuthentication("bearer")]
     /// <summary>
     /// Base Api Controller
     /// </summary>
@@ -26,14 +27,15 @@
         public static string currentUserEmail { get; set; }
         
         
-
+        
         public BaseController()
         {
             //var user = _userManager.FindByName(User.Identity.Name);
             _ctx = new AuthContext();
             _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_ctx));
 
-            var user = _userManager.FindByEmail(User.Identity.Name);
+           // var user = _userManager.FindByEmail(User.Identity.Name);
+            var user = _userManager.FindByName(User.Identity.Name);
 
             currentUser = user.Name;
             currentUserEmail = user.Email;

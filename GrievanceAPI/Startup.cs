@@ -27,6 +27,8 @@ namespace GrievanceAPI
 
             WebApiConfig.Register(config);
 
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+           // app.UseWebApi(config);
             //Swagger configuration
             //SwaggerConfig.Register();
             app.UseWebApi(config);

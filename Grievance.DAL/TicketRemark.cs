@@ -15,15 +15,11 @@ namespace Grievance.DAL
     public partial class TicketRemark
     {
         public int Id { get; set; }
-        public Nullable<int> TicketId { get; set; }
         public string Desription { get; set; }
-        public string ImageName { get; set; }
-        public string VoiceRecordName { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-    
-        public virtual Ticket Ticket { get; set; }
+        public Nullable<int> TicketId { get; set; }
     }
 }

@@ -55,11 +55,11 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TicketType GetTicketType(int id)
-        {
-            var ticketType = _ctx.TicketTypes.FirstOrDefault(i => i.Id == id);
-            return ticketType;
-        }
+        //public TicketType GetTicketType(int id)
+        //{
+        //    var ticketType = _ctx.TicketTypes.FirstOrDefault(i => i.Id == id);
+        //    return ticketType;
+        //}
         #endregion
 
         #region TicketStatuses
@@ -118,11 +118,11 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TicketStatus GetTicketStatus(int id)
-        {
-            var ticketStatus = _ctx.TicketStatuses.FirstOrDefault(i => i.Id == id);
-            return ticketStatus;
-        }        
+        //public TicketStatus GetTicketStatus(int id)
+        //{
+        //    var ticketStatus = _ctx.TicketStatuses.FirstOrDefault(i => i.Id == id);
+        //    return ticketStatus;
+        //}        
         #endregion
     }
 }

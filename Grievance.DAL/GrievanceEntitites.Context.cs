@@ -33,11 +33,14 @@ namespace Grievance.DAL
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<NotificationType> NotificationTypes { get; set; }
+        public virtual DbSet<TicketCategory> TicketCategories { get; set; }
+        public virtual DbSet<TicketIssue> TicketIssues { get; set; }
         public virtual DbSet<TicketOwner> TicketOwners { get; set; }
         public virtual DbSet<TicketPriority> TicketPriorities { get; set; }
         public virtual DbSet<TicketRemark> TicketRemarks { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<TicketStatus> TicketStatuses { get; set; }
+        public virtual DbSet<TicketTransaction> TicketTransactions { get; set; }
         public virtual DbSet<TicketType> TicketTypes { get; set; }
     }
 }

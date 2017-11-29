@@ -69,7 +69,17 @@
     <Compile Include="Department.cs">
       <DependentUpon>GrievanceEntitites.tt</DependentUpon>
     </Compile>
+    <Compile Include="DTO\AccountDTO.cs" />
+    <Compile Include="DTO\BaseDTO.cs" />
+    <Compile Include="DTO\CategoryDTO.cs" />
+    <Compile Include="DTO\DepartmentDTO.cs" />
     <Compile Include="DTO\TicketDTO.cs" />
+    <Compile Include="DTO\TicketIssuesDTO.cs" />
+    <Compile Include="DTO\TicketOwnerDTO.cs" />
+    <Compile Include="DTO\TicketPriorityDTO.cs" />
+    <Compile Include="DTO\TicketRemarkDTO.cs" />
+    <Compile Include="DTO\TicketStatusDTO.cs" />
+    <Compile Include="DTO\TicketTypeDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="GrievanceEntitites.Context.cs">
       <AutoGen>True</AutoGen>
@@ -96,6 +106,12 @@
     <Compile Include="Ticket.cs">
       <DependentUpon>GrievanceEntitites.tt</DependentUpon>
     </Compile>
+    <Compile Include="TicketCategory.cs">
+      <DependentUpon>GrievanceEntitites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TicketIssue.cs">
+      <DependentUpon>GrievanceEntitites.tt</DependentUpon>
+    </Compile>
     <Compile Include="TicketOwner.cs">
       <DependentUpon>GrievanceEntitites.tt</DependentUpon>
     </Compile>
@@ -106,6 +122,9 @@
       <DependentUpon>GrievanceEntitites.tt</DependentUpon>
     </Compile>
     <Compile Include="TicketStatus.cs">
+      <DependentUpon>GrievanceEntitites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TicketTransaction.cs">
       <DependentUpon>GrievanceEntitites.tt</DependentUpon>
     </Compile>
     <Compile Include="TicketType.cs">

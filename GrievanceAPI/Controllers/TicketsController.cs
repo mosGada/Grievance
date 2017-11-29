@@ -10,23 +10,20 @@
     using System.Web.Http;
     using GrievanceRepository;
     using Grievance.DAL;
+    using GrievanceRepository.Departments;
+    using GrievanceRepository.Ticket;
+    using Grievance.DAL.DTO;
+    using Grievance.API.Controllers;
     #endregion
-        
+
+    [Authorize]
     [RoutePrefix("api/tickets")]
     public class TicketsController : BaseController
     {
         #region Private Member Variable(s)
+        //DepartmentRepository 
         TicketRepository _dataProvider = new TicketRepository();
-        NotificationRepository _notificationProvider = new NotificationRepository();
         #endregion
-
-        //[HttpGet]
-        //[Route("GetAll")]
-        //// GET: api/Tickets
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
 
         [HttpGet]
         [Route("GetAll")]
@@ -36,93 +33,73 @@
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
+        [HttpGet]
+        [Route("GetTicketOwner")]
+        public async Task<HttpResponseMessage> GetTicketOwner()
+        {
+            var response = await _dataProvider.GetOwner();
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
+        //[HttpGet]
+        //[Route("GetTicketRemarks")]
+        //public async Task<HttpResponseMessage> GetTicketRemarks(int id)
+        //{
+        //    var response = await _dataProvider.GetRemarksById(id);
+        //    return Request.CreateResponse(HttpStatusCode.OK, response);
+        //}
+
         [HttpPost]
         [Route("Add")]
         public async Task<TicketDTO> Add(TicketDTO ticket)
         {
-            var newTicket = new TicketDTO();
-            ticket.CreatedBy = currentUser;
+            ticket.CreatedBy = User.Identity.Name;
+            ticket.UpdatedBy = User.Identity.Name;
             ticket.CreatedDate = currentDateTime;
-            ticket.LastModifiedDate = currentDateTime;            
-            ticket.UserId = currentUserId;
-            await Task.Run(async () =>
-            {
-                //Add Ticket
-                newTicket = await _dataProvider.Add(ticket);
-
-                //Send Email Notification
-                _notificationProvider.SendConfirmationNotification(currentUserEmail, newTicket);
-            });
-            
-            return newTicket;
+            ticket.UpdatedDate = currentDateTime;
+            var newTicket = await _dataProvider.Add(ticket);
+            return newTicket;            
         }
 
-        ///// <summary>
-        ///// Sends a notification.
-        ///// </summary>
-        ///// <param name="emailAddress"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //[Route("SendNotification")]
-        //public async Task<HttpResponseMessage> SendNotification(string emailAddress)
+        //[HttpPut]
+        //[Route("UpdateTicket")]
+        //public async Task<TicketDTO> UpdateTicket(TicketDTO ticket)
         //{
-        //    var response = await _notificationProvider.SendNotification(emailAddress);
-        //    return Request.CreateResponse(HttpStatusCode.OK, response);
+        //    return await _dataProvider.Update(ticket);
         //}
+
+        [HttpPost]
+        [Route("AddRemarks")]
+        public async Task<TicketRemarkDTO> AddRemarks(TicketRemarkDTO ticketRemark)
+        {
+            ticketRemark.CreatedBy = currentUser;
+            ticketRemark.UpdatedBy = currentUser;
+            ticketRemark.CreatedDate = currentDateTime;
+            ticketRemark.UpdatedDate = currentDateTime;
+            var newTicketRemark = await _dataProvider.AddRmark(ticketRemark);
+            return newTicketRemark;
+        }
+
+        [HttpPost]
+        [Route("AddOwners")]
+        public async Task<TicketOwnerDTO> AddOwners(TicketOwnerDTO ticketOwner)
+        {
+            ticketOwner.CreatedBy = currentUser;
+            ticketOwner.UpdatedBy = currentUser;
+            ticketOwner.CreatedDate = currentDateTime;
+            ticketOwner.UpdatedDate = currentDateTime;
+            var newTicketOwner = await _dataProvider.AddOwner(ticketOwner);
+            return newTicketOwner;
+        }
 
         [HttpPost]
         [Route("Update")]
         public async Task<TicketDTO> Update(TicketDTO ticket)
         {
+            ticket.UpdatedBy = currentUser;
+            ticket.UpdatedDate = currentDateTime;
             var newTicket = await _dataProvider.Update(ticket);
             return newTicket;
-        }
-
-        ///// <summary>
-        ///// Rejects an assigned order to Open Item 3.
-        ///// </summary>
-        ///// <param name="order"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //[Route("Cancel")]
-        //public async Task<HttpResponseMessage> RejectAssigned(OrderDTO order)
-        //{
-        //    var response = await _integrationProvider.RejectAssignedOrder(order);
-        //    if (response != null)
-        //    {
-        //        order.UpdatedBy = currentUser;
-        //        order.UpdatedDate = currentDateTime;
-        //        await Task.Run(() =>
-        //        {
-        //            _dataProvider.Delete(order);
-        //        });
-
-        //        ///Notify all clients to remove order.
-        //        var _context = GlobalHost.ConnectionManager.GetHubContext<ClientHub>();
-        //        _context.Clients.All.orderDelete(order);
-        //    }
-        //    return Request.CreateResponse(HttpStatusCode.OK, Constants.OpenItem.successMessage);
-        //}
-
-        // GET: api/Tickets/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/Tickets
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/Tickets/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Tickets/5
-        public void Delete(int id)
-        {
         }
     }
 }

@@ -43,5 +43,17 @@ namespace GrievanceAPI
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name= "Identity Number")]
+        public string IDNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Physical Address")]
+        public string PhysicalAddress { get; set; }
+
+        //[Required]
+        //[Display(Name = "Physical Address")]
+        //public string Gender { get; set; }
     }
 }
