@@ -5,21 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="79ce5214d4234789bdfb9ca4b2120a7e" Name="Diagram1" ZoomLevel="67">
-        <EntityTypeShape EntityType="grievancedbModel.AspNetRole" Width="1.5" PointX="0.75" PointY="23.5" />
-        <EntityTypeShape EntityType="grievancedbModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="24.5" />
-        <EntityTypeShape EntityType="grievancedbModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="22" />
-        <EntityTypeShape EntityType="grievancedbModel.AspNetUser" Width="1.5" PointX="3" PointY="21.25" />
+        <EntityTypeShape EntityType="grievancedbModel.AspNetRole" Width="1.5" PointX="0.75" PointY="22.625" />
+        <EntityTypeShape EntityType="grievancedbModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="23.75" />
+        <EntityTypeShape EntityType="grievancedbModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="21.25" />
+        <EntityTypeShape EntityType="grievancedbModel.AspNetUser" Width="1.5" PointX="3" PointY="20.5" />
         <EntityTypeShape EntityType="grievancedbModel.Client" Width="1.5" PointX="7.75" PointY="4.75" />
-        <EntityTypeShape EntityType="grievancedbModel.Department" Width="1.5" PointX="3" PointY="10.5" />
+        <EntityTypeShape EntityType="grievancedbModel.Department" Width="1.5" PointX="3" PointY="27.25" />
         <EntityTypeShape EntityType="grievancedbModel.Notification" Width="1.5" PointX="10" PointY="1" />
         <EntityTypeShape EntityType="grievancedbModel.NotificationType" Width="1.5" PointX="7.75" PointY="1.125" />
-        <EntityTypeShape EntityType="grievancedbModel.TicketCategory" Width="1.5" PointX="3" PointY="17.875" />
-        <EntityTypeShape EntityType="grievancedbModel.TicketIssue" Width="1.5" PointX="3" PointY="14.625" />
+        <EntityTypeShape EntityType="grievancedbModel.TicketCategory" Width="1.5" PointX="3" PointY="13.875" />
+        <EntityTypeShape EntityType="grievancedbModel.TicketIssue" Width="1.5" PointX="3" PointY="17.125" />
         <EntityTypeShape EntityType="grievancedbModel.TicketOwner" Width="1.5" PointX="3" PointY="1.75" />
         <EntityTypeShape EntityType="grievancedbModel.TicketPriority" Width="1.5" PointX="3" PointY="7.25" />
         <EntityTypeShape EntityType="grievancedbModel.TicketRemark" Width="1.5" PointX="5.75" PointY="8.75" />
         <EntityTypeShape EntityType="grievancedbModel.Ticket" Width="1.5" PointX="5.25" PointY="1.125" />
-        <EntityTypeShape EntityType="grievancedbModel.TicketStatus" Width="1.5" PointX="3" PointY="28" />
+        <EntityTypeShape EntityType="grievancedbModel.TicketStatus" Width="1.5" PointX="3" PointY="10.5" />
         <EntityTypeShape EntityType="grievancedbModel.TicketTransaction" Width="1.5" PointX="7.75" PointY="8.75" />
         <EntityTypeShape EntityType="grievancedbModel.TicketType" Width="1.5" PointX="0.75" PointY="2.5" />
         <AssociationConnector Association="grievancedbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />

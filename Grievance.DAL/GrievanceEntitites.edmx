@@ -198,6 +198,7 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="TicketId" Type="int" />
+          <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Tickets">
           <Key>
@@ -769,6 +770,7 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="TicketId" Type="Int32" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Ticket">
           <Key>
@@ -1169,6 +1171,7 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <EntitySetMapping Name="TicketRemarks">
             <EntityTypeMapping TypeName="grievancedbModel.TicketRemark">
               <MappingFragment StoreEntitySet="TicketRemarks">
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="TicketId" ColumnName="TicketId" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />

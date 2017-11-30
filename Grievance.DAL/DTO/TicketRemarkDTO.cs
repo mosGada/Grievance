@@ -19,10 +19,7 @@ namespace Grievance.DAL.DTO
         [DataMember(Name = "ticketOwnerName")]
         public string TicketOwnerName { get; set; }
 
-        [DataMember(Name = "imangeName")]
-        public string ImageName { get; set; }
-
-        [DataMember(Name = "voiceRecordName")]
-        public string VoiceRecordName { get; set; }
+        [DataMember(Name = "type")]
+        public string Type { get; set; }
     }
 }

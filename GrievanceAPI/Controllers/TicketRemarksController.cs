@@ -1,4 +1,5 @@
 ﻿using Grievance.DAL.DTO;
+using GrievanceAPI.Controllers;
 using GrievanceRepository.TicketRemarks;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Web.Http;
 namespace Grievance.API.Controllers
 {
     [RoutePrefix("api/ticketRemark")]
-    public class TicketRemarksController : ApiController
+    public class TicketRemarksController : BaseController
     {
         #region Private Member Variable(s)
         TicketRemarksRepository _dataProvider = new TicketRemarksRepository();
@@ -46,6 +47,25 @@ namespace Grievance.API.Controllers
         {
             var newRemark = await _dataProvider.Update(remark);
             return newRemark;
+        }
+
+        [HttpPost]
+        [Route("AddRemark")]
+        public async Task<TicketRemarkDTO> AddRemark(TicketRemarkDTO ticketRemark)
+        {
+            ticketRemark.CreatedBy = currentUser;
+            ticketRemark.CreatedDate = currentDateTime;
+            ticketRemark.UpdatedBy = currentUser;
+            ticketRemark.UpdatedDate = currentDateTime;            
+            var newRemark = await _dataProvider.AddRemark(ticketRemark);
+            return newRemark;
+        }
+
+        [HttpGet]
+        [Route("GetRemarksByTicketId")]
+        public async Task<List<TicketRemarkDTO>> GetRemarksByTicketId(int ticketId)
+        {
+            return await _dataProvider.GetRemarksByTicketId(ticketId);
         }
     }
 }
