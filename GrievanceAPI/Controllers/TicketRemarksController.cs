@@ -35,9 +35,9 @@ namespace Grievance.API.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public async Task<TicketRemarkDTO> Add(TicketRemarkDTO remark, int id)
+        public async Task<TicketRemarkDTO> Add(TicketRemarkDTO remark)
         {
-            var newRemark = await _dataProvider.Add(remark, id);
+            var newRemark = await _dataProvider.Add(remark);
             return newRemark;
         }
 
