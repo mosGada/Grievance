@@ -214,7 +214,7 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
     $scope.GetTicketOwner = function (owner) {
         $scope.getId = owner.ticketOwnerId
         ownerService.getById($scope.getId).then(function (response) {
-            $scope.Owner = response.data;
+            $scope.OwnerInfo = response.data;
         },
         function (error) {
             console.log('Error on Tickets: ' + error.data.message);

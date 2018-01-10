@@ -17,7 +17,7 @@ namespace GrievanceAPI.Controllers
         TicketOwnerRepository _dataProvider = new TicketOwnerRepository();
         #endregion
 
-        [HttpPost]
+        [HttpGet]
         [Route("getByID")]
         public async Task<TicketOwnerDTO> GetByID(int id)
         {

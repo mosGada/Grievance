@@ -6,7 +6,7 @@
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard fa-lg"></i> Home</a></li>
         <li><a href="#">Grievances Tickets</a></li>
-        <li class="active">Log ticket test</li>
+        <li class="active">Log ticket</li>
     </ol>
 </section>
 
@@ -38,17 +38,17 @@
                     <!-- /.form-group -->
                     <div class="form-group">
                         <label>Name</label>
-                        <input class="form-control input-sm" type="text" disabled ng-disabled="ticketUpdate.ticketTypeId === 2" data-ng-model="Owner.ticketOwnerName">
+                        <input class="form-control input-sm" type="text" disabled ng-disabled="ticketUpdate.ticketTypeId === 2" data-ng-model="OwnerInfo.name">
                     </div>
                     <!-- /.form-group -->
                     <div class="form-group">
                         <label>Surname</label>
-                        <input class="form-control input-sm" type="text" disabled ng-disabled="ticketUpdate.ticketTypeId === 2" data-ng-model="Owner.surname">
+                        <input class="form-control input-sm" type="text" disabled ng-disabled="ticketUpdate.ticketTypeId === 2" data-ng-model="OwnerInfo.surname">
                     </div>
                     <!-- /.form-group -->
                     <div class="form-group">
                         <label>ID Number</label>
-                        <input class="form-control input-sm" type="text" disabled ng-disabled="ticketUpdate.ticketTypeId === 2" data-ng-model="Owner.idNumber">
+                        <input class="form-control input-sm" type="text" disabled ng-disabled="ticketUpdate.ticketTypeId === 2" data-ng-model="OwnerInfo.idNumber">
                     </div>
 
                     <!-- /.form-group -->
@@ -57,7 +57,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Gender</label>
-                        <select class="form-control input-sm" ng-disabled="ticketUpdate.ticketTypeId === 2" data-ng-model="Owner.gender">
+                        <select class="form-control input-sm" ng-disabled="ticketUpdate.ticketTypeId === 2" data-ng-model="OwnerInfo.gender">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
@@ -66,17 +66,17 @@
 
                     <div class="form-group">
                         <label>Contact Number</label>
-                        <input class="form-control input-sm" type="text" ng-disabled="ticketUpdate.ticketTypeId === 2" data-ng-model="Owner.phone">
+                        <input class="form-control input-sm" type="text" ng-disabled="ticketUpdate.ticketTypeId === 2" data-ng-model="OwnerInfo.phone">
                     </div>
                     <!-- /.form-group -->
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input class="form-control input-sm" ng-disabled="ticketUpdate.ticketTypeId === 2" type="email" data-ng-model="Owner.email">
+                        <input class="form-control input-sm" ng-disabled="ticketUpdate.ticketTypeId === 2" type="email" data-ng-model="OwnerInfo.email">
                     </div>
                     <!-- /.form-group -->
                     <div class="form-group">
                         <label>Physical Address</label>
-                        <input class="form-control input-sm" type="text" ng-disabled="ticketUpdate.ticketTypeId === 2" data-ng-model="Owner.address">
+                        <input class="form-control input-sm" type="text" ng-disabled="ticketUpdate.ticketTypeId === 2" data-ng-model="OwnerInfo.physicalAddress">
                     </div>
                     <!-- /.form-group -->
                     <!--<div class="box-footer">
