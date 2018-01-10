@@ -10,11 +10,11 @@ app.factory('ticketsService', ['$http', 'ngAuthSettings', function ($http, ngAut
         });
     };
 
-    var _getTicketOwner = function () {
-        return $http.get(serviceBase + apiRoute + 'GetTicketOwner').then(function (response) {
-            return response;
-        });
-    };
+    //var _getTicketOwner = function () {
+    //    return $http.get(serviceBase + apiRoute + 'GetTicketOwner').then(function (response) {
+    //        return response;
+    //    });
+    //};
 
     var _addTickets = function (tickets) {
         return $http.post(serviceBase + apiRoute + 'Add', tickets).then(function (response) {
@@ -45,7 +45,7 @@ app.factory('ticketsService', ['$http', 'ngAuthSettings', function ($http, ngAut
     ticketsServiceFactory.updateTicket = _updateTicket;
     ticketsServiceFactory.addTicketRemarks = _addTicketRemarks;
     ticketsServiceFactory.addTicketOwners = _addTicketOwners; 
-    ticketsServiceFactory.getTicketOwner = _getTicketOwner;
+    //ticketsServiceFactory.getTicketOwner = _getTicketOwner;
 
     return ticketsServiceFactory;
 }]);

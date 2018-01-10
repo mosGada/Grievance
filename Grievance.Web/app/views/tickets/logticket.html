@@ -74,9 +74,9 @@
                             <input class="form-control input-sm" type="text" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.physicalAddress">
                         </div>
                         <!-- /.form-group -->
-                        <div class="box-footer">
+                        <!--<div class="box-footer">
                             <button type="submit" class="btn btn-primary" ng-click="signUp()" ng-disabled="ticketOwner.ticketTypeId === 2">Search</button>
-                        </div>
+                        </div>-->
                     </div>
                     <!-- /.col -->
                 </div>
@@ -150,6 +150,10 @@
                                 ng-options="asign.id as asign.name for asign in Assign"></select>
                     </div>
 
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary" ng-click="saveTicketOwners()">Submit</button>
+                    </div>
+
                 </div>
                 <!-- /.col -->
             </div>
@@ -158,35 +162,29 @@
         <!-- /.box-body -->
     </div>
 
-    <div class="box box-default">
+    <!--<div class="box box-default">
         <div class="box-header with-border">
             <h3 class="box-title">Ticket Remarks</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                <!--<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>-->
             </div>
         </div>
-        <!-- /.box-header -->
+        
         <div class="box-body">
             <div class="row">
-                <!-- /.col -->
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Remarks</label>
                         <textarea class="form-control input-sm" type="text" data-ng-model="ticketRemarks.Description"></textarea>
                     </div>
 
-                    <!-- /.form-group -->
                     <div class="box-footer">
-                        <!--<button type="submit" class="btn btn-primary" data-ng-click="saveTicketOwner()">Add</button>-->
                         <button type="submit" class="btn btn-primary" ng-click="saveTicketOwners()">Submit</button>
                     </div>
                 </div>
-                <!-- /.col -->
             </div>
-            <!-- /.row -->
         </div>
-        <!-- /.box-body -->
-    </div>
+        
+    </div>-->
 </section>
 

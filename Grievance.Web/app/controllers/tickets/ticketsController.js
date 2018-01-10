@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksService', 'statusService', 'ticketsService', 'priorityService', 'issuesService', 'authService', 'categoryService', 'typeService', 'departmentService', 'uiGridConstants', '$uibModal', function ($scope, $filter, ngStatus, remarksService, statusService, ticketsService, priorityService, issuesService, authService, categoryService, typeService, departmentService, uiGridConstants, $uibModal) {
+app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksService', 'ownerService', 'statusService', 'ticketsService', 'priorityService', 'issuesService', 'authService', 'categoryService', 'typeService', 'departmentService', 'uiGridConstants', '$uibModal', function ($scope, $filter, ngStatus, remarksService, ownerService, statusService, ticketsService, priorityService, issuesService, authService, categoryService, typeService, departmentService, uiGridConstants, $uibModal) {
 
     $scope.Departments = []; 
     $scope.Priorities = []; 
@@ -163,7 +163,7 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         $scope.tickets.TicketTypeId = owner.data.ticketTypeId
         ticketsService.addTickets($scope.tickets).then(function (response) {
      
-            $scope.saveTicketRemarks(response);
+            //$scope.saveTicketRemarks(response);
             $scope.response(response);
         },
                  function (response) {
@@ -181,6 +181,7 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
     $scope.editTicket = function displayModal(data) {
         $scope.ticketUpdate = data;
         $scope.GetTicketRemarks(data);
+        $scope.GetTicketOwner(data);
         var modalScope = $scope.$new();
         modalScope.ParentScope = $scope;
         modalScope.closeModal = function () {
@@ -204,6 +205,16 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         $scope.getTicketId = getId.id
         remarksService.getById($scope.getTicketId).then(function (response) {
             $scope.Remarks = response.data;
+        },
+        function (error) {
+            console.log('Error on Tickets: ' + error.data.message);
+        });
+    };
+
+    $scope.GetTicketOwner = function (owner) {
+        $scope.getId = owner.ticketOwnerId
+        ownerService.getById($scope.getId).then(function (response) {
+            $scope.Owner = response.data;
         },
         function (error) {
             console.log('Error on Tickets: ' + error.data.message);

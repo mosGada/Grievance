@@ -127,6 +127,7 @@
     <Content Include="app\services\categoryService.js" />
     <Content Include="app\services\departmentService.js" />
     <Content Include="app\services\issuesService.js" />
+    <Content Include="app\services\ownerServices.js" />
     <Content Include="app\services\priorityService.js" />
     <Content Include="app\services\remarksServices.js" />
     <Content Include="app\services\typeService.js" />
@@ -137,6 +138,9 @@
     <Content Include="app\views\tickets\response.html" />
     <Content Include="app\views\tickets\update.html" />
     <Content Include="packages.config" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\bootstrap\css\bootstrap-theme.css.map" />
     <Content Include="assets\bootstrap\css\bootstrap-theme.min.css.map" />
     <Content Include="assets\bootstrap\css\bootstrap.css.map" />
