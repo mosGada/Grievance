@@ -1,0 +1,38 @@
+﻿            <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Maintenance 
+        <small>Users</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/#!/home"><i class="fa fa-dashboard fa-lg"></i> Dashboard </a></li>
+        <li><a href="#">Maintenance</a></li>
+        <li class="active">Users</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-2">
+            <a id="" ng-click="addNew()"><span class="fa fa-plus fa-lg">New</span></a>&nbsp;
+            <a id="togglesearch" ng-click="toggleFiltering()"><span class="fa fa-search fa-lg">Filter</span></a>
+        </div>
+        <div class="col-md-5 pull-right">
+            <input type="text" id="globalsearch" class="form-control " ng-model="search" ng-change="refreshData(search)" placeholder="Search..." />
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <div id="grid1" ui-grid-edit ui-grid-exporter ui-grid-auto-resize style="height:447px" class="grid" ui-grid="gridUsersOptions"></div>
+                <strong>Number of Users:</strong> {{ gridUsersOptions.data.length | number }}
+            </div>
+        </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $("#togglesearch").click(function (event) {
+
+        });
+    });
+</script>

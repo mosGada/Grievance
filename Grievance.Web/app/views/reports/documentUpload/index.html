@@ -1,0 +1,62 @@
+﻿<section class="content-header">
+    <h1>
+        Reports
+        <small>Commercial Dashboard</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard fa-lg"></i> Home</a></li>
+        <li><a href="#">Reports</a></li>
+        <li class="active">Commercial Dashboard</li>
+    </ol>
+</section>
+<section class="content">
+    <!--Date Range-->
+    <div class="row">
+        <form name="dateFilterForm" class="col-md-4">
+            <input type="text" name="datefilter" class="form-control date-Range-TexField pull-left" ng-model="dateFilter.dateReturn" value="" placeholder="Date Range" required />
+            <button type="button" ng-click="GetGridData()" ng-hide="dateFilterForm.$invalid" class="btn btn-default blue pull-left" data-toggle="tooltip" data-placement="top" title="Reset to current month data">
+                <i class="fa fa-refresh"></i> Reset To {{startMonth | date:'MMMM'}}
+            </button>
+        </form>
+    </div>
+    <!--Summaries-->
+    <div id="data" class="row">
+        <div class="col-md-12">
+            <br>
+            <div id="grid1" ui-grid-grouping ui-grid-edit ui-grid-exporter ui-grid-auto-resize style="height:247px; width: 80%" class="grid" ui-grid="dashOptions"></div>
+            <strong>Number of Entries:</strong> {{ dashOptions.data.length | number }}
+        </div>
+    </div>
+    <br />
+    <!--List Data-->
+    <div id="data" class="row">
+        <div class="col-md-12">
+            <br>
+            <div id="grid1" ui-grid-edit ui-grid-exporter ui-grid-auto-resize style="height:247px" class="grid" ui-grid="gridOptions"></div>
+            <strong>Number of Entries:</strong> {{ gridOptions.data.length | number }}
+        </div>
+    </div>
+    <!--Upload-->
+    <div class="box box-info" style="width: 100%">
+        <div class="box-header text-center with-border">
+            <h4 class="box-title"><i class="fa fa-upload"></i>&nbsp;Document Upload</h4>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus fa-2x"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <input type="file" name="file" class="form-control"
+                        onchange="angular.element(this).scope().loadFile(this.files)" />
+            </div>
+            <div class="form-group">
+                <p ng-bind="msg"></p>
+            </div>
+        </div>
+        <div class="box-footer">
+            <button type="submit" class="btn btn-info pull-right" ng-click="handleFile()" style="background-color: #fbbf3e; border-color: #fbbf3e;">Import Data</button>
+        </div>
+    </div>
+</section>

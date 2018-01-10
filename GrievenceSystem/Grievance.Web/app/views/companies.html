@@ -1,0 +1,44 @@
+﻿<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Maintenance
+        <small>Companies</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard fa-lg"></i> Home</a></li>
+        <li><a href="#">Maintenance</a></li>
+        <li class="active">Companies</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+
+        <div class="col-md-5">
+
+            <button class="btn btn-success" ng-click="addnewitem()">add row</button>
+            <button type="button" class="btn btn-danger" ng-click="deleteselected()">delete selected</button>
+            <button id='togglefiltering' ng-click="togglefiltering()" class="btn btn-success">toggle filtering</button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+
+        <div class="col-md-5">
+
+            <input type="text" class="form-control " ng-change="refreshdata()" placeholder="search" ng-model="searchtext">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <br>
+
+            <div id="gridCompany" ui-grid-edit ui-grid-selection ui-grid-auto-resize class="grid" ui-grid="gridOptions"></div>
+            <strong>Number of Transporters:</strong> {{ gridCompany.data.length | number }}
+
+        </div>
+    </div>
+</section>
+<!-- /.content -->

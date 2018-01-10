@@ -1,0 +1,33 @@
+﻿<section class="content-header">
+    <h1>
+        Reports
+        <small>Laser Data</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard fa-lg"></i> Home</a></li>
+        <li><a href="#">Reports</a></li>
+        <li class="active">Laser Data</li>
+    </ol>
+</section>
+<section class="content">
+
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <div id="grid1" ui-grid-exporter ui-grid-auto-resize class="uiLaserGrid" ui-grid="grdLaserData"></div>
+            <strong>Number of Laser Data:</strong> {{ grdLaserData.data.length | number }}
+        </div>
+        <style>
+
+        </style>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $("#togglesearch").click(function (event) {
+
+            //$("#globalsearch").toggle();
+        });
+    });
+</script>

@@ -1,0 +1,139 @@
+﻿
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="col-sm-6">
+                <h3 class="modal-title">Edit User</h3>
+            </div>
+            <div class="col-sm-6">
+                <i class="fa fa-times fa-lg" ng-click="closeModal()"></i>
+            </div>
+
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" name="userEditForm" method="post">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="txtName" class="col-lg-4 control-label">Name <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="txtName" placeholder="Name" ng-model="registration.name" name="name" required />
+                            <div ng-messages="userEditForm.name.$error">
+                                <div class="text-danger" ng-message="required">Name is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtSurname" class="col-lg-4 control-label">Surname <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" placeholder="Surname" ng-model="registration.surname" name="surname" required />
+                            <div ng-messages="userEditForm.surname.$error">
+                                <div class="text-danger" ng-message="required">Surname is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtDesignation" class="col-lg-4 control-label">Designation <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="txtDesignation" placeholder="Enter designation" ng-model="registration.designation" name="designation" required />
+                            <div ng-messages="userEditForm.designation.$error">
+                                <div class="text-danger" ng-message="required">Designation is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtphoneNumber" class="col-lg-4 control-label">Contact Number <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="txtphoneNumber" placeholder="Contact number" data-inputmask='"mask": "(999) 999-9999"' data-mask ng-model="registration.phoneNumber" name="phoneNumber" />
+                            <div ng-messages="userEditForm.phoneNumber.$error">
+                                <div class="text-danger" ng-message="required">Contact number is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtEmail1" class="col-lg-4 control-label">Email address <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="email" class="form-control" id="txtEmail1" placeholder="Enter email" ng-model="registration.email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" name="email" required />
+                            <div ng-messages="userEditForm.email.$error">
+                                <div class="text-danger" ng-message="pattern">Please enter a valid email address!</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtUserName" class="col-lg-4 control-label">Username <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="txtUserName" placeholder="Enter username" ng-model="registration.userName" name="userName" required />
+                            <div ng-messages="userEditForm.userName.$error">
+                                <div class="text-danger" ng-message="required">Username is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txcompany" class="col-lg-4 control-label">Company <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <select class="form-control" ng-model="registration.company">
+                                <option ng-repeat="company in Transpoters" data-ng-value="{{company.id}}">{{company.name}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtRole" class="col-lg-4 control-label">Role <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <select class="form-control" ng-model="registration.RoleId">
+                                <option ng-repeat="role in Roles" data-ng-value="'{{role.id}}'">{{role.name}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group" id="divpasswordchange" style="display: none">
+                        <label for="txtPassword" class="col-lg-4 control-label">Password <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="password" class="form-control" id="txtPassword" placeholder="Password" ng-model="registration.password" ng-pattern="/^(?=.*[a-z])(?=.*\d)(?=.*[A-Z])/" name="password" />
+                            <div ng-messages="userEditForm.password.$error">
+                                <div class="text-danger" ng-message="pattern">password should contain 1 Capital letter and at least 1 numeric character</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="divpasswordConfirmchange" style="display: none">
+                        <label for="txtConfirmPassword" class="col-lg-4 control-label">Confirm Password <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="password" class="form-control" id="txtConfirmPassword" placeholder="Confirm Password" ng-model="registration.confirmPassword" ng-pattern="{{registration.password}}" name="confirmPassword" />
+                            <div ng-messages="userEditForm.confirmPassword.$error">
+                                <div class="text-danger" ng-message="pattern">Password doesnt match</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="box-footer">
+                    <button type="submit" id="Changepassword" class="btn btn-default pull-left">Change password</button>
+                    <button type="submit" class="btn btn-default pull-right" ng-click="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-info pull-right" ng-click="updateuser()" ng-disabled="userEditForm.$invalid">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Contact number mask-->
+<script>
+    //toggle the password and confirmpassword
+    $(document).ready(function() {
+        $("#Changepassword").click(function() {
+            $("#divpasswordConfirmchange, #divpasswordchange").toggle('Show');
+
+        });
+    });
+   
+    $("[data-mask]").inputmask();
+</script>

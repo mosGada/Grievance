@@ -1,0 +1,192 @@
+﻿<section class="content-header">
+    <h1>
+        Grievances Tickets
+        <small>Log ticket</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard fa-lg"></i> Home</a></li>
+        <li><a href="#">Grievances Tickets</a></li>
+        <li class="active">Log Ticket</li>
+    </ol>
+</section>
+
+<section class="content">
+   <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Ticket Owner Details</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" ><i class="fa fa-minus"></i></button>
+                    <!--<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>-->
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- /.form-group -->
+                        <div class="form-group">
+                            <label>Type</label>
+                            <select class="form-control" data-ng-model="ticketOwner.ticketTypeId">
+                                <option ng-repeat="type in Types" data-ng-value="{{type.id}}">{{type.name}}</option>
+                            </select>
+                        </div>
+                        <!-- /.form-group -->
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input class="form-control input-sm" type="text" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.name">
+                        </div>
+                        <!-- /.form-group -->
+                        <div class="form-group">
+                            <label>Surname</label>
+                            <input class="form-control input-sm" type="text" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.surname">
+                        </div>
+                        <!-- /.form-group -->
+                        <div class="form-group">
+                            <label>ID Number</label>
+                            <input class="form-control input-sm" type="text" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.idNumber">
+                        </div>
+
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select class="form-control input-sm" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input class="form-control input-sm" type="text" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.phone">
+                        </div>
+                        <!-- /.form-group -->
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input class="form-control input-sm" ng-disabled="ticketOwner.ticketTypeId === 2" type="email" data-ng-model="ticketOwner.email">
+                        </div>
+                        <!-- /.form-group -->
+                        <div class="form-group">
+                            <label>Physical Address</label>
+                            <input class="form-control input-sm" type="text" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.physicalAddress">
+                        </div>
+                        <!-- /.form-group -->
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary" ng-click="signUp()" ng-disabled="ticketOwner.ticketTypeId === 2">Search</button>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+       </div>
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Ticket Details</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <!--<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>-->
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input class="form-control input-sm" type="text" ng-model="tickets.name">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control input-sm" type="text" data-ng-model="tickets.description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-control" data-ng-model="tickets.TicketCategoryId">
+                            <option ng-repeat="category in Categories" data-ng-value="{{category.id}}">{{category.name}}</option>
+                        </select>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>Department</label>
+                        <!--<div class="col-lg-8">-->
+                            <select class="form-control" data-ng-model="tickets.DepartmentId">
+                                <option ng-repeat="department in Departments" value="{{department.id}}">{{department.name}}</option>
+                            </select>
+                        <!--</div>-->
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Cause of issue</label>
+                        <select class="form-control" data-ng-model="tickets.TicketIssueId">
+                            <option ng-repeat="issue in Issues" value="{{issue.id}}">{{issue.name}}</option>
+                        </select>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select class="form-control" data-ng-model="tickets.TicketPriorityId">
+                            <option ng-repeat="priority in Priorities" data-ng-value="{{priority.id}}">{{priority.name}}</option>
+                        </select>
+                    </div>
+
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>Assign To</label>
+                        <!--<select class="form-control" data-ng-model="tickets.asign">
+                            <option ng-repeat="asign in Assign" data-ng-value="{{asign.userName}}">{{asign.name}}</option>
+                        </select>-->
+                        <select class="form-control" ng-model="tickets.AssignedTo"
+                                ng-options="asign.id as asign.name for asign in Assign"></select>
+                    </div>
+
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Ticket Remarks</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <!--<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>-->
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <textarea class="form-control input-sm" type="text" data-ng-model="ticketRemarks.Description"></textarea>
+                    </div>
+
+                    <!-- /.form-group -->
+                    <div class="box-footer">
+                        <!--<button type="submit" class="btn btn-primary" data-ng-click="saveTicketOwner()">Add</button>-->
+                        <button type="submit" class="btn btn-primary" ng-click="saveTicketOwners()">Submit</button>
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+</section>
+

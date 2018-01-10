@@ -21,5 +21,6 @@ namespace Grievance.DAL
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<int> TicketId { get; set; }
+        public string Type { get; set; }
     }
 }

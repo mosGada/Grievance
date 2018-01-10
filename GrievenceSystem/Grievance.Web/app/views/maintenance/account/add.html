@@ -1,0 +1,143 @@
+﻿
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="col-sm-6">
+                <h3 class="modal-title">Add New User</h3>
+            </div>
+            <div class="col-sm-6">
+                <i class="fa fa-times fa-lg" ng-click="closeModal()"></i>
+            </div>
+
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" name="userregistrationForm" method="post">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="txtName" class="col-lg-4 control-label">Name <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" placeholder="Name" ng-model="registration.name" name="name" />
+                            <div ng-messages="userregistrationForm.Name.$error">
+                                <div class="text-danger" ng-message="required">Name is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtSurname" class="col-lg-4 control-label">Surname <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" placeholder="Surname" ng-model="registration.surname" name="Surname" />
+                            <div ng-messages="userregistrationForm.Surname.$error">
+                                <div class="text-danger" ng-message="required">Surname is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtphoneNumber" class="col-lg-4 control-label">ID Number <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" placeholder="Contact Number" ng-model="registration.IdNumber" name="IDNumber" />
+                            <div ng-messages="userregistrationForm.IdNumber.$error">
+                                <div class="text-danger" ng-message="required">ID Number is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="txtphoneNumber" class="col-lg-4 control-label">Contact Number <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" placeholder="Contact Number" data-inputmask='"mask": "(999) 999-9999"' data-mask ng-model="registration.phoneNumber" name="phoneNumber" />
+                            <div ng-messages="userregistrationForm.phoneNumber.$error">
+                                <div class="text-danger" ng-message="required">Phone Number is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--<div class="form-group">
+                        <label for="txtphoneNumber" class="col-lg-4 control-label">Alternative Number <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" placeholder="Contact Number" data-inputmask='"mask": "(999) 999-9999"' data-mask ng-model="registration.alternativeNumber" name="AlternativeNumber" />
+                            <div ng-messages="userregistrationForm.AlternativeNumber.$error">
+                                <div class="text-danger" ng-message="required">Alternative Number is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtphoneNumber" class="col-lg-4 control-label">Physical Address <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" placeholder="Contact Number" ng-model="registration.physicalAddress" name="phoneNumber" />
+                            <div ng-messages="userregistrationForm.PhysicalAddress.$error">
+                                <div class="text-danger" ng-message="required">Physical Address is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtEmail1" class="col-lg-4 control-label">Email address <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="email" class="form-control" placeholder="Email" ng-model="registration.email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" name="email" />
+                            <div ng-messages="userregistrationForm.Email.$error">
+                                <div class="text-danger" ng-message="pattern">Please enter a valid email address!</div>
+                            </div>
+                        </div>
+
+                    </div>-->
+                    <div class="form-group">
+                        <label for="txtUserName" class="col-lg-4 control-label">Username <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="txtUserName" placeholder="User Name" ng-model="registration.userName" name="UserName" />
+                            <div ng-messages="userregistrationForm.UserName.$error">
+                                <div class="text-danger" ng-message="required">User Name is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtRole" class="col-lg-4 control-label">Role <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <select class="form-control" ng-model="registration.Role" ng-disabled="userRoles.length == 0">
+                                <option ng-repeat="role in userRoles" value="{{ role.id }}">{{ role.name }}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPassword" class="col-lg-4 control-label">Password <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="password" class="form-control" id="txtPassword" placeholder="Password" ng-model="registration.password"  ng-pattern="/^(?=.*[a-z])(?=.*\d)(?=.*[A-Z])/" name="password" />
+                            <div ng-messages="userregistrationForm.Password.$error">
+                                <div class="text-danger" ng-message="required">Password is required</div>
+                                <div class="text-danger" ng-message="pattern">password should contain 1 Capital letter and at least 1 numeric character</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="txtConfirmPassword" class="col-lg-4 control-label">Confirm Password <span class="required">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="password" class="form-control" id="txtConfirmPassword" placeholder="Confirm Password" ng-model="registration.confirmPassword" ng-pattern="{{registration.Password}}" name="confirmPassword" />
+                            <div ng-messages="userregistrationForm.ConfirmPassword.$error">
+                                <div class="text-danger" ng-message="required">Confirm Password is required</div>
+                                <div class="text-danger" ng-message="pattern">Password doesnt match</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-default pull-right" ng-click="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-info pull-right" ng-click="saveUser()" ng-disabled="userregistrationForm.$invalid">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $("[data-mask]").inputmask();
+</script>

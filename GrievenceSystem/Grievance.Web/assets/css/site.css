@@ -1,0 +1,10 @@
+﻿.content-wrapper, .right-side {
+    height: 100% !important;
+    background-color: #545454 !important;
+    z-index: 800 !important;
+}
+.login-box, .register-box {
+    width: 360px;
+    margin: 7% auto;
+    margin-left:25%;
+}
