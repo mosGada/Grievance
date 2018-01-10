@@ -249,9 +249,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="ApplicationInsights.config" />
     <None Include="Properties\PublishProfiles\grievanceAPI - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\grievanceAPI - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\grievanceAPI - FTP.pubxml" />
