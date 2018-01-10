@@ -26,39 +26,36 @@
         {
             _ctx = new grievancedbEntities();
         }
-
-        //TicketRemarksRepository _dataProvider = new TicketRemarksRepository();
-
         #endregion
 
 
-        public async Task<List<TicketOwnerDTO>>GetOwner()
-        {
-            var ticketOwnerDTO = new List<TicketOwnerDTO>();
-            await Task.Run(() =>
-            {
-                var owners = _ctx.TicketOwners.ToList();
-                if (owners.Any())
-                {
-                    ticketOwnerDTO.AddRange(owners.Select(owner => new TicketOwnerDTO()
-                    {
-                        Id = owner.Id,
-                        CreatedDate = owner.CreatedDate ?? default(DateTime),
-                        Name = owner.Name,
-                        EmailAddress = owner.EmailAddress,
-                        Gender = owner.Gender,
-                        IDNumber = owner.IDNumber,
-                        PhoneNumber = owner.PhoneNumber,
-                        PhysicalAddress = owner.PhysicalAddress,
-                        Surname = owner.Surname,
-                        TicketTypeId = owner.TicketTypeId ?? default(int),
-                        TicketTypeName = owner.TicketType.Name                                  
+        //public async Task<List<TicketOwnerDTO>>GetOwner()
+        //{
+        //    var ticketOwnerDTO = new List<TicketOwnerDTO>();
+        //    await Task.Run(() =>
+        //    {
+        //        var owners = _ctx.TicketOwners.ToList();
+        //        if (owners.Any())
+        //        {
+        //            ticketOwnerDTO.AddRange(owners.Select(owner => new TicketOwnerDTO()
+        //            {
+        //                Id = owner.Id,
+        //                CreatedDate = owner.CreatedDate ?? default(DateTime),
+        //                Name = owner.Name,
+        //                EmailAddress = owner.EmailAddress,
+        //                Gender = owner.Gender,
+        //                IDNumber = owner.IDNumber,
+        //                PhoneNumber = owner.PhoneNumber,
+        //                PhysicalAddress = owner.PhysicalAddress,
+        //                Surname = owner.Surname,
+        //                TicketTypeId = owner.TicketTypeId ?? default(int),
+        //                TicketTypeName = owner.TicketType.Name                                  
 
-                    }));
-                }
-            });
-            return ticketOwnerDTO;
-        }
+        //            }));
+        //        }
+        //    });
+        //    return ticketOwnerDTO;
+        //}
         public async Task<List<TicketDTO>> GetTickets()
         {
             var ticketsDTO = new List<TicketDTO>();
@@ -89,17 +86,18 @@
                         TicketIssueName = ticket.TicketIssue.Name,
                         TicketTypeId = ticket.TicketTypeId ?? default(int),
                         TicketTypeName = ticket.TicketType.Name ?? default(string),
-                        TicketOwnerName = ticket.TicketOwner.Name ?? default(string),
-                        Address = ticket.TicketOwner.PhysicalAddress ?? default(string),
-                        EmailAddress = ticket.TicketOwner.EmailAddress ?? default(string),
-                        Gender = ticket.TicketOwner.Gender ?? default(string),
-                        IDNumber = ticket.TicketOwner.IDNumber ?? default(string),
-                        PhoneNumber = ticket.TicketOwner.PhoneNumber ?? default(string),
-                        Surname = ticket.TicketOwner.Surname ?? default(string)
+                        TicketOwnerId = ticket.TicketOwnerId ?? default(int),
+                        //TicketOwnerName = ticket.TicketOwner.Name ?? default(string),
+                        //Address = ticket.TicketOwner.PhysicalAddress ?? default(string),
+                        //EmailAddress = ticket.TicketOwner.EmailAddress ?? default(string),
+                        //Gender = ticket.TicketOwner.Gender ?? default(string),
+                        //IDNumber = ticket.TicketOwner.IDNumber ?? default(string),
+                        //PhoneNumber = ticket.TicketOwner.PhoneNumber ?? default(string),
+                        //Surname = ticket.TicketOwner.Surname ?? default(string)
                         //RemarkDesription = ticket.TicketRemark.Desription ?? default(string),
-                                            
-                     //   UserId = ticket.UserId                        
-                                                
+
+                        //   UserId = ticket.UserId                        
+
                     }));
                 }
             });
@@ -115,7 +113,6 @@
         {
             await Task.Run((Action)(() =>
             {
-                //var ticketOwnerID = _ctx.AspNetUsers.FirstOrDefault(x => x.IDNumber == idNumber).Id;
                 var newTicket = new Grievance.DAL.Ticket()
                 {
                     CreatedDate = ticket.CreatedDate,
@@ -130,7 +127,7 @@
                     Name = ticket.Name,
                     UpdatedBy = ticket.UpdatedBy,
                     UpdatedDate = ticket.UpdatedDate,
-                    AssignedTo = ticket.AssignedTo,// "0d64e363-89b0-4de2-8bb5-81994efc53c7",
+                    AssignedTo = ticket.AssignedTo,
                     TicketCategoryId = ticket.TicketCategoryId,
                     TicketIssueId = ticket.TicketIssueId
 
@@ -168,7 +165,7 @@
                     existingTicket.TicketPriorityId = ticket.TicketPriorityId;
                     existingTicket.TicketTypeId = ticket.TicketTypeId;
                     existingTicket.TicketIssueId = ticket.TicketIssueId;
-                    //existingTicket.AssignedTo = ticket.AssignedTo;
+                    existingTicket.AssignedTo = ticket.AssignedTo;
                     existingTicket.UpdatedBy = ticket.UpdatedBy;
                     existingTicket.UpdatedDate = DateTime.Now;
                     _ctx.SaveChanges();
@@ -201,81 +198,81 @@
 
         }
 
-        public string TicketOwnerNumber(TicketDTO ticket)
-        {
-            string refNo = "";
-           // var checkTicketName = 
-            var checkAvailability = _ctx.TicketOwners;
-            if (checkAvailability.Any())
-            {
-                var getLastTicketID = _ctx.TicketOwners.Count();
-                int calLastID = getLastTicketID + 1;
-                refNo = ticket.TicketTypeName + "/" + calLastID;
+        //public string TicketOwnerNumber(TicketDTO ticket)
+        //{
+        //    string refNo = "";
+        //   // var checkTicketName = 
+        //    var checkAvailability = _ctx.TicketOwners;
+        //    if (checkAvailability.Any())
+        //    {
+        //        var getLastTicketID = _ctx.TicketOwners.Count();
+        //        int calLastID = getLastTicketID + 1;
+        //        refNo = ticket.TicketTypeName + "/" + calLastID;
 
-            }
-            else
-            {
-                refNo = DateTime.Now.ToString("yyyyMMdd") + "/" + 1;
-            }
-            return refNo;
+        //    }
+        //    else
+        //    {
+        //        refNo = DateTime.Now.ToString("yyyyMMdd") + "/" + 1;
+        //    }
+        //    return refNo;
 
-        }
+        //}
 
 
-        public async Task<TicketRemarkDTO> AddRmark(TicketRemarkDTO ticketRemark)
-        {
-            await Task.Run(() =>
-            {
-                var newTicketRemark = new TicketRemark()
-                {
-                    CreatedBy = ticketRemark.CreatedBy,
-                    CreatedDate = ticketRemark.CreatedDate,
-                    Desription = ticketRemark.Desription,
-                    TicketId = ticketRemark.TicketId,
-                    UpdatedBy = ticketRemark.UpdatedBy,
-                    UpdatedDate = ticketRemark.UpdatedDate
-                };
-                _ctx.TicketRemarks.Add(newTicketRemark);
-                _ctx.SaveChanges();
+        //public async Task<TicketRemarkDTO> AddRmark(TicketRemarkDTO ticketRemark)
+        //{
+        //    await Task.Run(() =>
+        //    {
+        //        var newTicketRemark = new TicketRemark()
+        //        {
+        //            CreatedBy = ticketRemark.CreatedBy,
+        //            CreatedDate = ticketRemark.CreatedDate,
+        //            Desription = ticketRemark.Desription,
+        //            TicketId = ticketRemark.TicketId,
+        //            UpdatedBy = ticketRemark.UpdatedBy,
+        //            UpdatedDate = ticketRemark.UpdatedDate
+        //        };
+        //        _ctx.TicketRemarks.Add(newTicketRemark);
+        //        _ctx.SaveChanges();
 
-            });
-            return ticketRemark;
-        }
+        //    });
+        //    return ticketRemark;
+        //}
         
         /// <summary>
         /// Ticket Owner
         /// </summary>
         /// <param name="ticketOwner"></param>
         /// <returns></returns>
-        public async Task<TicketOwnerDTO> AddOwner(TicketOwnerDTO ticketOwner)
-        {
-            await Task.Run(() =>
-            {
-                var newTicketOwner = new Grievance.DAL.TicketOwner()
-                {
-                    CreatedBy = ticketOwner.CreatedBy,
-                    CreatedDate = ticketOwner.CreatedDate,
-                    EmailAddress = ticketOwner.EmailAddress,
-                    Gender = ticketOwner.Gender,
-                    IDNumber = ticketOwner.IDNumber,
-                    Latitude = ticketOwner.Latitude,
-                    Longitude = ticketOwner.Longitude,
-                    Name = ticketOwner.Name,
-                    PhoneNumber = ticketOwner.PhoneNumber,
-                    PhysicalAddress = ticketOwner.PhysicalAddress,
-                    Surname = ticketOwner.Surname,
-                    TicketTypeId = ticketOwner.TicketTypeId,
-                    UpdatedBy = ticketOwner.UpdatedBy,
-                    UpdatedDate = ticketOwner.UpdatedDate
-                };
-                _ctx.TicketOwners.Add(newTicketOwner);
-                _ctx.SaveChanges();
-                ticketOwner.Id = newTicketOwner.Id;
-                ticketOwner.TicketTypeId = newTicketOwner.TicketTypeId ?? default(int);
+        //public async Task<TicketOwnerDTO> AddOwner(TicketOwnerDTO ticketOwner)
+        //{
+        //    await Task.Run(() =>
+        //    {
+        //        var newTicketOwner = new Grievance.DAL.TicketOwner()
+        //        {
+        //            CreatedBy = ticketOwner.CreatedBy,
+        //            CreatedDate = ticketOwner.CreatedDate,
+        //            EmailAddress = ticketOwner.EmailAddress,
+        //            Gender = ticketOwner.Gender,
+        //            IDNumber = ticketOwner.IDNumber,
+        //            Latitude = ticketOwner.Latitude,
+        //            Longitude = ticketOwner.Longitude,
+        //            Name = ticketOwner.Name,
+        //            PhoneNumber = ticketOwner.PhoneNumber,
+        //            PhysicalAddress = ticketOwner.PhysicalAddress,
+        //            Surname = ticketOwner.Surname,
+        //            TicketTypeId = ticketOwner.TicketTypeId,
+        //            UpdatedBy = ticketOwner.UpdatedBy,
+        //            UpdatedDate = ticketOwner.UpdatedDate
+        //        };
+        //        _ctx.TicketOwners.Add(newTicketOwner);
+        //        _ctx.SaveChanges();
+        //        ticketOwner.Id = newTicketOwner.Id;
+        //        ticketOwner.TicketTypeId = newTicketOwner.TicketTypeId ?? default(int);
 
-            });
-            return ticketOwner;
-        }
+        //    });
+        //    return ticketOwner;
+        //}
 
     }
 

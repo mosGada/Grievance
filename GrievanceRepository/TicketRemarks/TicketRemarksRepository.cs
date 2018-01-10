@@ -24,7 +24,7 @@ namespace GrievanceRepository.TicketRemarks
             _ctx = new grievancedbEntities();
         }
         #endregion
-        public async Task<TicketRemarkDTO> Add(TicketRemarkDTO ticketRemark, int id)
+        public async Task<TicketRemarkDTO> Add(TicketRemarkDTO ticketRemark)
         {
             await Task.Run(() =>
             {
@@ -33,14 +33,13 @@ namespace GrievanceRepository.TicketRemarks
                     CreatedBy = ticketRemark.CreatedBy,
                     CreatedDate = ticketRemark.CreatedDate,
                     Desription = ticketRemark.Desription,
-                   // ImageName = ticketRemark.ImageName,
-                    TicketId = id,//ticketRemark.TicketId,
+                    TicketId = ticketRemark.TicketId,
                     UpdatedBy = ticketRemark.UpdatedBy,
-                    UpdatedDate = ticketRemark.UpdatedDate,
-                   // VoiceRecordName = ticketRemark.VoiceRecordName
+                    UpdatedDate = ticketRemark.UpdatedDate
                 };
                 _ctx.TicketRemarks.Add(newTicketRemark);
                 _ctx.SaveChanges();
+
             });
             return ticketRemark;
         }

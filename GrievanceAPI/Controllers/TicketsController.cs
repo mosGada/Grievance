@@ -14,6 +14,8 @@
     using GrievanceRepository.Ticket;
     using Grievance.DAL.DTO;
     using Grievance.API.Controllers;
+    using GrievanceRepository.TicketOwner;
+    using GrievanceRepository.TicketRemarks;
     #endregion
 
     [Authorize]
@@ -21,8 +23,9 @@
     public class TicketsController : BaseController
     {
         #region Private Member Variable(s)
-        //DepartmentRepository 
         TicketRepository _dataProvider = new TicketRepository();
+        TicketOwnerRepository _dataTicketOwner = new TicketOwnerRepository();
+        TicketRemarksRepository _dataTicketRemark = new TicketRemarksRepository();
         #endregion
 
         [HttpGet]
@@ -33,13 +36,13 @@
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
-        [HttpGet]
-        [Route("GetTicketOwner")]
-        public async Task<HttpResponseMessage> GetTicketOwner()
-        {
-            var response = await _dataProvider.GetOwner();
-            return Request.CreateResponse(HttpStatusCode.OK, response);
-        }
+        //[HttpGet]
+        //[Route("GetTicketOwner")]
+        //public async Task<HttpResponseMessage> GetTicketOwner()
+        //{
+        //    var response = await _dataProvider.GetOwner();
+        //    return Request.CreateResponse(HttpStatusCode.OK, response);
+        //}
 
         //[HttpGet]
         //[Route("GetTicketRemarks")]
@@ -61,13 +64,6 @@
             return newTicket;            
         }
 
-        //[HttpPut]
-        //[Route("UpdateTicket")]
-        //public async Task<TicketDTO> UpdateTicket(TicketDTO ticket)
-        //{
-        //    return await _dataProvider.Update(ticket);
-        //}
-
         [HttpPost]
         [Route("AddRemarks")]
         public async Task<TicketRemarkDTO> AddRemarks(TicketRemarkDTO ticketRemark)
@@ -76,7 +72,7 @@
             ticketRemark.UpdatedBy = currentUser;
             ticketRemark.CreatedDate = currentDateTime;
             ticketRemark.UpdatedDate = currentDateTime;
-            var newTicketRemark = await _dataProvider.AddRmark(ticketRemark);
+            var newTicketRemark = await _dataTicketRemark.Add(ticketRemark);
             return newTicketRemark;
         }
 
@@ -88,7 +84,7 @@
             ticketOwner.UpdatedBy = currentUser;
             ticketOwner.CreatedDate = currentDateTime;
             ticketOwner.UpdatedDate = currentDateTime;
-            var newTicketOwner = await _dataProvider.AddOwner(ticketOwner);
+            var newTicketOwner = await _dataTicketOwner.Add(ticketOwner);
             return newTicketOwner;
         }
 

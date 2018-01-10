@@ -120,23 +120,23 @@
         [DataMember(Name = "ticketOwnerId")]
         public int TicketOwnerId { get; set; }
 
-        [DataMember(Name = "ticketOwnerName")]
-        public string TicketOwnerName { get; set; }
+        //[DataMember(Name = "ticketOwnerName")]
+        //public string TicketOwnerName { get; set; }
 
-        [DataMember(Name = "gender")]
-        public string Gender { get; set; }
+        //[DataMember(Name = "gender")]
+        //public string Gender { get; set; }
 
-        [DataMember(Name = "idNumber")]
-        public string IDNumber { get; set; }
+        //[DataMember(Name = "idNumber")]
+        //public string IDNumber { get; set; }
 
-        [DataMember(Name = "email")]
-        public string EmailAddress { get; set; }
+        //[DataMember(Name = "email")]
+        //public string EmailAddress { get; set; }
 
-        [DataMember(Name = "phone")]
-        public string PhoneNumber { get; set; }
+        //[DataMember(Name = "phone")]
+        //public string PhoneNumber { get; set; }
 
-        [DataMember(Name = "surname")]
-        public string Surname { get; set; }
+        //[DataMember(Name = "surname")]
+        //public string Surname { get; set; }
 
         [DataMember(Name = "referenceNumber")]
         public string ReferenceNumber { get; set; }
@@ -146,8 +146,8 @@
         [DataMember(Name = "userName")]
         public string UserName { get; set; }
 
-        [DataMember(Name = "address")]
-        public string Address { get; set; }
+        //[DataMember(Name = "address")]
+        //public string Address { get; set; }
 
         [DataMember(Name = "remark")]
         public string RemarkDesription { get; set; }
