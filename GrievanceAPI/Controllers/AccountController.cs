@@ -16,6 +16,7 @@
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
+        private RoleRepository _roleRepo = null;
 
         private IAuthenticationManager Authentication
         {
@@ -25,6 +26,7 @@
         public AccountController()
         {
             _repo = new AuthRepository();
+            _roleRepo = new RoleRepository();
         }
 
         // POST api/Account/Register
@@ -90,6 +92,13 @@
             return await _dataProvider.GetAll();
             //var Users = _dataProvider.GetAll();
             //return Request.CreateResponse(HttpStatusCode.OK, Users);
+        }
+
+        [HttpGet]
+        [Route("GetRoles")]
+        public async Task<List<RoleDTO>> GetRoles()
+        {            
+            return await _roleRepo.GetAll();
         }
 
         #region Helpers

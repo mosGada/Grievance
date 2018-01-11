@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Account\AccountRepository.cs" />
     <Compile Include="Account\IAccountRepository.cs" />
+    <Compile Include="Account\RoleRepository.cs" />
     <Compile Include="Base\BaseRepository.cs" />
     <Compile Include="Departments\DepartmentRepository.cs" />
     <Compile Include="Departments\IDepartmentRepository.cs" />

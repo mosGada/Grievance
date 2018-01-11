@@ -77,6 +77,7 @@
     <Compile Include="DTO\BaseDTO.cs" />
     <Compile Include="DTO\CategoryDTO.cs" />
     <Compile Include="DTO\DepartmentDTO.cs" />
+    <Compile Include="DTO\RoleDTO.cs" />
     <Compile Include="DTO\TicketDTO.cs" />
     <Compile Include="DTO\TicketIssuesDTO.cs" />
     <Compile Include="DTO\TicketOwnerDTO.cs" />
