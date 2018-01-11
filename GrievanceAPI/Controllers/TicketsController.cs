@@ -14,7 +14,6 @@
     using GrievanceRepository.Ticket;
     using Grievance.DAL.DTO;
     using Grievance.API.Controllers;
-    using GrievanceRepository.TicketOwner;
     using GrievanceRepository.TicketRemarks;
     #endregion
 
@@ -24,7 +23,6 @@
     {
         #region Private Member Variable(s)
         TicketRepository _dataProvider = new TicketRepository();
-        TicketOwnerRepository _dataTicketOwner = new TicketOwnerRepository();
         TicketRemarksRepository _dataTicketRemark = new TicketRemarksRepository();
         #endregion
 
@@ -78,17 +76,17 @@
             return newTicketRemark;
         }
 
-        [HttpPost]
-        [Route("AddOwners")]
-        public async Task<TicketOwnerDTO> AddOwners(TicketOwnerDTO ticketOwner)
-        {
-            ticketOwner.CreatedBy = currentUser;
-            ticketOwner.UpdatedBy = currentUser;
-            ticketOwner.CreatedDate = currentDateTime;
-            ticketOwner.UpdatedDate = currentDateTime;
-            var newTicketOwner = await _dataTicketOwner.Add(ticketOwner);
-            return newTicketOwner;
-        }
+        //[HttpPost]
+        //[Route("AddOwners")]
+        //public async Task<TicketOwnerDTO> AddOwners(TicketOwnerDTO ticketOwner)
+        //{
+        //    ticketOwner.CreatedBy = currentUser;
+        //    ticketOwner.UpdatedBy = currentUser;
+        //    ticketOwner.CreatedDate = currentDateTime;
+        //    ticketOwner.UpdatedDate = currentDateTime;
+        //    var newTicketOwner = await _dataTicketOwner.Add(ticketOwner);
+        //    return newTicketOwner;
+        //}
 
         [HttpPost]
         [Route("Update")]

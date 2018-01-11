@@ -224,6 +224,7 @@
     <Compile Include="Controllers\TicketIssuesController.cs" />
     <Compile Include="Controllers\TicketPriorityController.cs" />
     <Compile Include="Controllers\TicketRemarksController.cs" />
+    <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\TicketStatusController.cs" />
     <Compile Include="Controllers\TicketTypeController.cs" />
     <Compile Include="Global.asax.cs">
