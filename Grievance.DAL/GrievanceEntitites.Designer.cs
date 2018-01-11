@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Mosa\Source\Repos\Grievance2\Grievance.DAL\GrievanceEntitites.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Koketso\Documents\Koketso\My Stuff\Projects\Mdu\Mosa\Working\Grievance2\Grievance.DAL\GrievanceEntitites.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

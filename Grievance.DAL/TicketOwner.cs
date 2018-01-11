@@ -14,12 +14,6 @@ namespace Grievance.DAL
     
     public partial class TicketOwner
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TicketOwner()
-        {
-            this.Tickets = new HashSet<Ticket>();
-        }
-    
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -36,8 +30,6 @@ namespace Grievance.DAL
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<int> TicketTypeId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ticket> Tickets { get; set; }
         public virtual TicketType TicketType { get; set; }
     }
 }

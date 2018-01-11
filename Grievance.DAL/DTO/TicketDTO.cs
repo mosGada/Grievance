@@ -118,7 +118,7 @@
         public string TicketPriorityName { get; set; }
 
         [DataMember(Name = "ticketOwnerId")]
-        public int TicketOwnerId { get; set; }
+        public string TicketOwnerId { get; set; }
 
         //[DataMember(Name = "ticketOwnerName")]
         //public string TicketOwnerName { get; set; }

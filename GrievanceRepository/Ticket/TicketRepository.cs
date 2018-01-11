@@ -86,7 +86,7 @@
                         TicketIssueName = ticket.TicketIssue.Name,
                         TicketTypeId = ticket.TicketTypeId ?? default(int),
                         TicketTypeName = ticket.TicketType.Name ?? default(string),
-                        TicketOwnerId = ticket.TicketOwnerId ?? default(int),
+                        TicketOwnerId = ticket.TicketOwnerId ?? default(string),
                         //TicketOwnerName = ticket.TicketOwner.Name ?? default(string),
                         //Address = ticket.TicketOwner.PhysicalAddress ?? default(string),
                         //EmailAddress = ticket.TicketOwner.EmailAddress ?? default(string),

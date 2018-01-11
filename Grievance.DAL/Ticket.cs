@@ -17,7 +17,7 @@ namespace Grievance.DAL
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Nullable<int> TicketOwnerId { get; set; }
+        public string TicketOwnerId { get; set; }
         public Nullable<int> TicketTypeId { get; set; }
         public Nullable<int> DepartmentId { get; set; }
         public Nullable<int> TicketStatusId { get; set; }
@@ -32,10 +32,10 @@ namespace Grievance.DAL
         public Nullable<int> TicketIssueId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual AspNetUser AspNetUser1 { get; set; }
         public virtual Department Department { get; set; }
         public virtual TicketCategory TicketCategory { get; set; }
         public virtual TicketIssue TicketIssue { get; set; }
-        public virtual TicketOwner TicketOwner { get; set; }
         public virtual TicketPriority TicketPriority { get; set; }
         public virtual TicketStatus TicketStatus { get; set; }
         public virtual TicketType TicketType { get; set; }
