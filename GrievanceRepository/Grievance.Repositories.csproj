@@ -73,8 +73,6 @@
     <Compile Include="TicketCategory\TicketCategoryRepository.cs" />
     <Compile Include="TicketIssues\ITicketIssuesRepository.cs" />
     <Compile Include="TicketIssues\TicketIssuesRepository.cs" />
-    <Compile Include="TicketOwner\ITicketOwnerRepository.cs" />
-    <Compile Include="TicketOwner\TicketOwnerRepository.cs" />
     <Compile Include="TicketPriority\ITicketPriorityRepository.cs" />
     <Compile Include="TicketPriority\TicketPriorityRepository.cs" />
     <Compile Include="TicketRemarks\ITicketRemarksRepository.cs" />
