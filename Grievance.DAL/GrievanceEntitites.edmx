@@ -65,6 +65,7 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="8" />
         </EntityType>
         <EntityType Name="Clients">
           <Key>
@@ -94,19 +95,6 @@
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Engagements">
-          <Property Name="Id" Type="int" />
-          <Property Name="TicketId" Type="int" />
-          <Property Name="EngagementDate" Type="datetime" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
-          <Property Name="Comment" Type="varchar" MaxLength="550" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="UpdatedDate" Type="datetime" />
-        </EntityType>-->
         <EntityType Name="Notifications">
           <Key>
             <PropertyRef Name="Id" />
@@ -155,26 +143,6 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="TicketOwners">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="Surname" Type="varchar" MaxLength="50" />
-          <Property Name="Gender" Type="varchar" MaxLength="10" />
-          <Property Name="IDNumber" Type="varchar" MaxLength="50" />
-          <Property Name="PhysicalAddress" Type="varchar" MaxLength="550" />
-          <Property Name="EmailAddress" Type="varchar" MaxLength="50" />
-          <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
-          <Property Name="Latitude" Type="varchar" MaxLength="50" />
-          <Property Name="Longitude" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="UpdatedDate" Type="datetime" />
-          <Property Name="TicketTypeId" Type="int" />
-        </EntityType>
         <EntityType Name="TicketPriorities">
           <Key>
             <PropertyRef Name="Id" />
@@ -207,7 +175,7 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="TicketOwnerId" Type="int" />
+          <Property Name="TicketOwnerId" Type="nvarchar" MaxLength="128" />
           <Property Name="TicketTypeId" Type="int" />
           <Property Name="DepartmentId" Type="int" />
           <Property Name="TicketStatusId" Type="int" />
@@ -373,26 +341,14 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TicketOwnerId">
-          <End Role="TicketOwners" Type="Self.TicketOwners" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TicketOwners">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Tickets">
               <PropertyRef Name="TicketOwnerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TicketOwnerTypeId">
-          <End Role="TicketTypes" Type="Self.TicketTypes" Multiplicity="0..1" />
-          <End Role="TicketOwners" Type="Self.TicketOwners" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TicketTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TicketOwners">
-              <PropertyRef Name="TicketTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -444,7 +400,6 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <EntitySet Name="NotificationTypes" EntityType="Self.NotificationTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketCategories" EntityType="Self.TicketCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketIssues" EntityType="Self.TicketIssues" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TicketOwners" EntityType="Self.TicketOwners" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketPriorities" EntityType="Self.TicketPriorities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketRemarks" EntityType="Self.TicketRemarks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
@@ -488,12 +443,8 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
             <End Role="Tickets" EntitySet="Tickets" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketOwnerId" Association="Self.FK_TicketOwnerId">
-            <End Role="TicketOwners" EntitySet="TicketOwners" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Tickets" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketOwnerTypeId" Association="Self.FK_TicketOwnerTypeId">
-            <End Role="TicketTypes" EntitySet="TicketTypes" />
-            <End Role="TicketOwners" EntitySet="TicketOwners" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketPriorityId" Association="Self.FK_TicketPriorityId">
             <End Role="TicketPriorities" EntitySet="TicketPriorities" />
@@ -512,94 +463,23 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="grievancedbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="grievancedbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AspNetRoles" EntityType="grievancedbModel.AspNetRole" />
-          <EntitySet Name="AspNetUserClaims" EntityType="grievancedbModel.AspNetUserClaim" />
-          <EntitySet Name="AspNetUserLogins" EntityType="grievancedbModel.AspNetUserLogin" />
-          <EntitySet Name="AspNetUsers" EntityType="grievancedbModel.AspNetUser" />
-          <EntitySet Name="Clients" EntityType="grievancedbModel.Client" />
-          <EntitySet Name="Departments" EntityType="grievancedbModel.Department" />
-          <EntitySet Name="Notifications" EntityType="grievancedbModel.Notification" />
-          <EntitySet Name="NotificationTypes" EntityType="grievancedbModel.NotificationType" />
-          <EntitySet Name="TicketCategories" EntityType="grievancedbModel.TicketCategory" />
-          <EntitySet Name="TicketIssues" EntityType="grievancedbModel.TicketIssue" />
-          <EntitySet Name="TicketOwners" EntityType="grievancedbModel.TicketOwner" />
-          <EntitySet Name="TicketPriorities" EntityType="grievancedbModel.TicketPriority" />
-          <EntitySet Name="TicketRemarks" EntityType="grievancedbModel.TicketRemark" />
-          <EntitySet Name="Tickets" EntityType="grievancedbModel.Ticket" />
-          <EntitySet Name="TicketStatuses" EntityType="grievancedbModel.TicketStatus" />
-          <EntitySet Name="TicketTransactions" EntityType="grievancedbModel.TicketTransaction" />
-          <EntitySet Name="TicketTypes" EntityType="grievancedbModel.TicketType" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="grievancedbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="grievancedbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AssignedTo" Association="grievancedbModel.FK_AssignedTo">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Ticket" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DepartmentId" Association="grievancedbModel.FK_DepartmentId">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="Ticket" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Notificat__Notif__75A278F5" Association="grievancedbModel.FK__Notificat__Notif__75A278F5">
-            <End Role="NotificationType" EntitySet="NotificationTypes" />
-            <End Role="Notification" EntitySet="Notifications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketCategoryId" Association="grievancedbModel.FK_TicketCategoryId">
-            <End Role="TicketCategory" EntitySet="TicketCategories" />
-            <End Role="Ticket" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketIssueId" Association="grievancedbModel.FK_TicketIssueId">
-            <End Role="TicketIssue" EntitySet="TicketIssues" />
-            <End Role="Ticket" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketOwnerId" Association="grievancedbModel.FK_TicketOwnerId">
-            <End Role="TicketOwner" EntitySet="TicketOwners" />
-            <End Role="Ticket" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketOwnerTypeId" Association="grievancedbModel.FK_TicketOwnerTypeId">
-            <End Role="TicketType" EntitySet="TicketTypes" />
-            <End Role="TicketOwner" EntitySet="TicketOwners" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketPriorityId" Association="grievancedbModel.FK_TicketPriorityId">
-            <End Role="TicketPriority" EntitySet="TicketPriorities" />
-            <End Role="Ticket" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketStatusId" Association="grievancedbModel.FK_TicketStatusId">
-            <End Role="TicketStatus" EntitySet="TicketStatuses" />
-            <End Role="Ticket" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketTypeId" Association="grievancedbModel.FK_TicketTypeId">
-            <End Role="TicketType" EntitySet="TicketTypes" />
-            <End Role="Ticket" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="grievancedbModel.AspNetUserRoles">
-            <End Role="AspNetRole" EntitySet="AspNetRoles" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="grievancedbModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="grievancedbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
@@ -607,16 +487,16 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
             <PropertyRef Name="ProviderKey" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="grievancedbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -627,7 +507,7 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Surname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IDNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
@@ -638,18 +518,20 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="grievancedbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="grievancedbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
-          <NavigationProperty Name="Tickets" Relationship="grievancedbModel.FK_AssignedTo" FromRole="AspNetUser" ToRole="Ticket" />
-          <NavigationProperty Name="AspNetRoles" Relationship="grievancedbModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_AssignedTo" FromRole="AspNetUsers" ToRole="Tickets" />
+          <NavigationProperty Name="Tickets1" Relationship="Self.FK_TicketOwnerId" FromRole="AspNetUsers" ToRole="Tickets" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <Property Name="Gender" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Client">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Secret" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Secret" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ApplicationType" Type="Int32" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="RefreshTokenLifeTime" Type="Int32" Nullable="false" />
@@ -670,7 +552,7 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Tickets" Relationship="grievancedbModel.FK_DepartmentId" FromRole="Department" ToRole="Ticket" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_DepartmentId" FromRole="Departments" ToRole="Tickets" />
         </EntityType>
         <EntityType Name="Notification">
           <Key>
@@ -678,13 +560,13 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TicketId" Type="Int32" />
-          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NotificationTypeId" Type="Int32" Nullable="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="NotificationType" Relationship="grievancedbModel.FK__Notificat__Notif__75A278F5" FromRole="Notification" ToRole="NotificationType" />
+          <NavigationProperty Name="NotificationType" Relationship="Self.FK__Notificat__Notif__75A278F5" FromRole="Notifications" ToRole="NotificationTypes" />
         </EntityType>
         <EntityType Name="NotificationType">
           <Key>
@@ -696,7 +578,7 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Notifications" Relationship="grievancedbModel.FK__Notificat__Notif__75A278F5" FromRole="NotificationType" ToRole="Notification" />
+          <NavigationProperty Name="Notifications" Relationship="Self.FK__Notificat__Notif__75A278F5" FromRole="NotificationTypes" ToRole="Notifications" />
         </EntityType>
         <EntityType Name="TicketCategory">
           <Key>
@@ -709,7 +591,7 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Tickets" Relationship="grievancedbModel.FK_TicketCategoryId" FromRole="TicketCategory" ToRole="Ticket" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_TicketCategoryId" FromRole="TicketCategories" ToRole="Tickets" />
         </EntityType>
         <EntityType Name="TicketIssue">
           <Key>
@@ -722,42 +604,20 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Tickets" Relationship="grievancedbModel.FK_TicketIssueId" FromRole="TicketIssue" ToRole="Ticket" />
-        </EntityType>
-        <EntityType Name="TicketOwner">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IDNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PhysicalAddress" Type="String" MaxLength="550" FixedLength="false" Unicode="false" />
-          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="TicketTypeId" Type="Int32" />
-          <NavigationProperty Name="Tickets" Relationship="grievancedbModel.FK_TicketOwnerId" FromRole="TicketOwner" ToRole="Ticket" />
-          <NavigationProperty Name="TicketType" Relationship="grievancedbModel.FK_TicketOwnerTypeId" FromRole="TicketOwner" ToRole="TicketType" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_TicketIssueId" FromRole="TicketIssues" ToRole="Tickets" />
         </EntityType>
         <EntityType Name="TicketPriority">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="2500" FixedLength="false" Unicode="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Tickets" Relationship="grievancedbModel.FK_TicketPriorityId" FromRole="TicketPriority" ToRole="Ticket" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_TicketPriorityId" FromRole="TicketPriorities" ToRole="Tickets" />
         </EntityType>
         <EntityType Name="TicketRemark">
           <Key>
@@ -770,7 +630,7 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="TicketId" Type="Int32" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="Ticket">
           <Key>
@@ -778,28 +638,28 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TicketOwnerId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TicketOwnerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="TicketTypeId" Type="Int32" />
           <Property Name="DepartmentId" Type="Int32" />
           <Property Name="TicketStatusId" Type="Int32" />
           <Property Name="TicketPriorityId" Type="Int32" />
           <Property Name="TicketCategoryId" Type="Int32" />
           <Property Name="AssignedTo" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ReferenceNumber" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="TicketIssueId" Type="Int32" />
-          <NavigationProperty Name="AspNetUser" Relationship="grievancedbModel.FK_AssignedTo" FromRole="Ticket" ToRole="AspNetUser" />
-          <NavigationProperty Name="Department" Relationship="grievancedbModel.FK_DepartmentId" FromRole="Ticket" ToRole="Department" />
-          <NavigationProperty Name="TicketCategory" Relationship="grievancedbModel.FK_TicketCategoryId" FromRole="Ticket" ToRole="TicketCategory" />
-          <NavigationProperty Name="TicketIssue" Relationship="grievancedbModel.FK_TicketIssueId" FromRole="Ticket" ToRole="TicketIssue" />
-          <NavigationProperty Name="TicketOwner" Relationship="grievancedbModel.FK_TicketOwnerId" FromRole="Ticket" ToRole="TicketOwner" />
-          <NavigationProperty Name="TicketPriority" Relationship="grievancedbModel.FK_TicketPriorityId" FromRole="Ticket" ToRole="TicketPriority" />
-          <NavigationProperty Name="TicketStatus" Relationship="grievancedbModel.FK_TicketStatusId" FromRole="Ticket" ToRole="TicketStatus" />
-          <NavigationProperty Name="TicketType" Relationship="grievancedbModel.FK_TicketTypeId" FromRole="Ticket" ToRole="TicketType" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_AssignedTo" FromRole="Tickets" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_TicketOwnerId" FromRole="Tickets" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_DepartmentId" FromRole="Tickets" ToRole="Departments" />
+          <NavigationProperty Name="TicketCategory" Relationship="Self.FK_TicketCategoryId" FromRole="Tickets" ToRole="TicketCategories" />
+          <NavigationProperty Name="TicketIssue" Relationship="Self.FK_TicketIssueId" FromRole="Tickets" ToRole="TicketIssues" />
+          <NavigationProperty Name="TicketPriority" Relationship="Self.FK_TicketPriorityId" FromRole="Tickets" ToRole="TicketPriorities" />
+          <NavigationProperty Name="TicketStatus" Relationship="Self.FK_TicketStatusId" FromRole="Tickets" ToRole="TicketStatuses" />
+          <NavigationProperty Name="TicketType" Relationship="Self.FK_TicketTypeId" FromRole="Tickets" ToRole="TicketTypes" />
         </EntityType>
         <EntityType Name="TicketStatus">
           <Key>
@@ -812,7 +672,7 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Tickets" Relationship="grievancedbModel.FK_TicketStatusId" FromRole="TicketStatus" ToRole="Ticket" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_TicketStatusId" FromRole="TicketStatuses" ToRole="Tickets" />
         </EntityType>
         <EntityType Name="TicketTransaction">
           <Key>
@@ -836,161 +696,214 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="TicketOwners" Relationship="grievancedbModel.FK_TicketOwnerTypeId" FromRole="TicketType" ToRole="TicketOwner" />
-          <NavigationProperty Name="Tickets" Relationship="grievancedbModel.FK_TicketTypeId" FromRole="TicketType" ToRole="Ticket" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_TicketTypeId" FromRole="TicketTypes" ToRole="Tickets" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Type="grievancedbModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="grievancedbModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUser">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetUserClaim">
+            <Dependent Role="AspNetUserClaims">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Type="grievancedbModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="grievancedbModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUser">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetUserLogin">
+            <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AssignedTo">
-          <End Type="grievancedbModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="grievancedbModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+          <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUser">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Ticket">
+            <Dependent Role="Tickets">
               <PropertyRef Name="AssignedTo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DepartmentId">
-          <End Type="grievancedbModel.Department" Role="Department" Multiplicity="0..1" />
-          <End Type="grievancedbModel.Ticket" Role="Ticket" Multiplicity="*" />
+        <Association Name="FK_TicketOwnerId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+          <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Department">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Ticket">
+            <Dependent Role="Tickets">
+              <PropertyRef Name="TicketOwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentId">
+          <End Role="Departments" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tickets">
               <PropertyRef Name="DepartmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Notificat__Notif__75A278F5">
-          <End Type="grievancedbModel.NotificationType" Role="NotificationType" Multiplicity="1" />
-          <End Type="grievancedbModel.Notification" Role="Notification" Multiplicity="*" />
+          <End Role="NotificationTypes" Type="Self.NotificationType" Multiplicity="1" />
+          <End Role="Notifications" Type="Self.Notification" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="NotificationType">
+            <Principal Role="NotificationTypes">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Notification">
+            <Dependent Role="Notifications">
               <PropertyRef Name="NotificationTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TicketCategoryId">
-          <End Type="grievancedbModel.TicketCategory" Role="TicketCategory" Multiplicity="0..1" />
-          <End Type="grievancedbModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <End Role="TicketCategories" Type="Self.TicketCategory" Multiplicity="0..1" />
+          <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TicketCategory">
+            <Principal Role="TicketCategories">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Ticket">
+            <Dependent Role="Tickets">
               <PropertyRef Name="TicketCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TicketIssueId">
-          <End Type="grievancedbModel.TicketIssue" Role="TicketIssue" Multiplicity="0..1" />
-          <End Type="grievancedbModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <End Role="TicketIssues" Type="Self.TicketIssue" Multiplicity="0..1" />
+          <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TicketIssue">
+            <Principal Role="TicketIssues">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Ticket">
+            <Dependent Role="Tickets">
               <PropertyRef Name="TicketIssueId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TicketOwnerId">
-          <End Type="grievancedbModel.TicketOwner" Role="TicketOwner" Multiplicity="0..1" />
-          <End Type="grievancedbModel.Ticket" Role="Ticket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TicketOwner">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Ticket">
-              <PropertyRef Name="TicketOwnerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TicketOwnerTypeId">
-          <End Type="grievancedbModel.TicketType" Role="TicketType" Multiplicity="0..1" />
-          <End Type="grievancedbModel.TicketOwner" Role="TicketOwner" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TicketType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TicketOwner">
-              <PropertyRef Name="TicketTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TicketPriorityId">
-          <End Type="grievancedbModel.TicketPriority" Role="TicketPriority" Multiplicity="0..1" />
-          <End Type="grievancedbModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <End Role="TicketPriorities" Type="Self.TicketPriority" Multiplicity="0..1" />
+          <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TicketPriority">
+            <Principal Role="TicketPriorities">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Ticket">
+            <Dependent Role="Tickets">
               <PropertyRef Name="TicketPriorityId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TicketStatusId">
-          <End Type="grievancedbModel.TicketStatus" Role="TicketStatus" Multiplicity="0..1" />
-          <End Type="grievancedbModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <End Role="TicketStatuses" Type="Self.TicketStatus" Multiplicity="0..1" />
+          <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TicketStatus">
+            <Principal Role="TicketStatuses">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Ticket">
+            <Dependent Role="Tickets">
               <PropertyRef Name="TicketStatusId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TicketTypeId">
-          <End Type="grievancedbModel.TicketType" Role="TicketType" Multiplicity="0..1" />
-          <End Type="grievancedbModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <End Role="TicketTypes" Type="Self.TicketType" Multiplicity="0..1" />
+          <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TicketType">
+            <Principal Role="TicketTypes">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Ticket">
+            <Dependent Role="Tickets">
               <PropertyRef Name="TicketTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="AspNetUserRoles">
-          <End Type="grievancedbModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="grievancedbModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
+        <EntityContainer Name="grievancedbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Notifications" EntityType="Self.Notification" />
+          <EntitySet Name="NotificationTypes" EntityType="Self.NotificationType" />
+          <EntitySet Name="TicketCategories" EntityType="Self.TicketCategory" />
+          <EntitySet Name="TicketIssues" EntityType="Self.TicketIssue" />
+          <EntitySet Name="TicketPriorities" EntityType="Self.TicketPriority" />
+          <EntitySet Name="TicketRemarks" EntityType="Self.TicketRemark" />
+          <EntitySet Name="Tickets" EntityType="Self.Ticket" />
+          <EntitySet Name="TicketStatuses" EntityType="Self.TicketStatus" />
+          <EntitySet Name="TicketTransactions" EntityType="Self.TicketTransaction" />
+          <EntitySet Name="TicketTypes" EntityType="Self.TicketType" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssignedTo" Association="Self.FK_AssignedTo">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketOwnerId" Association="Self.FK_TicketOwnerId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentId" Association="Self.FK_DepartmentId">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notificat__Notif__75A278F5" Association="Self.FK__Notificat__Notif__75A278F5">
+            <End Role="NotificationTypes" EntitySet="NotificationTypes" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketCategoryId" Association="Self.FK_TicketCategoryId">
+            <End Role="TicketCategories" EntitySet="TicketCategories" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketIssueId" Association="Self.FK_TicketIssueId">
+            <End Role="TicketIssues" EntitySet="TicketIssues" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketPriorityId" Association="Self.FK_TicketPriorityId">
+            <End Role="TicketPriorities" EntitySet="TicketPriorities" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketStatusId" Association="Self.FK_TicketStatusId">
+            <End Role="TicketStatuses" EntitySet="TicketStatuses" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketTypeId" Association="Self.FK_TicketTypeId">
+            <End Role="TicketTypes" EntitySet="TicketTypes" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1000,254 +913,234 @@ warning 6013: The table/view 'grievancedb.dbo.Engagements' does not have a prima
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="grievancedbModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
             <EntityTypeMapping TypeName="grievancedbModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
             <EntityTypeMapping TypeName="grievancedbModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="grievancedbModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="PhysicalAddress" ColumnName="PhysicalAddress" />
-                <ScalarProperty Name="IDNumber" ColumnName="IDNumber" />
-                <ScalarProperty Name="Surname" ColumnName="Surname" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="IDNumber" ColumnName="IDNumber" />
+                <ScalarProperty Name="PhysicalAddress" ColumnName="PhysicalAddress" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Clients">
             <EntityTypeMapping TypeName="grievancedbModel.Client">
               <MappingFragment StoreEntitySet="Clients">
-                <ScalarProperty Name="AllowedOrigin" ColumnName="AllowedOrigin" />
-                <ScalarProperty Name="RefreshTokenLifeTime" ColumnName="RefreshTokenLifeTime" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="ApplicationType" ColumnName="ApplicationType" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Secret" ColumnName="Secret" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Secret" ColumnName="Secret" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ApplicationType" ColumnName="ApplicationType" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="RefreshTokenLifeTime" ColumnName="RefreshTokenLifeTime" />
+                <ScalarProperty Name="AllowedOrigin" ColumnName="AllowedOrigin" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="grievancedbModel.Department">
               <MappingFragment StoreEntitySet="Departments">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-                <ScalarProperty Name="AlternativeNumber" ColumnName="AlternativeNumber" />
-                <ScalarProperty Name="TellNumber" ColumnName="TellNumber" />
-                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
-                <ScalarProperty Name="HOD" ColumnName="HOD" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="HOD" ColumnName="HOD" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="TellNumber" ColumnName="TellNumber" />
+                <ScalarProperty Name="AlternativeNumber" ColumnName="AlternativeNumber" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Notifications">
             <EntityTypeMapping TypeName="grievancedbModel.Notification">
               <MappingFragment StoreEntitySet="Notifications">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="NotificationTypeId" ColumnName="NotificationTypeId" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="NotificationTypeId" ColumnName="NotificationTypeId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NotificationTypes">
             <EntityTypeMapping TypeName="grievancedbModel.NotificationType">
               <MappingFragment StoreEntitySet="NotificationTypes">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TicketCategories">
             <EntityTypeMapping TypeName="grievancedbModel.TicketCategory">
               <MappingFragment StoreEntitySet="TicketCategories">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TicketIssues">
             <EntityTypeMapping TypeName="grievancedbModel.TicketIssue">
               <MappingFragment StoreEntitySet="TicketIssues">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TicketOwners">
-            <EntityTypeMapping TypeName="grievancedbModel.TicketOwner">
-              <MappingFragment StoreEntitySet="TicketOwners">
-                <ScalarProperty Name="TicketTypeId" ColumnName="TicketTypeId" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-                <ScalarProperty Name="PhysicalAddress" ColumnName="PhysicalAddress" />
-                <ScalarProperty Name="IDNumber" ColumnName="IDNumber" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Surname" ColumnName="Surname" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TicketPriorities">
             <EntityTypeMapping TypeName="grievancedbModel.TicketPriority">
               <MappingFragment StoreEntitySet="TicketPriorities">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TicketRemarks">
             <EntityTypeMapping TypeName="grievancedbModel.TicketRemark">
               <MappingFragment StoreEntitySet="TicketRemarks">
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Desription" ColumnName="Desription" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Desription" ColumnName="Desription" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tickets">
             <EntityTypeMapping TypeName="grievancedbModel.Ticket">
               <MappingFragment StoreEntitySet="Tickets">
-                <ScalarProperty Name="TicketIssueId" ColumnName="TicketIssueId" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
-                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
-                <ScalarProperty Name="TicketCategoryId" ColumnName="TicketCategoryId" />
-                <ScalarProperty Name="TicketPriorityId" ColumnName="TicketPriorityId" />
-                <ScalarProperty Name="TicketStatusId" ColumnName="TicketStatusId" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-                <ScalarProperty Name="TicketTypeId" ColumnName="TicketTypeId" />
-                <ScalarProperty Name="TicketOwnerId" ColumnName="TicketOwnerId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TicketOwnerId" ColumnName="TicketOwnerId" />
+                <ScalarProperty Name="TicketTypeId" ColumnName="TicketTypeId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="TicketStatusId" ColumnName="TicketStatusId" />
+                <ScalarProperty Name="TicketPriorityId" ColumnName="TicketPriorityId" />
+                <ScalarProperty Name="TicketCategoryId" ColumnName="TicketCategoryId" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="TicketIssueId" ColumnName="TicketIssueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TicketStatuses">
             <EntityTypeMapping TypeName="grievancedbModel.TicketStatus">
               <MappingFragment StoreEntitySet="TicketStatuses">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TicketTransactions">
             <EntityTypeMapping TypeName="grievancedbModel.TicketTransaction">
               <MappingFragment StoreEntitySet="TicketTransactions">
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Operation" ColumnName="Operation" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TicketTypes">
             <EntityTypeMapping TypeName="grievancedbModel.TicketType">
               <MappingFragment StoreEntitySet="TicketTypes">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="grievancedbModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRole">
+            <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

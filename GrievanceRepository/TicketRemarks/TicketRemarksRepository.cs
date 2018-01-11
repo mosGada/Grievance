@@ -110,7 +110,7 @@ namespace GrievanceRepository.TicketRemarks
             var ticketRemarkDTO = new TicketRemarkDTO();
             await Task.Run(() =>
             {
-                var ticketOwner = _ctx.Tickets.FirstOrDefault(x => x.Id == id).TicketOwner.Name;
+                var ticketOwner = _ctx.Tickets.FirstOrDefault(x => x.Id == id).AspNetUser.Name;
                 var remark = _ctx.TicketRemarks.FirstOrDefault(x => x.TicketId == id);
                 if (remark == null) return;
                 var mappedRemark = new TicketRemarkDTO()

@@ -117,9 +117,6 @@
     <Compile Include="TicketIssue.cs">
       <DependentUpon>GrievanceEntitites.tt</DependentUpon>
     </Compile>
-    <Compile Include="TicketOwner.cs">
-      <DependentUpon>GrievanceEntitites.tt</DependentUpon>
-    </Compile>
     <Compile Include="TicketPriority.cs">
       <DependentUpon>GrievanceEntitites.tt</DependentUpon>
     </Compile>
@@ -137,32 +134,30 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="GrievanceEntitites.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>GrievanceEntitites.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="GrievanceEntitites.edmx.diagram">
       <DependentUpon>GrievanceEntitites.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="GrievanceEntitites.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GrievanceEntitites.Context.cs</LastGenOutput>
       <DependentUpon>GrievanceEntitites.edmx</DependentUpon>
+      <LastGenOutput>GrievanceEntitites.Context.cs</LastGenOutput>
     </Content>
     <Content Include="GrievanceEntitites.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GrievanceEntitites.edmx</DependentUpon>
       <LastGenOutput>GrievanceEntitites.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

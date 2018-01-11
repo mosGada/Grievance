@@ -67,12 +67,12 @@ namespace GrievanceRepository.TicketOwner
                         CreatedBy = ticket.CreatedBy,
                         TicketTypeId = ticket.TicketTypeId ?? default(int),
                         TicketTypeName = ticket.TicketType.Name ?? default(string),
-                        PhysicalAddress = ticket.TicketOwner.PhysicalAddress ?? default(string),
-                        EmailAddress = ticket.TicketOwner.EmailAddress ?? default(string),
-                        Gender = ticket.TicketOwner.Gender ?? default(string),
-                        IDNumber = ticket.TicketOwner.IDNumber ?? default(string),
-                        PhoneNumber = ticket.TicketOwner.PhoneNumber ?? default(string),
-                        Surname = ticket.TicketOwner.Surname ?? default(string)
+                        PhysicalAddress = ticket.AspNetUser.PhysicalAddress ?? default(string),
+                        EmailAddress = ticket.AspNetUser.Email ?? default(string),
+                        Gender = ticket.AspNetUser.Gender ?? default(string),
+                        IDNumber = ticket.AspNetUser.IDNumber ?? default(string),
+                        PhoneNumber = ticket.AspNetUser.PhoneNumber ?? default(string),
+                        Surname = ticket.AspNetUser.Surname ?? default(string)
 
                     }));
                 }
