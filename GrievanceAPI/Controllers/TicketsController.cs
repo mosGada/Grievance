@@ -60,6 +60,8 @@
             ticket.UpdatedBy = User.Identity.Name;
             ticket.CreatedDate = currentDateTime;
             ticket.UpdatedDate = currentDateTime;
+            ticket.TicketOwnerId = currentUserId;
+            ticket.TicketOwnerId = ticket.TicketOwnerId == null ? currentUserId : ticket.TicketOwnerId;
             var newTicket = await _dataProvider.Add(ticket);
             return newTicket;            
         }
