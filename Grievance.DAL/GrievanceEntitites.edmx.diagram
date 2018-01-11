@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="grievancedbModel.NotificationType" Width="1.5" PointX="8.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="grievancedbModel.TicketCategory" Width="1.5" PointX="3.75" PointY="24.625" IsExpanded="true" />
         <EntityTypeShape EntityType="grievancedbModel.TicketIssue" Width="1.5" PointX="3.75" PointY="27.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="grievancedbModel.TicketOwner" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="grievancedbModel.TicketPriority" Width="1.5" PointX="3.75" PointY="31.25" IsExpanded="true" />
         <EntityTypeShape EntityType="grievancedbModel.TicketRemark" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="grievancedbModel.Ticket" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
@@ -30,7 +29,6 @@
         <AssociationConnector Association="grievancedbModel.FK__Notificat__Notif__75A278F5" ManuallyRouted="false" />
         <AssociationConnector Association="grievancedbModel.FK_TicketCategoryId" ManuallyRouted="false" />
         <AssociationConnector Association="grievancedbModel.FK_TicketIssueId" ManuallyRouted="false" />
-        <AssociationConnector Association="grievancedbModel.FK_TicketOwnerTypeId" ManuallyRouted="false" />
         <AssociationConnector Association="grievancedbModel.FK_TicketPriorityId" ManuallyRouted="false" />
         <AssociationConnector Association="grievancedbModel.FK_TicketStatusId" ManuallyRouted="false" />
         <AssociationConnector Association="grievancedbModel.FK_TicketTypeId" ManuallyRouted="false" />

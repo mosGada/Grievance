@@ -116,9 +116,6 @@
     <Compile Include="TicketIssue.cs">
       <DependentUpon>GrievanceEntitites.tt</DependentUpon>
     </Compile>
-    <Compile Include="TicketOwner.cs">
-      <DependentUpon>GrievanceEntitites.tt</DependentUpon>
-    </Compile>
     <Compile Include="TicketPriority.cs">
       <DependentUpon>GrievanceEntitites.tt</DependentUpon>
     </Compile>

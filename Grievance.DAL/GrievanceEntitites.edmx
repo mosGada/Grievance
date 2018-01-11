@@ -143,26 +143,6 @@
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="TicketOwners">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="Surname" Type="varchar" MaxLength="50" />
-          <Property Name="Gender" Type="varchar" MaxLength="10" />
-          <Property Name="IDNumber" Type="varchar" MaxLength="50" />
-          <Property Name="PhysicalAddress" Type="varchar" MaxLength="550" />
-          <Property Name="EmailAddress" Type="varchar" MaxLength="50" />
-          <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
-          <Property Name="Latitude" Type="varchar" MaxLength="50" />
-          <Property Name="Longitude" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="UpdatedDate" Type="datetime" />
-          <Property Name="TicketTypeId" Type="int" />
-        </EntityType>
         <EntityType Name="TicketPriorities">
           <Key>
             <PropertyRef Name="Id" />
@@ -372,18 +352,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TicketOwnerTypeId">
-          <End Role="TicketTypes" Type="Self.TicketTypes" Multiplicity="0..1" />
-          <End Role="TicketOwners" Type="Self.TicketOwners" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TicketTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TicketOwners">
-              <PropertyRef Name="TicketTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TicketPriorityId">
           <End Role="TicketPriorities" Type="Self.TicketPriorities" Multiplicity="0..1" />
           <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
@@ -432,7 +400,6 @@
           <EntitySet Name="NotificationTypes" EntityType="Self.NotificationTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketCategories" EntityType="Self.TicketCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketIssues" EntityType="Self.TicketIssues" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TicketOwners" EntityType="Self.TicketOwners" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketPriorities" EntityType="Self.TicketPriorities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketRemarks" EntityType="Self.TicketRemarks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
@@ -478,10 +445,6 @@
           <AssociationSet Name="FK_TicketOwnerId" Association="Self.FK_TicketOwnerId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Tickets" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketOwnerTypeId" Association="Self.FK_TicketOwnerTypeId">
-            <End Role="TicketTypes" EntitySet="TicketTypes" />
-            <End Role="TicketOwners" EntitySet="TicketOwners" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketPriorityId" Association="Self.FK_TicketPriorityId">
             <End Role="TicketPriorities" EntitySet="TicketPriorities" />
@@ -643,27 +606,6 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_TicketIssueId" FromRole="TicketIssues" ToRole="Tickets" />
         </EntityType>
-        <EntityType Name="TicketOwner">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IDNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PhysicalAddress" Type="String" MaxLength="550" FixedLength="false" Unicode="false" />
-          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="TicketTypeId" Type="Int32" />
-          <NavigationProperty Name="TicketType" Relationship="Self.FK_TicketOwnerTypeId" FromRole="TicketOwners" ToRole="TicketTypes" />
-        </EntityType>
         <EntityType Name="TicketPriority">
           <Key>
             <PropertyRef Name="Id" />
@@ -754,7 +696,6 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="TicketOwners" Relationship="Self.FK_TicketOwnerTypeId" FromRole="TicketTypes" ToRole="TicketOwners" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_TicketTypeId" FromRole="TicketTypes" ToRole="Tickets" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -857,18 +798,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TicketOwnerTypeId">
-          <End Role="TicketTypes" Type="Self.TicketType" Multiplicity="0..1" />
-          <End Role="TicketOwners" Type="Self.TicketOwner" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TicketTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TicketOwners">
-              <PropertyRef Name="TicketTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TicketPriorityId">
           <End Role="TicketPriorities" Type="Self.TicketPriority" Multiplicity="0..1" />
           <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
@@ -920,7 +849,6 @@
           <EntitySet Name="NotificationTypes" EntityType="Self.NotificationType" />
           <EntitySet Name="TicketCategories" EntityType="Self.TicketCategory" />
           <EntitySet Name="TicketIssues" EntityType="Self.TicketIssue" />
-          <EntitySet Name="TicketOwners" EntityType="Self.TicketOwner" />
           <EntitySet Name="TicketPriorities" EntityType="Self.TicketPriority" />
           <EntitySet Name="TicketRemarks" EntityType="Self.TicketRemark" />
           <EntitySet Name="Tickets" EntityType="Self.Ticket" />
@@ -958,10 +886,6 @@
           <AssociationSet Name="FK_TicketIssueId" Association="Self.FK_TicketIssueId">
             <End Role="TicketIssues" EntitySet="TicketIssues" />
             <End Role="Tickets" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TicketOwnerTypeId" Association="Self.FK_TicketOwnerTypeId">
-            <End Role="TicketTypes" EntitySet="TicketTypes" />
-            <End Role="TicketOwners" EntitySet="TicketOwners" />
           </AssociationSet>
           <AssociationSet Name="FK_TicketPriorityId" Association="Self.FK_TicketPriorityId">
             <End Role="TicketPriorities" EntitySet="TicketPriorities" />
@@ -1121,27 +1045,6 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TicketOwners">
-            <EntityTypeMapping TypeName="grievancedbModel.TicketOwner">
-              <MappingFragment StoreEntitySet="TicketOwners">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Surname" ColumnName="Surname" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="IDNumber" ColumnName="IDNumber" />
-                <ScalarProperty Name="PhysicalAddress" ColumnName="PhysicalAddress" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="TicketTypeId" ColumnName="TicketTypeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
