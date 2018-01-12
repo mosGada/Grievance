@@ -138,9 +138,6 @@
     <Content Include="app\views\tickets\response.html" />
     <Content Include="app\views\tickets\update.html" />
     <Content Include="packages.config" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="assets\bootstrap\css\bootstrap-theme.css.map" />
     <Content Include="assets\bootstrap\css\bootstrap-theme.min.css.map" />
     <Content Include="assets\bootstrap\css\bootstrap.css.map" />
