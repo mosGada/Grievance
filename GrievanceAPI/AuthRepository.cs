@@ -91,7 +91,8 @@
         {
 
 
-            ApplicationUser user = await _userManager.FindByIdAsync(userid);
+            //ApplicationUser user = await _userManager.FindByIdAsync(userid);
+            ApplicationUser user = await _userManager.FindByNameAsync(userModel.Name);
 
             user.PhoneNumber = userModel.phoneNumber;
             user.Name = userModel.Name;
