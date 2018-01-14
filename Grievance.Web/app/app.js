@@ -79,7 +79,7 @@ app.config(function ($routeProvider, $locationProvider) {
 });
 
 //Local
-var serviceBase = 'http://localhost:55638/';
+var serviceBase = 'http://localhost:55637/';
 
 //Live
 //var serviceBase = 'http://grievanceapi.azurewebsites.net/';
