@@ -56,6 +56,7 @@
         //    });
         //    return ticketOwnerDTO;
         //}
+
         public async Task<List<TicketDTO>> GetTickets()
         {
             var ticketsDTO = new List<TicketDTO>();
@@ -101,6 +102,155 @@
                     }));
                 }
             });
+            return ticketsDTO;
+        }
+
+        /// <summary>
+        /// Get tickets by user role
+        /// </summary>
+        /// <param name="userRole"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<List<TicketDTO>> GetTicketsByUserRole(string userRole, string userId = null)
+        {
+            var ticketsDTO = new List<TicketDTO>();            
+            switch (userRole)
+            {
+                case "Administrator":
+                    await Task.Run(() =>
+                    {
+                        var tickets = _ctx.Tickets.OrderByDescending(x => x.CreatedDate);
+                        if (tickets.Any())
+                        {
+                            ticketsDTO.AddRange(tickets.Select(ticket => new TicketDTO()
+                            {
+                                Id = ticket.Id,
+                                CreatedDate = ticket.CreatedDate ?? default(DateTime),
+                                Description = ticket.Description,
+                                Name = ticket.Name ?? default(string),
+                                AssignedTo = ticket.AssignedTo,
+                                AssigneToName = ticket.AspNetUser.Name,
+                                CreatedBy = ticket.CreatedBy,
+                                DepartmentName = ticket.Department.Name,
+                                DepartmentId = ticket.DepartmentId ?? default(int),
+                                ReferenceNumber = ticket.ReferenceNumber,
+                                TicketCategoryName = ticket.TicketCategory.Name,
+                                TicketCategoryId = ticket.TicketCategoryId ?? default(int),
+                                TicketPriorityId = ticket.TicketPriorityId ?? default(int),
+                                TicketPriorityName = ticket.TicketPriority.Name,
+                                TicketStatusId = ticket.TicketStatusId ?? default(int),
+                                TicketStatusName = ticket.TicketStatus.Name,
+                                TicketIssueId = ticket.TicketIssueId ?? default(int),
+                                TicketIssueName = ticket.TicketIssue.Name,
+                                TicketTypeId = ticket.TicketTypeId ?? default(int),
+                                TicketTypeName = ticket.TicketType.Name ?? default(string),
+                                TicketOwnerId = ticket.TicketOwnerId ?? default(string)
+                            }));
+                        }
+                    });
+                    break;
+                case "TicketOwner":
+                    await Task.Run(() =>
+                    {
+                        var tickets = _ctx.Tickets.OrderByDescending(x => x.CreatedDate).Where(x => x.TicketOwnerId.Equals(userId));
+                        if (tickets.Any())
+                        {
+                            ticketsDTO.AddRange(tickets.Select(ticket => new TicketDTO()
+                            {
+                                Id = ticket.Id,
+                                CreatedDate = ticket.CreatedDate ?? default(DateTime),
+                                Description = ticket.Description,
+                                Name = ticket.Name ?? default(string),
+                                AssignedTo = ticket.AssignedTo,
+                                AssigneToName = ticket.AspNetUser.Name,
+                                CreatedBy = ticket.CreatedBy,
+                                DepartmentName = ticket.Department.Name,
+                                DepartmentId = ticket.DepartmentId ?? default(int),
+                                ReferenceNumber = ticket.ReferenceNumber,
+                                TicketCategoryName = ticket.TicketCategory.Name,
+                                TicketCategoryId = ticket.TicketCategoryId ?? default(int),
+                                TicketPriorityId = ticket.TicketPriorityId ?? default(int),
+                                TicketPriorityName = ticket.TicketPriority.Name,
+                                TicketStatusId = ticket.TicketStatusId ?? default(int),
+                                TicketStatusName = ticket.TicketStatus.Name,
+                                TicketIssueId = ticket.TicketIssueId ?? default(int),
+                                TicketIssueName = ticket.TicketIssue.Name,
+                                TicketTypeId = ticket.TicketTypeId ?? default(int),
+                                TicketTypeName = ticket.TicketType.Name ?? default(string),
+                                TicketOwnerId = ticket.TicketOwnerId ?? default(string)
+                            }));
+                        }
+                    });
+                    break;
+                case "FieldWorker":
+                    await Task.Run(() =>
+                    {
+                        var tickets = _ctx.Tickets.OrderByDescending(x => x.CreatedDate).Where(x => x.AssignedTo.Equals(userId));
+                        if (tickets.Any())
+                        {
+                            ticketsDTO.AddRange(tickets.Select(ticket => new TicketDTO()
+                            {
+                                Id = ticket.Id,
+                                CreatedDate = ticket.CreatedDate ?? default(DateTime),
+                                Description = ticket.Description,
+                                Name = ticket.Name ?? default(string),
+                                AssignedTo = ticket.AssignedTo,
+                                AssigneToName = ticket.AspNetUser.Name,
+                                CreatedBy = ticket.CreatedBy,
+                                DepartmentName = ticket.Department.Name,
+                                DepartmentId = ticket.DepartmentId ?? default(int),
+                                ReferenceNumber = ticket.ReferenceNumber,
+                                TicketCategoryName = ticket.TicketCategory.Name,
+                                TicketCategoryId = ticket.TicketCategoryId ?? default(int),
+                                TicketPriorityId = ticket.TicketPriorityId ?? default(int),
+                                TicketPriorityName = ticket.TicketPriority.Name,
+                                TicketStatusId = ticket.TicketStatusId ?? default(int),
+                                TicketStatusName = ticket.TicketStatus.Name,
+                                TicketIssueId = ticket.TicketIssueId ?? default(int),
+                                TicketIssueName = ticket.TicketIssue.Name,
+                                TicketTypeId = ticket.TicketTypeId ?? default(int),
+                                TicketTypeName = ticket.TicketType.Name ?? default(string),
+                                TicketOwnerId = ticket.TicketOwnerId ?? default(string)
+                            }));
+                        }
+                    });
+                    break;
+                case "Backend":
+                    await Task.Run(() =>
+                    {
+                        var tickets = _ctx.Tickets.OrderByDescending(x => x.CreatedDate);
+                        if (tickets.Any())
+                        {
+                            ticketsDTO.AddRange(tickets.Select(ticket => new TicketDTO()
+                            {
+                                Id = ticket.Id,
+                                CreatedDate = ticket.CreatedDate ?? default(DateTime),
+                                Description = ticket.Description,
+                                Name = ticket.Name ?? default(string),
+                                AssignedTo = ticket.AssignedTo,
+                                AssigneToName = ticket.AspNetUser.Name,
+                                CreatedBy = ticket.CreatedBy,
+                                DepartmentName = ticket.Department.Name,
+                                DepartmentId = ticket.DepartmentId ?? default(int),
+                                ReferenceNumber = ticket.ReferenceNumber,
+                                TicketCategoryName = ticket.TicketCategory.Name,
+                                TicketCategoryId = ticket.TicketCategoryId ?? default(int),
+                                TicketPriorityId = ticket.TicketPriorityId ?? default(int),
+                                TicketPriorityName = ticket.TicketPriority.Name,
+                                TicketStatusId = ticket.TicketStatusId ?? default(int),
+                                TicketStatusName = ticket.TicketStatus.Name,
+                                TicketIssueId = ticket.TicketIssueId ?? default(int),
+                                TicketIssueName = ticket.TicketIssue.Name,
+                                TicketTypeId = ticket.TicketTypeId ?? default(int),
+                                TicketTypeName = ticket.TicketType.Name ?? default(string),
+                                TicketOwnerId = ticket.TicketOwnerId ?? default(string)
+                            }));
+                        }
+                    });
+                    break;
+                default: //anonymous
+                    break;
+            }            
             return ticketsDTO;
         }
 

@@ -17,6 +17,7 @@
         #region Private Member Variable(s)
         private AuthContext _ctx;
         private UserManager<ApplicationUser> _userManager;
+        private RoleManager<IdentityRole> _roleManager;
         #endregion
 
         public static string currentUser { get; set; }
@@ -25,6 +26,8 @@
         public static DateTime currentDateMonth { get; set; }
         public static DateTime currentDateDay { get; set; }
         public static string currentUserEmail { get; set; }
+
+        public static string currentUserRole { get; set; }
         
         
         
@@ -33,9 +36,14 @@
             //var user = _userManager.FindByName(User.Identity.Name);
             _ctx = new AuthContext();
             _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_ctx));
+            _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_ctx));
 
-           // var user = _userManager.FindByEmail(User.Identity.Name);
+            // var user = _userManager.FindByEmail(User.Identity.Name);
             var user = _userManager.FindByName(User.Identity.Name);
+
+            var roleId = user.Roles.ToList()[0].RoleId;
+            currentUserRole = _roleManager.FindById(roleId).Name;
+
 
             currentUser = user.Name;
             currentUserEmail = user.Email;
@@ -44,6 +52,7 @@
             currentDateTime = localZone.ToLocalTime(DateTime.UtcNow);
             currentDateMonth = new DateTime(currentDateTime.Year, currentDateTime.Month, 1);
             currentDateDay = new DateTime(currentDateTime.Year, currentDateTime.Month, currentDateTime.Day);
+            
         }
     }
 }

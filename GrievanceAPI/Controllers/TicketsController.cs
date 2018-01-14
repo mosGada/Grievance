@@ -34,6 +34,14 @@
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
+        [HttpGet]
+        [Route("GetTicketsByUserRole")]
+        public async Task<HttpResponseMessage> GetTicketsByUserRole()
+        {            
+            var response = await _dataProvider.GetTicketsByUserRole(currentUserRole, currentUserId);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
         //[HttpGet]
         //[Route("GetTicketOwner")]
         //public async Task<HttpResponseMessage> GetTicketOwner()
@@ -58,10 +66,23 @@
             ticket.UpdatedBy = User.Identity.Name;
             ticket.CreatedDate = currentDateTime;
             ticket.UpdatedDate = currentDateTime;
-            ticket.TicketOwnerId = currentUserId;
+            //ticket.TicketOwnerId = currentUserId;
             ticket.TicketOwnerId = ticket.TicketOwnerId == null ? currentUserId : ticket.TicketOwnerId;
             var newTicket = await _dataProvider.Add(ticket);
             return newTicket;            
+        }
+
+        [HttpPost]
+        [Route("AddAnonymous")]
+        public async Task<TicketDTO> AddAnonymous(TicketDTO ticket)
+        {
+            ticket.CreatedBy = "anonymous";
+            ticket.UpdatedBy = "anonymous";
+            ticket.CreatedDate = currentDateTime;
+            ticket.UpdatedDate = currentDateTime;
+            ticket.TicketOwnerId = "e298785a-d771-49a3-a829-1b360b287503"; //anonymous userId            
+            var newTicket = await _dataProvider.Add(ticket);
+            return newTicket;
         }
 
         [HttpPost]
