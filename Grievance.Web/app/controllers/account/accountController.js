@@ -25,10 +25,9 @@ app.controller('accountController', ['$scope', '$filter', '$uibModal', '$locatio
     var usercolumnDefs = [
             { field: 'name', displayName: 'Name', enableCellEdit: false },
             { field: 'surname', displayName: 'Surname', enableCellEdit: false },
-            { field: 'userName', displayName: 'User Name', enableCellEdit: false },
+            { field: 'idNumber', displayName: 'Id Number', enableCellEdit: false },
             { field: 'phoneNumber', displayName: 'Contact Number', enableCellEdit: false,width:'10%' },
-            { field: 'email', displayName: 'Email', enableCellEdit: false },
-           { field: 'roleName', displayName: 'Role', enableCellEdit: false },
+            { field: 'physicalAddress', displayName: 'Physical Address', enableCellEdit: false },
           {
               name: "Actions",
               field: "Savebutton",
@@ -161,116 +160,143 @@ app.controller('accountController', ['$scope', '$filter', '$uibModal', '$locatio
         }
     });
 
-
-    $scope.addNew = function () {
-
+    $scope.addTicket = function () {
         var modalScope = $scope.$new();
 
-            modalScope.registration = {
-                Id: 0,
-                name: '',
-                surname: '',
-                userName: '',
-                phoneNumber: '',
-                password: '',
-                confirmPassword: '',
-                email: '',
-                role: '',
-                roleId: '',
-                //idNumber: '',
-                //contactNumber: '',
-                //alternativeNumber: '',
-                //physicalAdress: ''
+        //modalScope.ticket = {
+        //    id: 0,
+        //    name: '',
+        //    description: '',
+        //    ticketOwnerId: '',
+        //    TicketTypeId: '',
+        //    DepartmentId: '',
+        //    TicketStatusId: '',
+        //    TicketPriorityId: '',
+        //    TicketCategoryId: '',
+        //    AssignedTo: '',
+        //    TicketIssueId: ''
+        //};
+            modalScope.ParentScope = $scope;
+            modalScope.closeModal = function () {
+                modalScope.modalInstance.close();
+            }
 
-            };
-        modalScope.ParentScope = $scope;
-        modalScope.closeModal = function () {
-            modalScope.modalInstance.close();
-        }
-
-            modalScope.saveUser = function () {
-                authService.saveRegistration(modalScope.registration).then(function (response) {
-
-                    $scope.gridUsersOptions.data.splice(0, 0, {
-                        Id: response.data,
-                        Name: modalScope.registration.name,
-                        Surname: modalScope.registration.surname,
-                        UserName: modalScope.registration.userName,
-                        phoneNumber: modalScope.registration.phoneNumber,
-                        Password: modalScope.registration.password,
-                        ConfirmPassword: modalScope.registration.confirmPassword,
-                        Email: modalScope.registration.email,
-                        roleName: $scope.getrolebyroleID(modalScope.registration.role),
-                        //RoleId: modalScope.registration.role,
-                        //ContactNumber: modalScope.registration.contactNumber,
-                        //AlternativeNumber: modalScope.registration.alternativeNumber,
-                        //PhysicalAdress: modalScope.registration.physicalAdress
-                    });
-                    modalScope.closeModal();
-                });
-            };
-
-        modalScope.modalInstance = $uibModal.open({
-            controller: 'accountController',
-            size: 'md',
-            templateUrl: 'app/views/maintenance/account/add.html',
-            scope: modalScope
-        });
-
+            //modalScope.saveTicket = function (owner) {
+            //    ticketsService.addTickets($scope.tickets).then(function (response) {
+            //        $scope.response(response);
+            //        modalScope.closeModal();
+            //    });
+            //};
+            modalScope.modalInstance = $uibModal.open({
+                controller: 'ticketsController',
+                size: 'lg',
+                templateUrl: '/app/views/tickets/logticket.html',
+                scope: modalScope
+            });
     }
 
-    $scope.registration = {};
-    $scope.editusers = function displayModal(data) {
-   
-        var index = $scope.gridUsersOptions.data.indexOf(data);
-  
-       
-        $scope.registration = data;
-        $scope.registration.confirmPassword = data.password;
-        //$scope.registration.RoleId = $scope.getrolebyroleName(data.roleName);
-        $scope.registration.company =$scope.getCompnayID(data.companyName);
 
 
+    
+    //$scope.addNew = function () {
 
+    //    var modalScope = $scope.$new();
 
-        var modalScope = $scope.$new();
+    //        modalScope.registration = {
+    //            Id: 0,
+    //            name: '',
+    //            surname: '',
+    //            userName: '',
+    //            phoneNumber: '',
+    //            password: '',
+    //            confirmPassword: '',
+    //            email: '',
+    //            role: '',
+    //            roleId: '',
+    //            //idNumber: '',
+    //            //contactNumber: '',
+    //            //alternativeNumber: '',
+    //            //physicalAdress: ''
 
-        modalScope.ParentScope = $scope;
-        //$scope.registration.companyName=
-        modalScope.closeModal = function () {
-            modalScope.modalInstance.close();
-        };
-        //update method 
-        modalScope.updateuser = function () {
+    //        };
+    //    modalScope.ParentScope = $scope;
+    //    modalScope.closeModal = function () {
+    //        modalScope.modalInstance.close();
+    //    }
 
+            //modalScope.saveUser = function () {
+            //    authService.saveRegistration(modalScope.registration).then(function (response) {
 
-            modalScope.registration.role = data.RoleId;
-            modalScope.registration.companyId = data.company;
-            modalScope.registration.companyName = $scope.getCompnayname(data.company);
-            modalScope.registration.roleName = $scope.getrolebyroleID(data.RoleId);
-            modalScope.registration.UserId = modalScope.registration.Id;
-            //update method from the service authservice
-            authService.updateuser(modalScope.registration).then(function (response) {
-                var index = $scope.gridUsersOptions.data.indexOf(data);
+            //        $scope.gridUsersOptions.data.splice(0, 0, {
+            //            Id: response.data,
+            //            Name: modalScope.registration.name,
+            //            Surname: modalScope.registration.surname,
+            //            UserName: modalScope.registration.userName,
+            //            phoneNumber: modalScope.registration.phoneNumber,
+            //            Password: modalScope.registration.password,
+            //            ConfirmPassword: modalScope.registration.confirmPassword,
+            //            Email: modalScope.registration.email,
+            //            roleName: $scope.getrolebyroleID(modalScope.registration.role),
+            //            RoleId: modalScope.registration.role,
+            //            ContactNumber: modalScope.registration.contactNumber,
+            //            AlternativeNumber: modalScope.registration.alternativeNumber,
+            //            PhysicalAdress: modalScope.registration.physicalAdress
+            //        });
+            //        modalScope.closeModal();
+            //    });
+            //};
 
+    //    modalScope.modalInstance = $uibModal.open({
+    //        controller: 'ticketsController',
+    //        size: 'lg',
+    //        templateUrl: '/app/views/tickets/logticket.html',
+    //        scope: modalScope
+    //    });
 
-            });
+    //}
 
-            modalScope.closeModal();
-        };
-        //opens a modal for editing the user details 
-
-        modalScope.modalInstance = $uibModal.open({
-
-            controller: 'accountController',
-            size: 'sm',
-            templateUrl: '/app/views/maintenance/account/edit.html',
-            scope: modalScope
-        });
+    
+    $scope.registration = {
+        password: 'Admin123',
+        confirmPassword: 'Admin123',
+        name: '',
+        surname: '',
+        userName: '',
+        phoneNumber: '',
+        Email: '',
+        email: '',
+        role: 'TicketOwner',
+        roleId: 'a95b2077-8c8b-4983-a928-ebfeb33d9789',
+        AccessFailedCount: 0,
+        LockoutEnabled: 0,
+        TwoFactorEnabled: 0,
+        PhoneNumberConfirmed: 0,
+        Gender: '',
+        IDNumber: '',
+        PhysicalAddress: '',
+        ticketTypeId: ''//,
+        //Latitude: '',
+        //Longitude:''
     };
 
-    function message(alertmessage) {
-        $scope.message = alertmessage;
+    $scope.signUp = function () {
+
+        authService.saveRegistration($scope.registration).then(function (response) {
+            //  $scope.saveTickets(response);
+            $scope.savedSuccessfully = true;
+            $scope.message = "User has been registered successfully, you will be redicted to login page in 2 seconds.";
+            startTimer();
+
+        },
+         function (response) {
+             var errors = [];
+             for (var key in response.data.modelState) {
+                 for (var i = 0; i < response.data.modelState[key].length; i++) {
+                     errors.push(response.data.modelState[key][i]);
+                 }
+             }
+             $scope.message = "Failed to register user due to:" + errors.join(' ');
+         });
     };
 
    

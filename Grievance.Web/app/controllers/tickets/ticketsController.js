@@ -146,21 +146,18 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         id: 0,
         name: '',
         description: '',
-        remarks: '',
-        //ticketOwnerId: '',
-        TicketTypeId:'',
-        //assignedTo: '',
+        ticketTypeId:'',
         DepartmentId: '',
-        TicketStatusId: '',
+        ticketStatusId: '',
         TicketPriorityId: '',
         TicketCategoryId:'',
         AssignedTo: '',
-        ticketOwnerId: ''
+        ticketOwnerId: '',
+        ticketIssueId: ''
     }
 
     $scope.saveTickets = function (owner) {
-        $scope.tickets.ticketOwnerId = owner.data.id
-        $scope.tickets.TicketTypeId = owner.data.ticketTypeId
+        $scope.tickets.ticketOwnerId = owner.data
         ticketsService.addTickets($scope.tickets).then(function (response) {
      
             //$scope.saveTicketRemarks(response);
@@ -248,69 +245,56 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
     };
 
     $scope.ticketOwner = {
-        id: 0,
-        name: '',
-        surname: '',
-        gender: '',
-        idNumber: '',
-        physicalAddress: '',
-        email: '',
-        phone: '',
-        latitude: '',
-        longitude: '',
-        ticketTypeId:''
-    }
-    $scope.saveTicketOwners = function () {
-        ticketsService.addTicketOwners($scope.ticketOwner).then(function (response) {
-            $scope.saveTickets(response);
-        },
-                 function (response) {
-                     var errors = [];
-                     for (var key in response.data.modelState) {
-                         for (var i = 0; i < response.data.modelState[key].length; i++) {
-                             errors.push(response.data.modelState[key][i]);
-                         }
-                     }
-                     $scope.message = "Failed to add ticket owner due to:" + errors.join(' ');
-                 });
-    };
-
-    $scope.registration = {
         password: 'Admin123',
         confirmPassword: 'Admin123',
-        Id: 0,
-        name: 'Admin',
-        surname: 'Admin',
-        userName: 'Admin',
-        phoneNumber: '0710125210',
-        Email:'admin@gmail.com',
-        email: 'admin@gmail.com',
+        name: '',
+        surname: '',
+        userName: '',
+        phoneNumber: '',
+        Email: '',
+        email: '',
         role: 'TicketOwner',
         roleId: 'a95b2077-8c8b-4983-a928-ebfeb33d9789',
         AccessFailedCount: 0,
         LockoutEnabled: 0,
         TwoFactorEnabled: 0,
         PhoneNumberConfirmed: 0,
+        Gender: '',
+        IDNumber: '',
+        PhysicalAddress: ''
+       // ticketTypeId: ''//,
+        //Latitude: '',
+        //Longitude:''
     };
 
-    $scope.signUp = function () {
+    $scope.saveTicketOwners = function () {
 
-        authService.saveRegistration($scope.registration).then(function (response) {
-            
-            $scope.savedSuccessfully = true;
-            $scope.message = "User has been registered successfully, you will be redicted to login page in 2 seconds.";
-            startTimer();
+        if ($scope.tickets.ticketTypeId === 1)
+        {
+            authService.saveRegistration($scope.ticketOwner).then(function (response) {
+                $scope.saveTickets(response);
 
-        },
-         function (response) {
-             var errors = [];
-             for (var key in response.data.modelState) {
-                 for (var i = 0; i < response.data.modelState[key].length; i++) {
-                     errors.push(response.data.modelState[key][i]);
+                $scope.savedSuccessfully = true;
+                $scope.message = "User has been registered successfully, you will be redicted to login page in 2 seconds.";
+                startTimer();
+
+            },
+             function (response) {
+                 var errors = [];
+                 for (var key in response.data.modelState) {
+                     for (var i = 0; i < response.data.modelState[key].length; i++) {
+                         errors.push(response.data.modelState[key][i]);
+                     }
                  }
-             }
-             $scope.message = "Failed to register user due to:" + errors.join(' ');
-         });
+                 $scope.message = "Failed to register user due to:" + errors.join(' ');
+             });
+        }
+        else {
+            $scope.ticketOwner_Id = '4780d8a4-7a74-4566-acba-7ec03b5878d0';
+            $scope.saveTickets($scope.ticketOwner_Id);
+        }
+                
+
     };
 
     //

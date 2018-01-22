@@ -9,6 +9,8 @@
         public string Surname { get; set; }
         public string IDNumber { get; set; }
         public string PhysicalAddress { get; set; }
-        //public string Gender { get; set; }
+        public string Gender { get; set; }
+        //public decimal Latitude { get; set; }
+        //public decimal Longitude { get; set; }
     }
 }

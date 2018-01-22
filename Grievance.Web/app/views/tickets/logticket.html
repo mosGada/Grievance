@@ -26,24 +26,24 @@
                         <!-- /.form-group -->
                         <div class="form-group">
                             <label>Type</label>
-                            <select class="form-control" data-ng-model="ticketOwner.ticketTypeId">
+                            <select class="form-control" data-ng-model="tickets.ticketTypeId">
                                 <option ng-repeat="type in Types" data-ng-value="{{type.id}}">{{type.name}}</option>
                             </select>
                         </div>
                         <!-- /.form-group -->
                         <div class="form-group">
                             <label>Name</label>
-                            <input class="form-control input-sm" type="text" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.name">
+                            <input class="form-control input-sm" type="text" ng-disabled="tickets.ticketTypeId === 2" data-ng-model="ticketOwner.name">
                         </div>
                         <!-- /.form-group -->
                         <div class="form-group">
                             <label>Surname</label>
-                            <input class="form-control input-sm" type="text" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.surname">
+                            <input class="form-control input-sm" type="text" ng-disabled="tickets.ticketTypeId === 2" data-ng-model="ticketOwner.surname">
                         </div>
                         <!-- /.form-group -->
                         <div class="form-group">
                             <label>ID Number</label>
-                            <input class="form-control input-sm" type="text" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.idNumber">
+                            <input class="form-control input-sm" type="text" ng-disabled="tickets.ticketTypeId === 2" data-ng-model="ticketOwner.idNumber">
                         </div>
 
                         <!-- /.form-group -->
@@ -52,7 +52,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Gender</label>
-                            <select class="form-control input-sm" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.gender">
+                            <select class="form-control input-sm" ng-disabled="tickets.ticketTypeId === 2" data-ng-model="ticketOwner.gender">
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>
@@ -61,17 +61,17 @@
 
                         <div class="form-group">
                             <label>Contact Number</label>
-                            <input class="form-control input-sm" type="text" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.phone">
+                            <input class="form-control input-sm" type="text" ng-disabled="tickets.ticketTypeId === 2" data-ng-model="ticketOwner.phoneNumber">
                         </div>
                         <!-- /.form-group -->
                         <div class="form-group">
                             <label>Email Address</label>
-                            <input class="form-control input-sm" ng-disabled="ticketOwner.ticketTypeId === 2" type="email" data-ng-model="ticketOwner.email">
+                            <input class="form-control input-sm" ng-disabled="tickets.ticketTypeId === 2" type="email" data-ng-model="ticketOwner.email">
                         </div>
                         <!-- /.form-group -->
                         <div class="form-group">
                             <label>Physical Address</label>
-                            <input class="form-control input-sm" type="text" ng-disabled="ticketOwner.ticketTypeId === 2" data-ng-model="ticketOwner.physicalAddress">
+                            <input class="form-control input-sm" type="text" ng-disabled="tickets.ticketTypeId === 2" data-ng-model="ticketOwner.physicalAddress">
                         </div>
                         <!-- /.form-group -->
                         <!--<div class="box-footer">

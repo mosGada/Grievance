@@ -28,35 +28,6 @@
         }
         #endregion
 
-
-        //public async Task<List<TicketOwnerDTO>>GetOwner()
-        //{
-        //    var ticketOwnerDTO = new List<TicketOwnerDTO>();
-        //    await Task.Run(() =>
-        //    {
-        //        var owners = _ctx.TicketOwners.ToList();
-        //        if (owners.Any())
-        //        {
-        //            ticketOwnerDTO.AddRange(owners.Select(owner => new TicketOwnerDTO()
-        //            {
-        //                Id = owner.Id,
-        //                CreatedDate = owner.CreatedDate ?? default(DateTime),
-        //                Name = owner.Name,
-        //                EmailAddress = owner.EmailAddress,
-        //                Gender = owner.Gender,
-        //                IDNumber = owner.IDNumber,
-        //                PhoneNumber = owner.PhoneNumber,
-        //                PhysicalAddress = owner.PhysicalAddress,
-        //                Surname = owner.Surname,
-        //                TicketTypeId = owner.TicketTypeId ?? default(int),
-        //                TicketTypeName = owner.TicketType.Name                                  
-
-        //            }));
-        //        }
-        //    });
-        //    return ticketOwnerDTO;
-        //}
-
         public async Task<List<TicketDTO>> GetTickets()
         {
             var ticketsDTO = new List<TicketDTO>();
@@ -87,17 +58,7 @@
                         TicketIssueName = ticket.TicketIssue.Name,
                         TicketTypeId = ticket.TicketTypeId ?? default(int),
                         TicketTypeName = ticket.TicketType.Name ?? default(string),
-                        TicketOwnerId = ticket.TicketOwnerId ?? default(string),
-                        //TicketOwnerName = ticket.TicketOwner.Name ?? default(string),
-                        //Address = ticket.TicketOwner.PhysicalAddress ?? default(string),
-                        //EmailAddress = ticket.TicketOwner.EmailAddress ?? default(string),
-                        //Gender = ticket.TicketOwner.Gender ?? default(string),
-                        //IDNumber = ticket.TicketOwner.IDNumber ?? default(string),
-                        //PhoneNumber = ticket.TicketOwner.PhoneNumber ?? default(string),
-                        //Surname = ticket.TicketOwner.Surname ?? default(string)
-                        //RemarkDesription = ticket.TicketRemark.Desription ?? default(string),
-
-                        //   UserId = ticket.UserId                        
+                        TicketOwnerId = ticket.TicketOwnerId ?? default(string)                 
 
                     }));
                 }

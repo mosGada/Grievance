@@ -131,6 +131,7 @@
     <Content Include="app\services\priorityService.js" />
     <Content Include="app\services\remarksServices.js" />
     <Content Include="app\services\typeService.js" />
+    <Content Include="app\views\account\search.html" />
     <Content Include="app\views\dashboard\dashboardChart.html" />
     <Content Include="app\views\signup.html" />
     <Content Include="app\views\tickets\completed.html" />
@@ -379,9 +380,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="app\views\account\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>

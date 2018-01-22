@@ -1,6 +1,7 @@
 ﻿namespace GrievanceAPI
 {
-    # region Usings
+    using Grievance.DAL;
+    #region Usings
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
@@ -16,12 +17,14 @@
 
         private UserManager<ApplicationUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
+        private grievancedbEntities _db;
 
         public AuthRepository()
         {
             var role = new RoleStore<IdentityRole>(new AuthContext());
             var roleManager = new RoleManager<IdentityRole>(role);
             _ctx = new AuthContext();
+            _db = new grievancedbEntities();
             _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_ctx));
             _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_ctx));
         }
@@ -33,6 +36,7 @@
         /// <returns></returns>
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
         {
+
             ApplicationUser user = new GrievanceAPI.ApplicationUser
             {
                 PhoneNumber = userModel.phoneNumber,
@@ -41,7 +45,10 @@
                 Surname = userModel.Surname,
                 Email = userModel.Email,
                 IDNumber = userModel.IDNumber,
-                PhysicalAddress = userModel.PhysicalAddress                
+                PhysicalAddress = userModel.PhysicalAddress,
+                Gender = userModel.Gender
+                //Latitude = userModel.Latitude,
+                //Longitude = userModel.Longitude
             };
 
             var result = await _userManager.CreateAsync(user, userModel.Password);
@@ -90,7 +97,6 @@
         public async Task<IdentityResult> UpdateUser(UserModel userModel, string userid)
         {
 
-
             //ApplicationUser user = await _userManager.FindByIdAsync(userid);
             ApplicationUser user = await _userManager.FindByNameAsync(userModel.Name);
 
@@ -126,6 +132,28 @@
             var result = await _userManager.UpdateAsync(user);
 
             return result;
+        }
+
+        /// <summary>
+        /// Generate username for users 
+        /// </summary>
+        /// <param name="ticket"></param>
+        /// <returns></returns>
+        public string GenerateUsername(UserModel userModel)
+        {
+            string userName = "";
+            var users = _db.AspNetUsers;
+            if(users.Any())
+            {
+                var getCount = _db.AspNetUsers.Count();
+                userName = userModel.Name + getCount;
+            }
+            else
+            {
+                userName = userModel.Name + 1;
+            }
+            return userName;
+
         }
 
         /// <summary>

@@ -28,10 +28,10 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: "/app/views/tickets/active.html"
     }); 
 
-    $routeProvider.when("/logticket", {
-        controller: "ticketsController",
-        templateUrl: "/app/views/tickets/logticket.html"
-    });
+    //$routeProvider.when("/logticket", {
+    //    controller: "ticketsController",
+    //    templateUrl: "/app/views/tickets/logticket.html"
+    //});
 
     $routeProvider.when("/completed", {
         controller: "ticketsCompletedController",
@@ -46,6 +46,11 @@ app.config(function ($routeProvider, $locationProvider) {
     $routeProvider.when("/users", {
         controller: "accountController",
         templateUrl: "/app/views/signup.html"
+    });
+
+    $routeProvider.when("/logticket", {
+        controller: "accountController",
+        templateUrl: "/app/views/account/search.html"
     });
 
     $routeProvider.when("/roleDefinition", {

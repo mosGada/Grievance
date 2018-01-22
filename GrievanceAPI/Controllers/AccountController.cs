@@ -34,7 +34,7 @@
         [Route("Register")]
         public async Task<IHttpActionResult> Register(UserModel userModel)
         {
-            
+            userModel.UserName = _repo.GenerateUsername(userModel);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -52,7 +52,7 @@
             IdentityUser user = await _repo.FindUserByName(userModel.UserName);
             if (user != null)
             {
-                IdentityResult roleresult = await _repo.AddUserToRole(user.Id, userModel.Role);
+                IdentityResult roleresult = await _repo.AddUserToRole(user.Id, userModel.RoleID);
                 var userid = user.Id;
 
                 return Ok(userid);

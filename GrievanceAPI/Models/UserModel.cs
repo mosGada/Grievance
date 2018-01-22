@@ -11,7 +11,7 @@ namespace GrievanceAPI
 
         [Display(Name = "User Id")]
         public string UserID { get; set; }
-        [Required]
+        
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
@@ -52,8 +52,10 @@ namespace GrievanceAPI
         [Display(Name = "Physical Address")]
         public string PhysicalAddress { get; set; }
 
-        //[Required]
-        //[Display(Name = "Physical Address")]
-        //public string Gender { get; set; }
+        [Required]
+        [Display(Name = "Gender")]
+        public string Gender { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
     }
 }
