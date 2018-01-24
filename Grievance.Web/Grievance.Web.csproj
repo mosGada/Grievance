@@ -150,8 +150,10 @@
     <Content Include="assets\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="assets\plugins\input-mask\phone-codes\phone-codes.json" />
     <None Include="Properties\PublishProfiles\grievance - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\grievance - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\grievance - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\grievance - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\grievance - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\grievance - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

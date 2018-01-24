@@ -155,7 +155,6 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         ticketOwnerId: '',
         ticketIssueId: ''
     }
-
     $scope.saveTickets = function (owner) {
         $scope.tickets.ticketOwnerId = owner.data
         ticketsService.addTickets($scope.tickets).then(function (response) {
@@ -174,10 +173,13 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
                  });
     };
 
+    $scope.getTicketId = '';
+
     $scope.ticketUpdate = {};
     $scope.editTicket = function displayModal(data) {
         $scope.ticketUpdate = data;
-        $scope.GetTicketRemarks(data);
+        $scope.getTicketId = data.id;
+        $scope.GetTicketRemarks(data.id);
         $scope.GetTicketOwner(data);
         var modalScope = $scope.$new();
         modalScope.ParentScope = $scope;
@@ -192,15 +194,14 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         }
 
         modalScope.modalInstance = $uibModal.open({
-            size: 'md',
+            size: 'lg',
             templateUrl: '/app/views/tickets/update.html',
             scope: modalScope
         });
     };
 
-    $scope.GetTicketRemarks = function (getId) {
-        $scope.getTicketId = getId.id
-        remarksService.getById($scope.getTicketId).then(function (response) {
+    $scope.GetTicketRemarks = function (ticket_id) {
+        remarksService.getById(ticket_id).then(function (response) {
             $scope.Remarks = response.data;
         },
         function (error) {
@@ -220,12 +221,14 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
 
     $scope.ticketRemarks = {
         id: 0,
-        TicketId: '',
-        Description: ''        
+        type: 'file',
+        ticketId: '',
+        description: ''        
     }
-    $scope.saveTicketRemarks = function (remark) {
-        $scope.ticketRemarks.TicketId = remark.data.id
-        ticketsService.addTicketRemarks($scope.ticketRemarks).then(function (response) {
+    $scope.saveTicketRemarks = function () {
+        $scope.ticketRemarks.ticketId = $scope.getTicketId
+        remarksService.addRemark($scope.ticketRemarks).then(function (response) {
+            
         },
                          function (response) {
                              var errors = [];
@@ -297,6 +300,7 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
 
     };
 
+
     //
     $scope.resMessage = {
         msg:'',
@@ -314,7 +318,7 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         $scope.submitForm();
 
         modalScope.modalInstance = $uibModal.open({
-            size: 'md',
+            size: 'lg',
             templateUrl: '/app/views/tickets/response.html',
             scope: modalScope
         });

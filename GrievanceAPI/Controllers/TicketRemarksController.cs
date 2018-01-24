@@ -33,13 +33,13 @@ namespace Grievance.API.Controllers
             return await _dataProvider.GetById(ticketId);
         }
 
-        [HttpPost]
-        [Route("Add")]
-        public async Task<TicketRemarkDTO> Add(TicketRemarkDTO remark)
-        {
-            var newRemark = await _dataProvider.Add(remark);
-            return newRemark;
-        }
+        //[HttpPost]
+        //[Route("Add")]
+        //public async Task<TicketRemarkDTO> Add(TicketRemarkDTO remark)
+        //{
+        //    var newRemark = await _dataProvider.Add(remark);
+        //    return newRemark;
+        //}
 
         [HttpPost]
         [Route("Update")]

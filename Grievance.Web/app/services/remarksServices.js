@@ -5,13 +5,13 @@ app.factory('remarksService', ['$http', 'ngAuthSettings', function ($http, ngAut
     var remarkServiceFactory = {};
 
     var _getById = function (remark) {
-        return $http.get(serviceBase + apiRoute + 'GetById?ticketId=' + remark).then(function (response) {
+        return $http.get(serviceBase + apiRoute + 'GetRemarksByTicketId?ticketId=' + remark).then(function (response) {
             return response;
         });
     };
 
     var _addRemark = function (remark) {
-        return $http.post(serviceBase + apiRoute + 'Add', remark).then(function (response) {
+        return $http.post(serviceBase + apiRoute + 'AddRemark', remark).then(function (response) {
             return response;
         });
     };

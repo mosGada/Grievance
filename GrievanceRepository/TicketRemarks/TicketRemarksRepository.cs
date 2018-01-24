@@ -24,25 +24,6 @@ namespace GrievanceRepository.TicketRemarks
             _ctx = new grievancedbEntities();
         }
         #endregion
-        public async Task<TicketRemarkDTO> Add(TicketRemarkDTO ticketRemark)
-        {
-            await Task.Run(() =>
-            {
-                var newTicketRemark = new TicketRemark()
-                {
-                    CreatedBy = ticketRemark.CreatedBy,
-                    CreatedDate = ticketRemark.CreatedDate,
-                    Desription = ticketRemark.Desription,
-                    TicketId = ticketRemark.TicketId,
-                    UpdatedBy = ticketRemark.UpdatedBy,
-                    UpdatedDate = ticketRemark.UpdatedDate
-                };
-                _ctx.TicketRemarks.Add(newTicketRemark);
-                _ctx.SaveChanges();
-
-            });
-            return ticketRemark;
-        }
 
         /// <summary>
         /// Add remarks of type Image

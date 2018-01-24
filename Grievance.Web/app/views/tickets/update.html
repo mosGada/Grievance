@@ -200,29 +200,28 @@
                                     <ul class="contacts-list">
                                         <li>
                                             <a href="#">
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        <label >{{Remarks.ticketOwnerName}}</label>
-                                                        <small class="contacts-list-date pull-right" >{{Remarks.createdDate}}</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">{{Remarks.description}}</span>
+                                                <div class="contacts-list-info" ng-repeat="(key, value) in Remarks | groupBy: '[ticketId]'">
+                                                    <div class="direct-chat-text" ng-repeat="remk in value">
+                                                        <span class="contacts-list-name">
+                                                            <label>{{remk.createdBy}}</label>
+                                                            <small class="contacts-list-date pull-right">{{ remk.createdDate | date : format : medium}}</small>
+                                                        </span>
+                                                        <span ng-if="remk.type != 'File'" class="contacts-list-msg">{{remk.description}}</span>
+                                                        <span ng-if="remk.type == 'File'"class="contacts-list-msg"><img src="{{remk.description}}" width="300" height="300" /></span>
+                                                    </div>
                                                 </div>
-                                                <!-- /.contacts-list-info -->
                                             </a>
                                         </li>
-                                        <!-- End Contact Item -->
                                     </ul>
-                                    <!-- /.contatcts-list -->
                                 </div>
-                                <!-- /.direct-chat-pane -->
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <form action="#" method="post">
                                     <div class="input-group">
-                                        <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                                        <input type="text" name="message" placeholder="Type Message ..." data-ng-model="ticketRemarks.description" class="form-control">
                                         <span class="input-group-btn">
-                                            <button type="button" class="btn btn-danger btn-flat">Send</button>
+                                            <button type="button" class="btn btn-danger btn-flat" ng-click="saveTicketRemarks()">Send</button>
                                         </span>
                                     </div>
                                 </form>
