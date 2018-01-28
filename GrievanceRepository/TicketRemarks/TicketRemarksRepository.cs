@@ -85,31 +85,6 @@ namespace GrievanceRepository.TicketRemarks
             throw new NotImplementedException();
         }
 
-        public async Task<TicketRemarkDTO> GetById(int id)
-        {
-            
-            var ticketRemarkDTO = new TicketRemarkDTO();
-            await Task.Run(() =>
-            {
-                var ticketOwner = _ctx.Tickets.FirstOrDefault(x => x.Id == id).AspNetUser.Name;
-                var remark = _ctx.TicketRemarks.FirstOrDefault(x => x.TicketId == id);
-                if (remark == null) return;
-                var mappedRemark = new TicketRemarkDTO()
-                {
-                    Id = remark.Id,
-                    Desription = remark.Desription,
-                    TicketId = remark.TicketId ?? default(int),
-                    UpdatedBy = remark.UpdatedBy,
-                    UpdatedDate = remark.UpdatedDate ?? default(DateTime),
-                    CreatedBy = remark.CreatedBy,
-                    CreatedDate = remark.CreatedDate ?? default(DateTime),
-                    TicketOwnerName = ticketOwner != "" ? ticketOwner : "Anonymous"
-                };
-                ticketRemarkDTO = mappedRemark;
-            });
-            return ticketRemarkDTO;
-        }
-
         public Task<TicketRemarkDTO> Update(TicketRemarkDTO ticketRemark)
         {
             throw new NotImplementedException();

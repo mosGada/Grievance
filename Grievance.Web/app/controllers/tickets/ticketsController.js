@@ -1,6 +1,9 @@
 ﻿'use strict';
 app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksService', 'ownerService', 'statusService', 'ticketsService', 'priorityService', 'issuesService', 'authService', 'categoryService', 'typeService', 'departmentService', 'uiGridConstants', '$uibModal', function ($scope, $filter, ngStatus, remarksService, ownerService, statusService, ticketsService, priorityService, issuesService, authService, categoryService, typeService, departmentService, uiGridConstants, $uibModal) {
 
+    $scope.buttonName = 'Update';
+    $scope.showChatTag = true;
+
     $scope.Departments = []; 
     $scope.Priorities = []; 
     $scope.Categories = [];
@@ -8,7 +11,6 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
     $scope.Issues = [];
     $scope.Assign = [];
     $scope.Status = [];
-
 
     authService.getUsers().then(function (response) {
         $scope.Assign = response.data;
@@ -39,11 +41,13 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         $scope.Priorities = response.data;
     });
 
+    //**********************************************************************************************
+    //*UI Grid
+    //**********************************************************************************************
     $scope.grdTickets = {};
     $scope.filterOptions = {
         filterText: ''
     };
-
     $scope.grdTickets = {
         enableSelectAll: true,
         enableSorting: true,
@@ -81,39 +85,34 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
             $scope.gridApi = gridApi;
         },
         columnDefs: [
-            { field: 'ticketOwnerName', displayName: 'Owner', enableCellEdit: false, enableFiltering: true },
             { field: 'ticketTypeName', displayName: 'Type', enableCellEdit: false },
-            { field: 'address', displayName: 'Community', enableCellEdit: false },
             { field: 'referenceNumber', displayName: 'Ref No', enableCellEdit: false },
               { field: 'description', displayName: 'Description', enableCellEdit: false, enableFiltering: true },
               { field: 'departmentName', displayName: 'Department', enableCellEdit: false },
               { field: 'ticketCategoryName', displayName: 'Category', enableCellEdit: false },
               { field: 'assignedToName', displayName: 'Field Worker', enableCellEdit: false },
               { field: 'ticketIssueName', displayName: 'Issue', enableCellEdit: false },
-              //{ field: 'ticketStatusName', displayName: 'Status', enableCellEdit: false },
-                                {
-                                    field: 'ticketStatusName', displayName: 'Status', width: "7.5%", enableCellEdit: false,
-                                    cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
-                                        if (grid.getCellValue(row, col) === 'New') {
-                                            return 'label-success';
-                                        }
-                                        else
-                                            if (grid.getCellValue(row, col) === 'Resolved') {
-                                                return 'label-warning';
-                                            }
-                                            else
-                                                if (grid.getCellValue(row, col) === 'Escalated') {
-                                                    return 'label-danger';
-                                                }
-                                                else
-                                                    if (grid.getCellValue(row, col) === 'Assigned') {
-                                                    return 'label-info';
-                                                }
-                                    }
-                                },
-              { field: 'createdDate', displayName: 'Date Generated', enableCellEdit: false, cellFilter: 'date:\'dd/MM/yyyy\'' },
-              //{ field: 'remarks', displayName: 'Remarks', enableCellEdit: false },
-              
+              {
+                field: 'ticketStatusName', displayName: 'Status', width: "7.5%", enableCellEdit: false,
+                cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
+                    if (grid.getCellValue(row, col) === 'New') {
+                        return 'label-success';
+                    }
+                    else
+                        if (grid.getCellValue(row, col) === 'Resolved') {
+                            return 'label-warning';
+                        }
+                        else
+                            if (grid.getCellValue(row, col) === 'Escalated') {
+                                return 'label-danger';
+                            }
+                            else
+                                if (grid.getCellValue(row, col) === 'Assigned') {
+                                return 'label-info';
+                            }
+                    }
+                },
+              { field: 'createdDate', displayName: 'Date Generated', enableCellEdit: false, cellFilter: 'date:\'dd/MM/yyyy\'' },              
             {
                 name: "Actions",
                 field: "Savebutton",
@@ -132,6 +131,9 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         ]
     };
 
+    //**********************************************************************************************
+    //*Call GetTickets 
+    //**********************************************************************************************
         ticketsService.getTickets().then(function (response) {
             $scope.grdTickets.data = response.data;
             $scope.Data = response.data;
@@ -141,7 +143,9 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         console.log('Error on Tickets: ' + error.data.message);
     });
     
-
+    //**********************************************************************************************
+    //*Add Tickets
+    //**********************************************************************************************
     $scope.tickets = {
         id: 0,
         name: '',
@@ -158,41 +162,54 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
     $scope.saveTickets = function (owner) {
         $scope.tickets.ticketOwnerId = owner.data
         ticketsService.addTickets($scope.tickets).then(function (response) {
-     
-            //$scope.saveTicketRemarks(response);
             $scope.response(response);
         },
-                 function (response) {
-                     var errors = [];
-                     for (var key in response.data.modelState) {
-                         for (var i = 0; i < response.data.modelState[key].length; i++) {
-                             errors.push(response.data.modelState[key][i]);
-                         }
-                     }
-                     $scope.message = "Failed to add ticket due to:" + errors.join(' ');
-                 });
+        function (response) {
+            var errors = [];
+            for (var key in response.data.modelState) {
+                for (var i = 0; i < response.data.modelState[key].length; i++) {
+                    errors.push(response.data.modelState[key][i]);
+                }
+            }
+            $scope.message = "Failed to add ticket due to:" + errors.join(' ');
+        });
+
     };
 
-    $scope.getTicketId = '';
+    //**********************************************************************************************
+    //*Get Ticket Owner
+    //**********************************************************************************************
+    $scope.ownerID = '';
+    $scope.GetTicketOwner = function (owner) {
+        authService.getAccountById(owner).then(function (response) {
+            $scope.oDetails = response.data;
+        },
+        function (error) {
+            console.log('Error on Tickets: ' + error.data.message);
+        });
+    };
 
+    //**********************************************************************************************
+    //*Update Ticket 
+    //**********************************************************************************************
+    $scope.getTicketId = '';
     $scope.ticketUpdate = {};
     $scope.editTicket = function displayModal(data) {
         $scope.ticketUpdate = data;
+        $scope.GetTicketOwner(data.ticketOwnerId);
         $scope.getTicketId = data.id;
         $scope.GetTicketRemarks(data.id);
-        $scope.GetTicketOwner(data);
+
         var modalScope = $scope.$new();
         modalScope.ParentScope = $scope;
         modalScope.closeModal = function () {
             modalScope.modalInstance.close();
         }
-
         modalScope.updateTicket = function () {
             ticketsService.updateTicket(modalScope.ticketUpdate).then(function (response) {
                 modalScope.closeModal();
             });
         }
-
         modalScope.modalInstance = $uibModal.open({
             size: 'lg',
             templateUrl: '/app/views/tickets/update.html',
@@ -200,6 +217,9 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         });
     };
 
+    //**********************************************************************************************
+    //*Get Ticket Remarks
+    //**********************************************************************************************
     $scope.GetTicketRemarks = function (ticket_id) {
         remarksService.getById(ticket_id).then(function (response) {
             $scope.Remarks = response.data;
@@ -209,16 +229,9 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         });
     };
 
-    $scope.GetTicketOwner = function (owner) {
-        $scope.getId = owner.ticketOwnerId
-        ownerService.getById($scope.getId).then(function (response) {
-            $scope.OwnerInfo = response.data;
-        },
-        function (error) {
-            console.log('Error on Tickets: ' + error.data.message);
-        });
-    };
-
+    //**********************************************************************************************
+    //*Save Ticket Remarks 
+    //**********************************************************************************************
     $scope.ticketRemarks = {
         id: 0,
         type: 'file',
@@ -230,23 +243,28 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         remarksService.addRemark($scope.ticketRemarks).then(function (response) {
             
         },
-                         function (response) {
-                             var errors = [];
-                             for (var key in response.data.modelState) {
-                                 for (var i = 0; i < response.data.modelState[key].length; i++) {
-                                     errors.push(response.data.modelState[key][i]);
-                                 }
-                             }
-                             $scope.message = "Failed to add ticket remarks due to:" + errors.join(' ');
-                         });
+        function (response) {
+            var errors = [];
+            for (var key in response.data.modelState) {
+                for (var i = 0; i < response.data.modelState[key].length; i++) {
+                    errors.push(response.data.modelState[key][i]);
+                }
+            }
+            $scope.message = "Failed to add ticket remarks due to:" + errors.join(' ');
+        });
     };
 
+    //**********************************************************************************************
+    //*Filtering 
+    //**********************************************************************************************
     $scope.toggleFiltering = function () {
         $scope.grdTickets.enableFiltering = !$scope.grdTickets.enableFiltering;
         $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.COLUMN);
-
     };
 
+    //**********************************************************************************************
+    //*Save Ticket Owner
+    //**********************************************************************************************
     $scope.ticketOwner = {
         password: 'Admin123',
         confirmPassword: 'Admin123',
@@ -265,22 +283,13 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         Gender: '',
         IDNumber: '',
         PhysicalAddress: ''
-       // ticketTypeId: ''//,
-        //Latitude: '',
-        //Longitude:''
     };
-
     $scope.saveTicketOwners = function () {
-
         if ($scope.tickets.ticketTypeId === 1)
         {
             authService.saveRegistration($scope.ticketOwner).then(function (response) {
                 $scope.saveTickets(response);
-
                 $scope.savedSuccessfully = true;
-                $scope.message = "User has been registered successfully, you will be redicted to login page in 2 seconds.";
-                startTimer();
-
             },
              function (response) {
                  var errors = [];
@@ -295,13 +304,12 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         else {
             $scope.ticketOwner_Id = '4780d8a4-7a74-4566-acba-7ec03b5878d0';
             $scope.saveTickets($scope.ticketOwner_Id);
-        }
-                
-
+        }              
     };
 
-
-    //
+    //**********************************************************************************************
+    //*Display response message
+    //**********************************************************************************************
     $scope.resMessage = {
         msg:'',
         refNum:''
@@ -314,9 +322,7 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         modalScope.closeModal = function () {
             modalScope.modalInstance.close();
         }
-
         $scope.submitForm();
-
         modalScope.modalInstance = $uibModal.open({
             size: 'lg',
             templateUrl: '/app/views/tickets/response.html',
@@ -324,14 +330,18 @@ app.controller("ticketsController", ['$scope', '$filter', 'ngStatus', 'remarksSe
         });
     }
 
-
+    //**********************************************************************************************
+    //*Clear Form
+    //**********************************************************************************************
     $scope.submitForm = function () {
         $scope.ticketOwner = null; 
         $scope.ticketRemarks = null;
         $scope.tickets = null;
     };
 
-    //Global search function
+    //**********************************************************************************************
+    //*Global search filter 
+    //**********************************************************************************************
     $scope.refreshData = function (termObj) {
         $scope.grdTickets.data = $scope.Data;
         while (termObj) {

@@ -105,6 +105,7 @@
             user.Surname = userModel.Surname;
             user.Email = userModel.Email;
             user.UserName = userModel.UserName;
+            user.PhysicalAddress = userModel.PhysicalAddress;
 
             if (user.PasswordHash != userModel.Password)
             {

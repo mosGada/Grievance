@@ -45,6 +45,8 @@ namespace Grievance.DAL.DTO
         [DataMember(Name = "idNumber")]
         public string IDNumber { get; set; }
 
+        [DataMember(Name = "gender")]
+        public string Gender { get; set; }
 
         [DataMember(Name = "physicalAddress")]
         public string PhysicalAddress { get; set; }

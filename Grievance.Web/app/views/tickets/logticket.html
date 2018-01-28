@@ -147,7 +147,8 @@
                             <option ng-repeat="asign in Assign" data-ng-value="{{asign.userName}}">{{asign.name}}</option>
                         </select>-->
                         <select class="form-control" ng-model="tickets.AssignedTo"
-                                ng-options="asign.id as asign.name for asign in Assign"></select>
+                                ng-options="asign.id as asign.name for asign in Assign">
+                        </select>
                     </div>
 
                     <div class="box-footer">

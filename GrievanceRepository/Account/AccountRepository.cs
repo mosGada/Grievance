@@ -44,7 +44,8 @@ namespace GrievanceRepository.Account
                         Password = user.PasswordHash,
                         ConfirmPassword = user.PasswordHash,
                         IDNumber = user.IDNumber,
-                        PhysicalAddress = user.PhysicalAddress
+                        PhysicalAddress = user.PhysicalAddress,
+                        Gender = user.Gender
                         //Latitude = users.Latitude,
                         //Longitude = users.Longitude
 
@@ -52,7 +53,35 @@ namespace GrievanceRepository.Account
                 }
             });
             return accountDTO;
-        }        
+        }
+
+        public async Task<AccountDTO> GetByID(string id)
+        {
+            var accountDTO = new AccountDTO();
+            await Task.Run(() =>
+            {
+                var user = _ctx.AspNetUsers.FirstOrDefault(x => x.Id == id);
+                if (user == null) return;
+                var mappedAccount = new AccountDTO()
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    UserName = user.UserName,
+                    Password = user.PasswordHash,
+                    ConfirmPassword = user.PasswordHash,
+                    IDNumber = user.IDNumber,
+                    PhysicalAddress = user.PhysicalAddress,
+                    Gender = user.Gender
+                };
+                accountDTO = mappedAccount;                
+            });
+            return accountDTO;
+        }
+
+
 
     }
 }

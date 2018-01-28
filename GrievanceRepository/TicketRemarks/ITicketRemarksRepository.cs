@@ -10,7 +10,7 @@ namespace GrievanceRepository.TicketRemarks
     public interface ITicketRemarksRepository
     {
         Task<List<TicketRemarkDTO>> GetAll();
-        Task<TicketRemarkDTO> GetById(int id);
+        //Task<TicketRemarkDTO> GetById(int id);
         Task<TicketRemarkDTO> Update(TicketRemarkDTO ticketRemark);
 
     }

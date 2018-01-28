@@ -26,6 +26,12 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
     };
 
+    var _getAccountById = function (account) {
+        return $http.get(serviceBase + 'api/Account/GetAccountByID?id=' + account).then(function (response) {
+            return response;
+        });
+    };
+
 
     var _updateRegistration = function (User) {
        
@@ -210,8 +216,9 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
     authServiceFactory.fillAuthData = _fillAuthData;
     authServiceFactory.authentication = _authentication;
     authServiceFactory.refreshToken = _refreshToken;
-    authServiceFactory.saveRole = _saveRole;
+    authServiceFactory.saveRole = _saveRole; 
     authServiceFactory.getUsers = _getUsers
+    authServiceFactory.getAccountById = _getAccountById
 
     authServiceFactory.obtainAccessToken = _obtainAccessToken;
     authServiceFactory.externalAuthData = _externalAuthData;

@@ -26,12 +26,12 @@ namespace Grievance.API.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
-        [HttpGet]
-        [Route("GetById")]
-        public async Task<TicketRemarkDTO> GetById(int ticketId)
-        {
-            return await _dataProvider.GetById(ticketId);
-        }
+        //[HttpGet]
+        //[Route("GetById")]
+        //public async Task<TicketRemarkDTO> GetById(int ticketId)
+        //{
+        //    return await _dataProvider.GetById(ticketId);
+        //}
 
         //[HttpPost]
         //[Route("Add")]

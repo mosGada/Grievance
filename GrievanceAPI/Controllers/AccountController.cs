@@ -15,8 +15,11 @@
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
+        #region Private Member variable(s)
+        AccountRepository _dataProvider = new AccountRepository();
         private AuthRepository _repo = null;
         private RoleRepository _roleRepo = null;
+        #endregion
 
         private IAuthenticationManager Authentication
         {
@@ -27,6 +30,13 @@
         {
             _repo = new AuthRepository();
             _roleRepo = new RoleRepository();
+        }
+
+        [HttpGet]
+        [Route("GetAccountByID")]
+        public async Task<AccountDTO> GetAccountById(string id)
+        {
+            return await _dataProvider.GetByID(id);
         }
 
         // POST api/Account/Register
@@ -80,10 +90,6 @@
 
             return Ok("Error");
         }
-
-        #region Private Member variable(s)
-        AccountRepository _dataProvider = new AccountRepository();
-        #endregion
 
         [HttpGet]
         [Route("GetAll")]
